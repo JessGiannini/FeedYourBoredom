@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css" />
+
     <title>Document</title>
 </head>
 <body>
@@ -21,12 +22,25 @@
                 <!-- Modal content -->
                 <div class="modal-survey">
                   <span class="close">&times;</span>
-                  <p>Some text in the Modal..</p>
+                  <h3>Some text in the Modal..</h3>
+
+                <input class="input" id="city-input" type="text" placeholder="City Name">
+                <div class="select">
+                    <select class="activityType">
+                        <option>Select Acitivity from dropdown</option>
+                        <option>Acitivity Type Placeholder</option>
+                    </select>
                 </div>
+                <input class="input" id="participants-input" type="text" placeholder="Number of Participants">
+            </div>
+
               
               </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="./assets/js/script.js"></script>
+    
 </body>
 </html>
