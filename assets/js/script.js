@@ -7,6 +7,8 @@ fetch("http://www.boredapi.com/api/activity/")
     console.log(data);
   });
 
+
+  
 fetch(
   "https://cors.bridged.cc/https://api.yelp.com/v3/businesses/search?location=san%20jose",
   {
