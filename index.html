@@ -5,34 +5,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Document</title>
 </head>
 <body>
-    <script>
-        fetch("http://www.boredapi.com/api/activity/")
-            .then(function (res) {
-                return res.json();
-            })
-            .then(function (data) {
-                console.log("activity");
-                console.log(data);
-            })
-            
-        fetch("https://cors.bridged.cc/https://api.yelp.com/v3/businesses/search?location=san%20jose", {
-            headers: {
-                Authorization: "Bearer i5jzi0uL9To_HaeteYpdGCzthane6BIfOQaBq7cjio6JjWlK_xcMrzKEJXiMg2Zti8K2NnY-zkvyrGAyw8J7vqN7hpSRP_b71d2IiKyepW0oMrzrz_jw_IaEcdfkYHYx"
-            }
-        })
-            .then(function (res) {
-                console.log(res);
-                return res.json();
-            })
-            .then(function (data) {
-                console.log(data);
-            })
-            .catch(function (err) {
-                console.log(err);
-            })
-    </script>
+    <header>
+        <h1>FEED YOUR BOREDOM</h1>
+    </header>
+
+    <div class="container">
+        <div class="new-search">
+            <button id="search-btn" class="btn">New Search</button>
+            <div id="user-modal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-survey">
+                  <span class="close">&times;</span>
+                  <p>Some text in the Modal..</p>
+                </div>
+              
+              </div>
+        </div>
+    </div>
+    <script src="./assets/js/script.js"></script>
 </body>
 </html>
