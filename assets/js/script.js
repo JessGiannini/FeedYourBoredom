@@ -3,7 +3,7 @@ var btn = document.getElementById("search-btn");
 var span = document.getElementsByClassName("close")[0];
 var modalHeader = $("h3").text("Please, fill out this form.");
 var dataFromYelp = [];
-var yelpResultsSaved = [];
+var businessesSaved = [];
 var activityType = [
   "random",
   "education",
@@ -28,24 +28,22 @@ var activityType = [
 
 
 
-
-function loadYelpSaved() {
-  // get info from local storage
-  yelpResultsSaved = JSON.parse(localStorage.getItem("yelpResultSaved"));
-  if (yelpResultsSaved === null) {
-    yelpResultsSaved = [];
+// check localStorage
+//load and display the businesses saved if any
+function loadBusinessesSaved() {
+  businessesSaved = JSON.parse(localStorage.getItem("businessesSaved"));
+  if (businessesSaved === null) {
+    businessesSaved = [];
   } else {
-    listYelpSaved();
+    listBusinessesSaved();
   }
 }
 
-function listYelpSaved() {
-  for (var i = 0; i < yelpResultsSaved.length; i++) {
-    var nameEl = $("<div>").text(yelpResultsSaved[i].name);
-    console.log(i);
-    console.log(yelpResultsSaved[i]);
-    nameEl.attr("data-id", yelpResultsSaved[i].id);
-    nameEl.addClass("yelp-result-saved");
+function listBusinessesSaved() {
+  for (var i = 0; i < businessesSaved.length; i++) {
+    var nameEl = $("<div>").text(businessesSaved[i].name);
+    nameEl.attr("data-id", businessesSaved[i].id);
+    nameEl.addClass("business-saved");
     $(".search-saved-yelp").prepend(nameEl);
   }
 }
@@ -98,15 +96,10 @@ for (var i = 0; i < activityType.length; i++) {
   $("#activity-type-select").append($("<option>").text(activityType[i]));
 }
 
-// function for Yelp api
-
-function displayYelpSaved() {
-  console.log("display yelp saved");
-  console.log(this);
+function displayBusinessSaved() {
   var id = $(this).attr("data-id");
   var requestURL =
     "https://cors.bridged.cc/https://api.yelp.com/v3/businesses/" + id;
-  console.log(requestURL);
   fetch(requestURL, {
     headers: {
       Authorization:
@@ -118,24 +111,23 @@ function displayYelpSaved() {
     })
     .then(function(data) {
       if (data != undefined) {
-        console.log(data);
-        displayMoreDetails(data);
+        displayBusinessDetails(data);
       }
     })
 }
 
 function fetchDetails() {
   var indexOfYelpResult = $(this).attr("data-index");
-  displayMoreDetails(dataFromYelp[indexOfYelpResult]);
+  displayBusinessDetails(dataFromYelp[indexOfYelpResult]);
   var goBackButton = $("<button>").text("Go Back");
   goBackButton.attr("id", "go-back-button");
-  var yelpSaveButton = $("<button>").text("Like");
-  yelpSaveButton.attr("id", "yelp-save-button");
-  yelpSaveButton.attr("data-index", indexOfYelpResult);
-  $(".detail-result-display").append(goBackButton, yelpSaveButton);
+  var saveBusinessButton = $("<button>").text("Save");
+  saveBusinessButton.attr("id", "save-business-button");
+  saveBusinessButton.attr("data-index", indexOfYelpResult);
+  $(".detail-result-display").append(goBackButton, saveBusinessButton);
 }
 
-function displayMoreDetails(businessSelected) {
+function displayBusinessDetails(businessSelected) {
   $(".detail-result-display").css("display", "block");
   $(".search-result-display").css("display", "none");
   $(".detail-result-display").empty();
@@ -162,27 +154,27 @@ function saveYelpResult() {
   var nameEl = $("<div>").text(business.name);
   var relistNeeded = false;
   nameEl.attr("data-id", business.id);
-  nameEl.addClass("yelp-result-saved");
+  nameEl.addClass("business-saved");
   var resultToAdd = {
     name: business.name,
     id: business.id
   }
-  if (yelpResultsSaved === null) {
-    yelpResultsSaved = [];
+  if (businessesSaved === null) {
+    businessesSaved = [];
   }
-  for (var i = 0; i < yelpResultsSaved.length; i++) {
-    if (yelpResultsSaved[i].id === business.id) {
-      yelpResultsSaved.splice(i, 1);
+  for (var i = 0; i < businessesSaved.length; i++) {
+    if (businessesSaved[i].id === business.id) {
+      businessesSaved.splice(i, 1);
       i--;
       relistNeeded = true;
     }
   }
-  yelpResultsSaved.push(resultToAdd);
-  localStorage.setItem("yelpResultSaved", JSON.stringify(yelpResultsSaved));
+  businessesSaved.push(resultToAdd);
+  localStorage.setItem("businessesSaved", JSON.stringify(businessesSaved));
   if (relistNeeded) {
     $(".search-saved-yelp").empty();
     console.log("relist");
-    listYelpSaved();
+    listBusinessesSaved();
   } else {
     $(".search-saved-yelp").prepend(nameEl);
   }
@@ -255,7 +247,7 @@ span.onclick = function () {
   modal.style.display = "none";
 };
 
-loadYelpSaved();
+loadBusinessesSaved();
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
@@ -271,5 +263,5 @@ $(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
 $(".search-result-display").on("click", ".yelp-result", fetchDetails);
 // $("button").on("click", "#go-back-button", function() {
 $(document).on("click", "#go-back-button", displayYelpResult);
-$(document).on("click", "#yelp-save-button", saveYelpResult);
-$(document).on("click", ".yelp-result-saved", displayYelpSaved);
+$(document).on("click", "#save-business-button", saveYelpResult);
+$(document).on("click", ".business-saved", displayBusinessSaved);
