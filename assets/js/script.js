@@ -14,6 +14,7 @@ var activityType = [
   "music",
   "busywork",
 ];
+
 // key: number of participants; value: all possible types of results
 // var activityType = {
 //   1: ["education", "recreational", "social", "diy", "charity", "cooking", "relaxation", "music", "busywork"],
@@ -99,6 +100,15 @@ function displayMoreDetails(event) {
   var goBackButton = $("<button>").text("Go Back");
   goBackButton.attr("id", "gobackbutton");
   $(".detail-result-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl, goBackButton);
+  var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'your.mapbox.access.token'
+}).addTo(mymap);
 }
 
 function displayYelpResult() {
@@ -184,3 +194,10 @@ $(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
 $(".search-result-display").on("click", ".yelp-result", displayMoreDetails);
 // $("button").on("click", "#gobackbutton", function() {
 $(document).on("click", "#gobackbutton", displayYelpResult);
+
+var hammertime = new Hammer(myElement, myOptions);
+hammertime.on('pan', function(ev) {
+	console.log(ev);
+});
+hammertime.get('pinch').set({ enable: true });
+hammertime.get('rotate').set({ enable: true });
