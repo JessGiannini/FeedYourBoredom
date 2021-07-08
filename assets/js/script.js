@@ -31,13 +31,20 @@ var activityType = [
 
 function loadYelpSaved() {
   // get info from local storage
-  var yelpResultsSaved = JSON.parse(localStorage.getItem("yelpResultSaved"));
+  yelpResultsSaved = JSON.parse(localStorage.getItem("yelpResultSaved"));
   if (yelpResultsSaved === null) {
     yelpResultsSaved = [];
   } else {
-  // display local storage with for loop if the data returned is not empty
-    for (var i = 0; i < yelpResultsSaved.length; i++)
-    var a;
+    console.log("yelpResultSaved: ");
+    console.log(yelpResultsSaved);
+    for (var i = 0; i < yelpResultsSaved.length; i++) {
+      var nameEl = $("<div>").text(yelpResultsSaved[i].name);
+      console.log(i);
+      console.log(yelpResultsSaved[i]);
+      nameEl.attr("data-id", yelpResultsSaved[i].id);
+      nameEl.addClass("yelp-result-saved");
+      $(".search-saved-yelp").append(nameEl);
+    }
   }
 }
 
@@ -167,7 +174,7 @@ function saveYelpResult() {
   yelpResultsSaved.push(resultToAdd);
   localStorage.setItem("yelpResultSaved", JSON.stringify(yelpResultsSaved));
   console.log(index);
-  $(".search-result-yelp").append(nameEl);
+  $(".search-saved-yelp").prepend(nameEl);
 }
 
 function displayYelpResult() {
