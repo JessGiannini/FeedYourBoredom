@@ -27,19 +27,18 @@ var activityType = [
 // function to deal with bored api
 function submitEventHandlerBored() {
   event.preventDefault();
-  var participants = $("#participants-input").val();
-  var participantsQueryParameter =
-    participants == "" ? "" : "participants=" + participants + "&";
+  // var participants = $("#participants-input").val();
+  // var participantsQueryParameter =
+    // participants == "" ? "" : "participants=" + participants + "&";
   var typeSelected = $("#activity-type-select").val();
 
   // display the user input
-  var participantsEl = $("<div>").text("participants: " + participants);
+  // var participantsEl = $("<div>").text("participants: " + participants);
   var typeEl = $("<div>").text("Type: " + typeSelected);
   $(".user-input-record").html("");
-  $(".user-input-record").append(participantsEl, typeEl);
+  $(".user-input-record").append(typeEl);
   var requestURL =
     "http://www.boredapi.com/api/activity/?" +
-    participantsQueryParameter +
     "type=" +
     typeSelected;
   fetch(requestURL)
