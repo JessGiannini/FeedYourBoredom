@@ -112,5 +112,9 @@ header {
 }
 
 #mapid { 
-    height: 180px; 
+    height: 180px;  
+  
+.search-result-yelp {
+  height: 200px;
+  border: 2px solid var(--border-testcolor-);
 }
