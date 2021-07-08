@@ -2,7 +2,18 @@ var modal = document.getElementById("user-modal-1");
 var btn = document.getElementById("search-btn");
 var span = document.getElementsByClassName("close")[0];
 var modalHeader = $("h3").text("Please, fill out this form.");
-var activityType = ["random", "education", "recreational", "social", "diy", "charity", "cooking", "relaxation", "music", "busywork"];
+var activityType = [
+  "random",
+  "education",
+  "recreational",
+  "social",
+  "diy",
+  "charity",
+  "cooking",
+  "relaxation",
+  "music",
+  "busywork",
+];
 // key: number of participants; value: all possible types of results
 // var activityType = {
 //   1: ["education", "recreational", "social", "diy", "charity", "cooking", "relaxation", "music", "busywork"],
@@ -11,15 +22,14 @@ var activityType = ["random", "education", "recreational", "social", "diy", "cha
 //   4: ["social", "music", "recreational"],
 //   5: ["social", "music"]
 // }
-
-
+// GREAT IDEA ^^^
 
 // function to deal with bored api
 function submitEventHandlerBored() {
   event.preventDefault();
   var participants = $("#participants-input").val();
-  var participantsQueryParameter = participants == "" ? ""
-    : "participants=" + participants + "&";
+  var participantsQueryParameter =
+    participants == "" ? "" : "participants=" + participants + "&";
   var typeSelected = $("#activity-type-select").val();
 
   // display the user input
@@ -27,7 +37,11 @@ function submitEventHandlerBored() {
   var typeEl = $("<div>").text("Type: " + typeSelected);
   $(".user-input-record").html("");
   $(".user-input-record").append(participantsEl, typeEl);
-  var requestURL = "http://www.boredapi.com/api/activity/?" + participantsQueryParameter + "type=" + typeSelected;
+  var requestURL =
+    "http://www.boredapi.com/api/activity/?" +
+    participantsQueryParameter +
+    "type=" +
+    typeSelected;
   fetch(requestURL)
     .then(function (res) {
       return res.json();
@@ -42,7 +56,9 @@ function submitEventHandlerBored() {
       // var participantsEl = $("<div>").text("participants: " + data.participants);
       var priceEl = $("<div>").text("price: " + data.price);
       // var typeEl = $("<div>").text("type: " + data.type);
-      var accessibilityEl = $("<div>").text("accessibility: " + data.accessibility);
+      var accessibilityEl = $("<div>").text(
+        "accessibility: " + data.accessibility
+      );
       // price and accessibility can be displayed using empty or colored star
       $(".search-result-display").html("");
       $(".search-result-display").append(activityEl, priceEl, accessibilityEl);
@@ -54,25 +70,28 @@ for (var i = 0; i < activityType.length; i++) {
   $("#activity-type-select").append($("<option>").text(activityType[i]));
 }
 
+// function for Yelp api
+
 function submitEventHandlerYelp() {
   event.preventDefault();
   var location = $("#city-input").val();
+  //HELP! unsure what the term is in regards to user input
   var term = $("#term-input").val();
-  var termQueryParameter = (term === "") ? ""
-                                        : ("&term=" + term);
+  var termQueryParameter = term === "" ? "" : "&term=" + term;
+  // drop down menu for selecting budget
   price = $("#price-select").val();
-  var priceQueryParameter = (price === "") ? ""
-                                            : ("&price=" + price.length);
-  var requestURL = "https://cors.bridged.cc/https://api.yelp.com/v3/businesses/search?location=" + location + termQueryParameter + priceQueryParameter;
-  fetch(
-    requestURL,
-    {
-      headers: {
-        Authorization:
-          "Bearer i5jzi0uL9To_HaeteYpdGCzthane6BIfOQaBq7cjio6JjWlK_xcMrzKEJXiMg2Zti8K2NnY-zkvyrGAyw8J7vqN7hpSRP_b71d2IiKyepW0oMrzrz_jw_IaEcdfkYHYx",
-      },
-    }
-  )
+  var priceQueryParameter = price === "" ? "" : "&price=" + price.length;
+  var requestURL =
+    "https://cors.bridged.cc/https://api.yelp.com/v3/businesses/search?location=" +
+    location +
+    termQueryParameter +
+    priceQueryParameter;
+  fetch(requestURL, {
+    headers: {
+      Authorization:
+        "Bearer i5jzi0uL9To_HaeteYpdGCzthane6BIfOQaBq7cjio6JjWlK_xcMrzKEJXiMg2Zti8K2NnY-zkvyrGAyw8J7vqN7hpSRP_b71d2IiKyepW0oMrzrz_jw_IaEcdfkYHYx",
+    },
+  })
     .then(function (res) {
       console.log(res);
       return res.json();
@@ -95,8 +114,8 @@ function submitEventHandlerYelp() {
       console.log(err);
     });
 }
-
-
+// the above funtion displays way to many results on the web page
+// TODO: style the results into a block set up
 
 // When the user clicks on the button, open the modal
 btn.onclick = function () {
@@ -114,6 +133,7 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 };
-
-$(document).on("click", "#submit-button", submitEventHandlerBored)
-$(document).on("click", "#submit-button-yelp", submitEventHandlerYelp)
+// creates both submit buttons
+$(document).on("click", "#submit-button", submitEventHandlerBored);
+// this button is not located inside the modal
+$(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
