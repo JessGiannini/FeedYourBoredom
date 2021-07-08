@@ -111,6 +111,7 @@ header {
   flex-wrap: wrap;
 }
 
+<<<<<<< HEAD
 #mapid { 
     height: 180px;  
   
@@ -118,3 +119,9 @@ header {
   height: 200px;
   border: 2px solid var(--border-testcolor-);
 }
+=======
+.map {
+    height: 300px;
+    width: 300px;
+  }
+>>>>>>> fe30e04 (add map library)
