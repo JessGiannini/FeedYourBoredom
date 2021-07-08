@@ -80,7 +80,15 @@ header {
 }
 
 .search-result-display {
-  height: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  height: 400px;
+  border: 2px solid var(--border-testcolor-);
+}
+
+.detail-result-display {
+  height: 400px;
+
   border: 2px solid var(--border-testcolor-);
 }
 

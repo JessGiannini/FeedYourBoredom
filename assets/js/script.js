@@ -165,6 +165,13 @@ function submitEventHandlerYelp() {
         imgEl.css("height", "100px");
         resEl.append(nameEl, imgEl, distanceEl);
         $(".search-result-display").append(resEl);
+
+        document
+          .querySelector("<img>")
+          .addEventListener("click", function (event) {
+            imgEl.setAttribute("src", data.businesses[i].url);
+          });
+        //document.querySelector("<div>").style.display = 'none';
       }
     })
     .catch(function (err) {
