@@ -51,16 +51,19 @@ function submitEventHandlerBored() {
         return;
       }
       //there is one more query parameter key: unique and can be used to search a certain activity
-      var activityEl = $("<h3>").text("activity: " + data.activity);
+      var activityEl = $("<h3>").text("Activity: " + data.activity);
       // var participantsEl = $("<div>").text("participants: " + data.participants);
-      var priceEl = $("<div>").text("price: " + data.price);
+      var priceEl = $("<div>").text("Price: " + data.price);
       // var typeEl = $("<div>").text("type: " + data.type);
       var accessibilityEl = $("<div>").text(
-        "accessibility: " + data.accessibility
+        "Accessibility: " + data.accessibility
       );
+      var participantsEl = $("<div>").text("Participants: Up to " + data.participants + " person(s)");
+    
+
       // price and accessibility can be displayed using empty or colored star
       $(".user-input-record").html("");
-      $(".user-input-record").append(activityEl, priceEl, accessibilityEl);
+      $(".user-input-record").append(activityEl, priceEl, accessibilityEl, participantsEl);
       console.log(data);
     });
 }
