@@ -2,6 +2,22 @@
   --border-testcolor-: rgba(44, 41, 41, 0.4);
 }
 
+.hero-body {
+  text-align: center;
+}
+.title {
+  font-family: "Festive", cursive;
+  font-size: 100px;
+}
+
+.subtitle {
+  display: block;
+  margin-top: 200px;
+  padding: 30px 10px;
+  font-family: "Amatic SC", cursive;
+  font-size: 35px;
+}
+
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -11,8 +27,8 @@
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content/Box */
@@ -64,6 +80,9 @@ header {
 }
 
 .search-result-display {
+<<<<<<< HEAD
+  height: 600px;
+=======
   display: flex;
   flex-wrap: wrap;
   height: 400px;
@@ -72,13 +91,14 @@ header {
 
 .detail-result-display {
   height: 400px;
+>>>>>>> 2f5da491fc31b68e0d9bc2a1b35930bbb5a06448
   border: 2px solid var(--border-testcolor-);
 }
 
 
 #search-btn {
-    margin: 10px;
-    display: flex;
+  margin: 10px;
+  display: flex;
 }
 
 #submit-button-yelp {
@@ -87,6 +107,11 @@ header {
 }
 
 .search-result-display {
+<<<<<<< HEAD
+  display: flex;
+  flex-wrap: wrap;
+=======
     display: flex;
     flex-wrap: wrap;
+>>>>>>> 2f5da491fc31b68e0d9bc2a1b35930bbb5a06448
 }
