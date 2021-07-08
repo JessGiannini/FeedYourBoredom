@@ -35,16 +35,18 @@ function loadYelpSaved() {
   if (yelpResultsSaved === null) {
     yelpResultsSaved = [];
   } else {
-    console.log("yelpResultSaved: ");
-    console.log(yelpResultsSaved);
-    for (var i = 0; i < yelpResultsSaved.length; i++) {
-      var nameEl = $("<div>").text(yelpResultsSaved[i].name);
-      console.log(i);
-      console.log(yelpResultsSaved[i]);
-      nameEl.attr("data-id", yelpResultsSaved[i].id);
-      nameEl.addClass("yelp-result-saved");
-      $(".search-saved-yelp").append(nameEl);
-    }
+    listYelpSaved();
+  }
+}
+
+function listYelpSaved() {
+  for (var i = 0; i < yelpResultsSaved.length; i++) {
+    var nameEl = $("<div>").text(yelpResultsSaved[i].name);
+    console.log(i);
+    console.log(yelpResultsSaved[i]);
+    nameEl.attr("data-id", yelpResultsSaved[i].id);
+    nameEl.addClass("yelp-result-saved");
+    $(".search-saved-yelp").prepend(nameEl);
   }
 }
 
@@ -157,24 +159,33 @@ function displayMoreDetails(businessSelected) {
 function saveYelpResult() {
   var index = $(this).attr("data-index");
   var business = dataFromYelp[index];
-  console.log(index);
-  console.log(business);
   var nameEl = $("<div>").text(business.name);
-  nameEl.attr("data-location", business.location.city);
+  var relistNeeded = false;
   nameEl.attr("data-id", business.id);
   nameEl.addClass("yelp-result-saved");
   var resultToAdd = {
     name: business.name,
     id: business.id
   }
-  var yelpResultsSaved = JSON.parse(localStorage.getItem("yelpResultSaved"));
   if (yelpResultsSaved === null) {
     yelpResultsSaved = [];
   }
+  for (var i = 0; i < yelpResultsSaved.length; i++) {
+    if (yelpResultsSaved[i].id === business.id) {
+      yelpResultsSaved.splice(i, 1);
+      i--;
+      relistNeeded = true;
+    }
+  }
   yelpResultsSaved.push(resultToAdd);
   localStorage.setItem("yelpResultSaved", JSON.stringify(yelpResultsSaved));
-  console.log(index);
-  $(".search-saved-yelp").prepend(nameEl);
+  if (relistNeeded) {
+    $(".search-saved-yelp").empty();
+    console.log("relist");
+    listYelpSaved();
+  } else {
+    $(".search-saved-yelp").prepend(nameEl);
+  }
 }
 
 function displayYelpResult() {
