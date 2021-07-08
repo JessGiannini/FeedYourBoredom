@@ -36,13 +36,9 @@ function loadYelpSaved() {
     yelpResultsSaved = [];
   } else {
   // display local storage with for loop if the data returned is not empty
-    for (var i = 0; i < yelpResultsSaved.length; i++) {
-      
-    }
-
+    for (var i = 0; i < yelpResultsSaved.length; i++)
+    var a;
   }
-
-
 }
 
 // function to deal with bored api
