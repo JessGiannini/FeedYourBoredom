@@ -85,7 +85,7 @@ function displayMoreDetails(event) {
   businessSelected = dataFromYelp[index];
   var nameEl = $("<div>").text(businessSelected.name);
   var imgURL = businessSelected.image_url;
-  var distanceEl = $("<div>").text(businessSelected.distance);
+  var distanceEl = $("<div>").text(parseInt(businessSelected.distance) + "m");
   var imgEl = $("<img>").attr("src", imgURL);
   imgEl.css("float", "right");
   imgEl.css("width", "300px");
@@ -96,14 +96,36 @@ function displayMoreDetails(event) {
   addressEl.append($("<p>").text(businessSelected.location.address2));
   addressEl.append($("<p>").text(businessSelected.location.address3));
   addressEl.append($("<p>").text(businessSelected.location.city));
-  console.log("add go back button")
   var goBackButton = $("<button>").text("Go Back");
-  goBackButton.attr("id", "gobackbutton");
-  $(".detail-result-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl, goBackButton);
+  goBackButton.attr("id", "go-back-button");
+  var yelpSaveButton = $("<button>").text("Like");
+  yelpSaveButton.attr("id", "yelp-save-button");
+  yelpSaveButton.attr("data-index", index);
+  $(".detail-result-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl, goBackButton, yelpSaveButton);
+}
+
+function saveYelpResult() {
+  var index = $(this).attr("data-index");
+  var business = dataFromYelp[index];
+  var nameEl = $("<div>").text(business.name);
+  nameEl.attr("data-index", business.id);
+  var resultToAdd = {
+    name: business.name,
+    id: business.id
+  }
+  var yelpResultsSaved = JSON.parse(localStorage.getItem("yelpResultSaved"));
+  if (yelpResultsSaved === null) {
+    yelpResultsSaved = [];
+  }
+  yelpResultsSaved.push(resultToAdd);
+  localStorage.setItem("yelpResultSaved", JSON.stringify(yelpResultsSaved));
+  console.log(index);
+  $(".search-result-yelp").append(nameEl);
 }
 
 function displayYelpResult() {
-  console.log("I am executed");
+  console.log(this);
+  console.log("display yelp result");
   $(".search-result-display").css("display", "flex");
   $(".detail-result-display").css("display", "none");
 }
@@ -183,5 +205,6 @@ $(document).on("click", "#submit-button", submitEventHandlerBored);
 // this button is not located inside the modal
 $(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
 $(".search-result-display").on("click", ".yelp-result", displayMoreDetails);
-// $("button").on("click", "#gobackbutton", function() {
-$(document).on("click", "#gobackbutton", displayYelpResult);
+// $("button").on("click", "#go-back-button", function() {
+$(document).on("click", "#go-back-button", displayYelpResult);
+$(document).on("click", "#yelp-save-button", saveYelpResult);
