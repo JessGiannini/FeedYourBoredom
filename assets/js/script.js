@@ -3,6 +3,7 @@ var btn = document.getElementById("search-btn");
 var span = document.getElementsByClassName("close")[0];
 var modalHeader = $("h3").text("Please, fill out this form.");
 var dataFromYelp = [];
+var yelpResultsSaved = [];
 var activityType = [
   "random",
   "education",
@@ -24,6 +25,25 @@ var activityType = [
 //   5: ["social", "music"]
 // }
 // GREAT IDEA ^^^
+
+
+
+
+function loadYelpSaved() {
+  // get info from local storage
+  var yelpResultsSaved = JSON.parse(localStorage.getItem("yelpResultSaved"));
+  if (yelpResultsSaved === null) {
+    yelpResultsSaved = [];
+  } else {
+  // display local storage with for loop if the data returned is not empty
+    for (var i = 0; i < yelpResultsSaved.length; i++) {
+      
+    }
+
+  }
+
+
+}
 
 // function to deal with bored api
 function submitEventHandlerBored() {
@@ -75,14 +95,46 @@ for (var i = 0; i < activityType.length; i++) {
 
 // function for Yelp api
 
-function displayMoreDetails(event) {
+function displayYelpSaved() {
+  console.log("display yelp saved");
+  console.log(this);
+  var id = $(this).attr("data-id");
+  var requestURL =
+    "https://cors.bridged.cc/https://api.yelp.com/v3/businesses/" + id;
+  console.log(requestURL);
+  fetch(requestURL, {
+    headers: {
+      Authorization:
+        "Bearer i5jzi0uL9To_HaeteYpdGCzthane6BIfOQaBq7cjio6JjWlK_xcMrzKEJXiMg2Zti8K2NnY-zkvyrGAyw8J7vqN7hpSRP_b71d2IiKyepW0oMrzrz_jw_IaEcdfkYHYx",
+    },
+  })
+    .then(function(response) {
+      return response.json()
+    })
+    .then(function(data) {
+      if (data != undefined) {
+        console.log(data);
+        displayMoreDetails(data);
+      }
+    })
+}
+
+function fetchDetails() {
+  var indexOfYelpResult = $(this).attr("data-index");
+  displayMoreDetails(dataFromYelp[indexOfYelpResult]);
+  var goBackButton = $("<button>").text("Go Back");
+  goBackButton.attr("id", "go-back-button");
+  var yelpSaveButton = $("<button>").text("Like");
+  yelpSaveButton.attr("id", "yelp-save-button");
+  yelpSaveButton.attr("data-index", indexOfYelpResult);
+  $(".detail-result-display").append(goBackButton, yelpSaveButton);
+}
+
+function displayMoreDetails(businessSelected) {
   $(".detail-result-display").css("display", "block");
   $(".search-result-display").css("display", "none");
   $(".detail-result-display").empty();
-  var index = $(this).attr("data-index");
-  console.log(dataFromYelp);
-  console.log(index);
-  businessSelected = dataFromYelp[index];
+  console.log(businessSelected);
   var nameEl = $("<div>").text(businessSelected.name);
   var imgURL = businessSelected.image_url;
   var distanceEl = $("<div>").text(parseInt(businessSelected.distance) + "m");
@@ -96,19 +148,18 @@ function displayMoreDetails(event) {
   addressEl.append($("<p>").text(businessSelected.location.address2));
   addressEl.append($("<p>").text(businessSelected.location.address3));
   addressEl.append($("<p>").text(businessSelected.location.city));
-  var goBackButton = $("<button>").text("Go Back");
-  goBackButton.attr("id", "go-back-button");
-  var yelpSaveButton = $("<button>").text("Like");
-  yelpSaveButton.attr("id", "yelp-save-button");
-  yelpSaveButton.attr("data-index", index);
-  $(".detail-result-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl, goBackButton, yelpSaveButton);
+  $(".detail-result-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl);
 }
 
 function saveYelpResult() {
   var index = $(this).attr("data-index");
   var business = dataFromYelp[index];
+  console.log(index);
+  console.log(business);
   var nameEl = $("<div>").text(business.name);
-  nameEl.attr("data-index", business.id);
+  nameEl.attr("data-location", business.location.city);
+  nameEl.attr("data-id", business.id);
+  nameEl.addClass("yelp-result-saved");
   var resultToAdd = {
     name: business.name,
     id: business.id
@@ -124,8 +175,6 @@ function saveYelpResult() {
 }
 
 function displayYelpResult() {
-  console.log(this);
-  console.log("display yelp result");
   $(".search-result-display").css("display", "flex");
   $(".detail-result-display").css("display", "none");
 }
@@ -134,7 +183,6 @@ function submitEventHandlerYelp() {
   event.preventDefault();
   $(".search-result-display").empty();
   var location = $("#city-input").val();
-  //HELP! unsure what the term is in regards to user input
   var term = $("#term-input").val();
   var termQueryParameter = term === "" ? "" : "&term=" + term;
   // drop down menu for selecting budget
@@ -193,6 +241,8 @@ span.onclick = function () {
   modal.style.display = "none";
 };
 
+loadYelpSaved();
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
   if (event.target == modal) {
@@ -204,7 +254,8 @@ $(".detail-result-display").css("display", "none");
 $(document).on("click", "#submit-button", submitEventHandlerBored);
 // this button is not located inside the modal
 $(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
-$(".search-result-display").on("click", ".yelp-result", displayMoreDetails);
+$(".search-result-display").on("click", ".yelp-result", fetchDetails);
 // $("button").on("click", "#go-back-button", function() {
 $(document).on("click", "#go-back-button", displayYelpResult);
 $(document).on("click", "#yelp-save-button", saveYelpResult);
+$(document).on("click", ".yelp-result-saved", displayYelpSaved);
