@@ -59,14 +59,22 @@ header {
 }
 
 .user-input-record {
-  height: 400px;
+  height: 200px;
   border: 2px solid var(--border-testcolor-);
 }
 
 .search-result-display {
+  display: flex;
+  flex-wrap: wrap;
   height: 400px;
   border: 2px solid var(--border-testcolor-);
 }
+
+.detail-result-display {
+  height: 400px;
+  border: 2px solid var(--border-testcolor-);
+}
+
 
 #search-btn {
     margin: 10px;
