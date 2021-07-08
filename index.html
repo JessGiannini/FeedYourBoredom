@@ -15,25 +15,38 @@
     </header>
 
     <div class="container">
-        <div class="new-search">
-            <button id="search-btn" class="btn">New Search</button>
-            <div id="user-modal" class="modal">
-
-                <!-- Modal content -->
-                <div class="modal-survey">
-                  <span class="close">&times;</span>
-                  <h3>Some text in the Modal..</h3>
-
-                <input class="input" id="city-input" type="text" placeholder="City Name">
-                <div class="select">
-                    <select id="activity-type-select">
-                    </select>
-                </div>
-                <input class="input" id="participants-input" type="text" placeholder="Number of Participants">
+        <div class="search-section">
+            <div class="new-search">
+                <button id="search-btn" class="btn">New Search</button>
+                <form id="user-modal-1" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-survey">
+                        <span class="close">&times;</span>
+                        <h3>Some text in the Modal..</h3>
+        
+                        <input class="input" id="participants-input" type="text" placeholder="Number of Participants">
+                        <div class="select">
+                            <select id="activity-type-select">
+                            </select>
+                        </div>
+                        <input id="submit-button" type="submit">
+                    </div>
+                </form>
+                <form id="user-modal-2" action="">
+                    <input class="input" id="city-input" type="text" placeholder="City Name">
+                </form>
             </div>
+            <div class="search-history">
 
-              
-              </div>
+            </div>
+        </div>
+        <div class="search-result-section">
+            <div class="user-input-record">
+                <h2>user-input-record</h2>
+            </div>
+            <div class="search-result-display">
+                <h2>search-result-display</h2>
+            </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
