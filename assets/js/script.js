@@ -140,12 +140,30 @@ function displayMoreDetails(businessSelected) {
   imgEl.css("height", "300px");      
   var phoneEl = $("<div>").text("phone number: " + businessSelected.phone);
   var addressEl = $("<div>").text("address: ");
+  
   addressEl.append($("<p>").text(businessSelected.location.address1));
   addressEl.append($("<p>").text(businessSelected.location.address2));
   addressEl.append($("<p>").text(businessSelected.location.address3));
   addressEl.append($("<p>").text(businessSelected.location.city));
-<<<<<<< HEAD
-  $(".detail-result-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl);
+
+  var mapEl = $("<div></div>").addClass("map").attr("id", "map");
+
+  $(document).ready(function() {
+    var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([37.41, 8.82]),
+          zoom: 4
+        })
+      });
+  })
+  
+  $(".detail-result-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl, mapEl);
 }
 
 function saveYelpResult() {
@@ -169,37 +187,7 @@ function saveYelpResult() {
   localStorage.setItem("yelpResultSaved", JSON.stringify(yelpResultsSaved));
   console.log(index);
   $(".search-result-yelp").append(nameEl);
-=======
-  
-  var mapEl = $("<div></div>").addClass("map").attr("id", "map");
-
-  console.log("add go back button");
-  var goBackButton = $("<button>").text("Go Back");
-  goBackButton.attr("id", "gobackbutton");
-  $(".detail-result-display").append(
-    nameEl,
-    imgEl,
-    distanceEl,
-    addressEl,
-    phoneEl,
-    goBackButton,
-    mapEl
-  );
->>>>>>> fe30e04 (add map library)
 }
-
-var map = new ol.Map({
-    target: 'map',
-    layers: [
-      new ol.layer.Tile({
-        source: new ol.source.OSM()
-      })
-    ],
-    view: new ol.View({
-      center: ol.proj.fromLonLat([37.41, 8.82]),
-      zoom: 4
-    })
-  });
 
 function displayYelpResult() {
   $(".search-result-display").css("display", "flex");
@@ -285,11 +273,8 @@ $(".search-result-display").on("click", ".yelp-result", displayMoreDetails);
 // $("button").on("click", "#gobackbutton", function() {
 $(document).on("click", "#gobackbutton", displayYelpResult);
 
-<<<<<<< HEAD
 $(".search-result-display").on("click", ".yelp-result", fetchDetails);
 // $("button").on("click", "#go-back-button", function() {
 $(document).on("click", "#go-back-button", displayYelpResult);
 $(document).on("click", "#yelp-save-button", saveYelpResult);
 $(document).on("click", ".yelp-result-saved", displayYelpSaved);
-=======
->>>>>>> fe30e04 (add map library)
