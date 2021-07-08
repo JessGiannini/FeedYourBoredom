@@ -15,11 +15,11 @@ var activityType = ["random", "education", "recreational", "social", "diy", "cha
 
 
 // function to deal with bored api
-function submitEventHandler() {
+function submitEventHandlerBored() {
   event.preventDefault();
   var participants = $("#participants-input").val();
   var participantsQueryParameter = participants == "" ? ""
-                                        : "participants=" + participants + "&";
+    : "participants=" + participants + "&";
   var typeSelected = $("#activity-type-select").val();
 
   // display the user input
@@ -27,52 +27,75 @@ function submitEventHandler() {
   var typeEl = $("<div>").text("Type: " + typeSelected);
   $(".user-input-record").html("");
   $(".user-input-record").append(participantsEl, typeEl);
-  var requestURL = "http://www.boredapi.com/api/activity/?" + participantsQueryParameter + "type=" + typeSelected; 
+  var requestURL = "http://www.boredapi.com/api/activity/?" + participantsQueryParameter + "type=" + typeSelected;
   fetch(requestURL)
-  .then(function (res) {
-    return res.json();
-  })
-  .then(function (data) {
-    if (data.error != undefined) {
-      $(".search-result-display").append("No results found");
-      return;
-    }
-    //there is one more query parameter key: unique and can be used to search a certain activity
-    var activityEl = $("<h3>").text("activity: " + data.activity);
-    // var participantsEl = $("<div>").text("participants: " + data.participants);
-    var priceEl = $("<div>").text("price: " + data.price);
-    // var typeEl = $("<div>").text("type: " + data.type);
-    var accessibilityEl = $("<div>").text("accessibility: " + data.accessibility);
-    // price and accessibility can be displayed using empty or colored star
-    $(".search-result-display").html("");
-    $(".search-result-display").append(activityEl, priceEl, accessibilityEl);
-    console.log(data);
-  });
+    .then(function (res) {
+      return res.json();
+    })
+    .then(function (data) {
+      if (data.error != undefined) {
+        $(".search-result-display").append("No results found");
+        return;
+      }
+      //there is one more query parameter key: unique and can be used to search a certain activity
+      var activityEl = $("<h3>").text("activity: " + data.activity);
+      // var participantsEl = $("<div>").text("participants: " + data.participants);
+      var priceEl = $("<div>").text("price: " + data.price);
+      // var typeEl = $("<div>").text("type: " + data.type);
+      var accessibilityEl = $("<div>").text("accessibility: " + data.accessibility);
+      // price and accessibility can be displayed using empty or colored star
+      $(".search-result-display").html("");
+      $(".search-result-display").append(activityEl, priceEl, accessibilityEl);
+      console.log(data);
+    });
 }
 
-for(var i = 0; i < activityType.length; i++) {
+for (var i = 0; i < activityType.length; i++) {
   $("#activity-type-select").append($("<option>").text(activityType[i]));
 }
 
-fetch(
-  "https://cors.bridged.cc/https://api.yelp.com/v3/businesses/search?location=san%20jose",
-  {
-    headers: {
-      Authorization:
-        "Bearer i5jzi0uL9To_HaeteYpdGCzthane6BIfOQaBq7cjio6JjWlK_xcMrzKEJXiMg2Zti8K2NnY-zkvyrGAyw8J7vqN7hpSRP_b71d2IiKyepW0oMrzrz_jw_IaEcdfkYHYx",
-    },
-  }
-)
-  .then(function (res) {
-    console.log(res);
-    return res.json();
-  })
-  .then(function (data) {
-    console.log(data);
-  })
-  .catch(function (err) {
-    console.log(err);
-  });
+function submitEventHandlerYelp() {
+  event.preventDefault();
+  var location = $("#city-input").val();
+  var term = $("#term-input").val();
+  var termQueryParameter = (term === "") ? ""
+                                        : ("&term=" + term);
+  price = $("#price-select").val();
+  var priceQueryParameter = (price === "") ? ""
+                                            : ("&price=" + price.length);
+  var requestURL = "https://cors.bridged.cc/https://api.yelp.com/v3/businesses/search?location=" + location + termQueryParameter + priceQueryParameter;
+  fetch(
+    requestURL,
+    {
+      headers: {
+        Authorization:
+          "Bearer i5jzi0uL9To_HaeteYpdGCzthane6BIfOQaBq7cjio6JjWlK_xcMrzKEJXiMg2Zti8K2NnY-zkvyrGAyw8J7vqN7hpSRP_b71d2IiKyepW0oMrzrz_jw_IaEcdfkYHYx",
+      },
+    }
+  )
+    .then(function (res) {
+      console.log(res);
+      return res.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      for (var i = 0; i < 10; i++) {
+        var resEl = $("<div>");
+        var nameEl = $("<div>").text(data.businesses[i].name);
+        var imgURL = data.businesses[i].image_url;
+        var distanceEl = $("<div>").text(data.businesses[i].distance);
+        var imgEl = $("<img>").attr("src", imgURL);
+        imgEl.css("width", "100px");
+        imgEl.css("height", "100px");
+        resEl.append(nameEl, imgEl, distanceEl);
+        $(".search-result-display").append(resEl);
+      }
+    })
+    .catch(function (err) {
+      console.log(err);
+    });
+}
+
 
 
 // When the user clicks on the button, open the modal
@@ -92,4 +115,5 @@ window.onclick = function (event) {
   }
 };
 
-$(document).on("click", "#submit-button", submitEventHandler)
+$(document).on("click", "#submit-button", submitEventHandlerBored)
+$(document).on("click", "#submit-button-yelp", submitEventHandlerYelp)
