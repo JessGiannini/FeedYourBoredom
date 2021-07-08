@@ -27,19 +27,18 @@ var activityType = [
 // function to deal with bored api
 function submitEventHandlerBored() {
   event.preventDefault();
-  var participants = $("#participants-input").val();
-  var participantsQueryParameter =
-    participants == "" ? "" : "participants=" + participants + "&";
+  // var participants = $("#participants-input").val();
+  // var participantsQueryParameter =
+    // participants == "" ? "" : "participants=" + participants + "&";
   var typeSelected = $("#activity-type-select").val();
 
   // display the user input
-  var participantsEl = $("<div>").text("participants: " + participants);
+  // var participantsEl = $("<div>").text("participants: " + participants);
   var typeEl = $("<div>").text("Type: " + typeSelected);
   $(".user-input-record").html("");
-  $(".user-input-record").append(participantsEl, typeEl);
+  $(".user-input-record").append(typeEl);
   var requestURL =
     "http://www.boredapi.com/api/activity/?" +
-    participantsQueryParameter +
     "type=" +
     typeSelected;
   fetch(requestURL)
@@ -48,20 +47,23 @@ function submitEventHandlerBored() {
     })
     .then(function (data) {
       if (data.error != undefined) {
-        $(".search-result-display").append("No results found");
+        $(".user-input-record").append("No results found");
         return;
       }
       //there is one more query parameter key: unique and can be used to search a certain activity
-      var activityEl = $("<h3>").text("activity: " + data.activity);
+      var activityEl = $("<h3>").text("Activity: " + data.activity);
       // var participantsEl = $("<div>").text("participants: " + data.participants);
-      var priceEl = $("<div>").text("price: " + data.price);
+      var priceEl = $("<div>").text("Price: " + data.price);
       // var typeEl = $("<div>").text("type: " + data.type);
       var accessibilityEl = $("<div>").text(
-        "accessibility: " + data.accessibility
+        "Accessibility: " + data.accessibility
       );
+      var participantsEl = $("<div>").text("Participants: Up to " + data.participants + " person(s)");
+    
+
       // price and accessibility can be displayed using empty or colored star
-      $(".search-result-display").html("");
-      $(".search-result-display").append(activityEl, priceEl, accessibilityEl);
+      $(".user-input-record").html("");
+      $(".user-input-record").append(activityEl, priceEl, accessibilityEl, participantsEl);
       console.log(data);
     });
 }
