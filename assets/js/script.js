@@ -4,7 +4,6 @@ var span = document.getElementsByClassName("close")[0];
 var modalHeader = $("h3").text("Please, fill out this form.");
 var dataFromYelp = [];
 var activityType = [
-  "random",
   "education",
   "recreational",
   "social",
