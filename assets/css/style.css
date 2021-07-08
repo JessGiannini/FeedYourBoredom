@@ -80,9 +80,21 @@ header {
 }
 
 .search-result-display {
+<<<<<<< HEAD
   height: 600px;
+=======
+  display: flex;
+  flex-wrap: wrap;
+  height: 400px;
   border: 2px solid var(--border-testcolor-);
 }
+
+.detail-result-display {
+  height: 400px;
+>>>>>>> 2f5da491fc31b68e0d9bc2a1b35930bbb5a06448
+  border: 2px solid var(--border-testcolor-);
+}
+
 
 #search-btn {
   margin: 10px;
@@ -95,6 +107,11 @@ header {
 }
 
 .search-result-display {
+<<<<<<< HEAD
   display: flex;
   flex-wrap: wrap;
+=======
+    display: flex;
+    flex-wrap: wrap;
+>>>>>>> 2f5da491fc31b68e0d9bc2a1b35930bbb5a06448
 }
