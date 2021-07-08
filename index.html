@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,36 +10,65 @@
 
     <title>Document</title>
 </head>
+
 <body>
     <header>
         <h1>FEED YOUR BOREDOM</h1>
     </header>
-
+<!-- side bar with search button to trigger modal -->
     <div class="container">
-        <div class="new-search">
-            <button id="search-btn" class="btn">New Search</button>
-            <div id="user-modal" class="modal">
+        <div class="search-section">
+            <div class="new-search">
+                <button id="search-btn" class="btn">Activity Search</button>
+                <form id="user-modal-1" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-survey">
+                        <span class="close">&times;</span>
+                        <h3>Some text in the Modal..</h3>
 
-                <!-- Modal content -->
-                <div class="modal-survey">
-                  <span class="close">&times;</span>
-                  <h3>Some text in the Modal..</h3>
-
-                <input class="input" id="city-input" type="text" placeholder="City Name">
-                <div class="select">
-                    <select id="activity-type-select">
-                    </select>
-                </div>
-                <input class="input" id="participants-input" type="text" placeholder="Number of Participants">
+                        <input class="input" id="participants-input" type="text" placeholder="Number of Participants">
+                        <div class="select">
+                            <select id="activity-type-select">
+                            </select>
+                        </div>
+                        <input id="submit-button" type="submit">
+                    </div>
+                </form>
+                <!-- not displaying as a modal, located in side bar, pertains to YELP -->
+                <form id="user-modal-2" action="">
+                    <input class="input" id="city-input" type="text" placeholder="City Name">
+                    <input class="input" id="term-input" type="text" placeholder="Restaurant, etc.">
+                    <div class="select">
+                        <select name="" id="price-select">
+                            <option value=""></option>
+                            <option value="$">$</option>
+                            <option value="$$">$$</option>
+                            <option value="$$$">$$$</option>
+                            <option value="$$$$">$$$$</option>
+                            <option value="$$$$$">$$$$$</option>
+                        </select>
+                    </div>
+                    <input id="submit-button-yelp" type="submit">
+                </form>
             </div>
-
-              
-              </div>
+            <!-- the above section needs to be added to the modal pop up -->
+            <div class="search-history">
+<!-- TODO: create local storage -->
+            </div>
+        </div>
+        <div class="search-result-section">
+            <div class="user-input-record">
+                <h2>user-input-record</h2>
+            </div>
+            <div class="search-result-display">
+                <h2>search-result-display</h2>
+            </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="./assets/js/script.js"></script>
-    
+
 </body>
+
 </html>
