@@ -7,20 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Festive&display=swap" rel="stylesheet">
     
     <title>Document</title>
 </head>
 
 <body>
-    <header>
+    <section class="hero is-info">
+        <div class="hero-body">
+            <p class="title">
+                Feed Your Boredom
+            </p>
+            <p class="subtitle">
+                Restaurant and Activity Selector
+            </p>
+        </div>
+    </section>
+    <!-- <header>
         <h1>FEED YOUR BOREDOM</h1>
-    </header>
+    </header> -->
 <!-- side bar with search button to trigger modal -->
     <div class="container">
         <div class="search-section">
             <div class="new-search">
-                <div class="search">
-                    <button id="search-btn" class="btn">Activity Search</button>
+                <div class="box search">
+                    <button class="button is-warning is-rounded" id="search-btn" class="btn">Activity Search</button>
                 </div>
                 <form id="user-modal-1" class="modal">
                     <!-- Modal content -->
@@ -32,11 +45,28 @@
                             <select id="activity-type-select">
                             </select>
                         </div>
-                        <input id="submit-button" type="submit">
+                        <input class="button is-warning is-rounded" id="submit-button" type="submit">
                     </div>
                 </form>
                 <!-- not displaying as a modal, located in side bar, pertains to YELP -->
-                <form id="user-modal-2" action="">
+                <!-- <form class="box">
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                            <input class="input" type="email" placeholder="e.g. alex@example.com">
+                        </div>
+                    </div>
+                
+                    <div class="field">
+                        <label class="label">Password</label>
+                        <div class="control">
+                            <input class="input" type="password" placeholder="********">
+                        </div>
+                    </div>
+                
+                    <button class="button is-primary">Sign in</button>
+                </form> -->
+                <form class="box" id="user-modal-2" action="">
                     <input class="input" id="city-input" type="text" placeholder="City Name">
                     <input class="input" id="term-input" type="text" placeholder="Restaurant, etc.">
                     <div class="select">
@@ -49,7 +79,7 @@
                             <option value="$$$$$">$$$$$</option>
                         </select>
                     </div>
-                    <input id="submit-button-yelp" type="submit">
+                    <input class="button is-warning is-rounded" id="submit-button-yelp" type="submit">
                 </form>
             </div>
             <!-- the above section needs to be added to the modal pop up -->

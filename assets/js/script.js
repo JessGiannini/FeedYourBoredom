@@ -30,7 +30,7 @@ function submitEventHandlerBored() {
   event.preventDefault();
   // var participants = $("#participants-input").val();
   // var participantsQueryParameter =
-    // participants == "" ? "" : "participants=" + participants + "&";
+  // participants == "" ? "" : "participants=" + participants + "&";
   var typeSelected = $("#activity-type-select").val();
 
   // display the user input
@@ -39,9 +39,7 @@ function submitEventHandlerBored() {
   $(".user-input-record").html("");
   $(".user-input-record").append(typeEl);
   var requestURL =
-    "http://www.boredapi.com/api/activity/?" +
-    "type=" +
-    typeSelected;
+    "http://www.boredapi.com/api/activity/?" + "type=" + typeSelected;
   fetch(requestURL)
     .then(function (res) {
       return res.json();
@@ -59,12 +57,18 @@ function submitEventHandlerBored() {
       var accessibilityEl = $("<div>").text(
         "Accessibility: " + data.accessibility
       );
-      var participantsEl = $("<div>").text("Participants: Up to " + data.participants + " person(s)");
-    
+      var participantsEl = $("<div>").text(
+        "Participants: Up to " + data.participants + " person(s)"
+      );
 
       // price and accessibility can be displayed using empty or colored star
       $(".user-input-record").html("");
-      $(".user-input-record").append(activityEl, priceEl, accessibilityEl, participantsEl);
+      $(".user-input-record").append(
+        activityEl,
+        priceEl,
+        accessibilityEl,
+        participantsEl
+      );
       console.log(data);
     });
 }
@@ -89,26 +93,24 @@ function displayMoreDetails(event) {
   var imgEl = $("<img>").attr("src", imgURL);
   imgEl.css("float", "right");
   imgEl.css("width", "300px");
-  imgEl.css("height", "300px");      
+  imgEl.css("height", "300px");
   var phoneEl = $("<div>").text("phone number: " + businessSelected.phone);
   var addressEl = $("<div>").text("address: ");
   addressEl.append($("<p>").text(businessSelected.location.address1));
   addressEl.append($("<p>").text(businessSelected.location.address2));
   addressEl.append($("<p>").text(businessSelected.location.address3));
   addressEl.append($("<p>").text(businessSelected.location.city));
-  console.log("add go back button")
+  console.log("add go back button");
   var goBackButton = $("<button>").text("Go Back");
   goBackButton.attr("id", "gobackbutton");
-  $(".detail-result-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl, goBackButton);
-  var mymap = L.map('mapid').setView([51.505, -0.09], 13);
-  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'your.mapbox.access.token'
-}).addTo(mymap);
+  $(".detail-result-display").append(
+    nameEl,
+    imgEl,
+    distanceEl,
+    addressEl,
+    phoneEl,
+    goBackButton
+  );
 }
 
 function displayYelpResult() {
@@ -144,7 +146,7 @@ function submitEventHandlerYelp() {
     })
     .then(function (data) {
       console.log(data);
-      dataFromYelp = []
+      dataFromYelp = [];
       for (var i = 0; i < 10; i++) {
         dataFromYelp.push(data.businesses[i]);
         var resEl = $("<div>");
@@ -153,7 +155,9 @@ function submitEventHandlerYelp() {
         var nameEl = $("<div>").text(data.businesses[i].name);
         nameEl.attr("data-index", "" + i);
         var imgURL = data.businesses[i].image_url;
-        var distanceEl = $("<div>").text(parseInt(data.businesses[i].distance) + "m");
+        var distanceEl = $("<div>").text(
+          parseInt(data.businesses[i].distance) + "m"
+        );
         distanceEl.attr("data-index", "" + i);
         var imgEl = $("<img>").attr("src", imgURL);
         imgEl.attr("data-index", "" + i);
@@ -161,6 +165,13 @@ function submitEventHandlerYelp() {
         imgEl.css("height", "100px");
         resEl.append(nameEl, imgEl, distanceEl);
         $(".search-result-display").append(resEl);
+
+        document
+          .querySelector("<img>")
+          .addEventListener("click", function (event) {
+            imgEl.setAttribute("src", data.businesses[i].url);
+          });
+        //document.querySelector("<div>").style.display = 'none';
       }
     })
     .catch(function (err) {
