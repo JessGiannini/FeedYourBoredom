@@ -2,9 +2,11 @@
   --border-testcolor-: rgba(44, 41, 41, 0.4);
 }
 
+/* used bulma and google font to create title header */
 .hero-body {
   text-align: center;
 }
+
 .title {
   font-family: "Festive", cursive;
   font-size: 100px;
@@ -17,7 +19,9 @@
   font-family: "Amatic SC", cursive;
   font-size: 35px;
 }
+/* end up title styling */
 
+/* modal styling for activity search */
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
