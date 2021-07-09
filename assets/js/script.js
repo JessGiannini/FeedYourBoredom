@@ -144,7 +144,6 @@ function displayMoreDetails(businessSelected) {
   addressEl.append($("<p>").text(businessSelected.location.address2));
   addressEl.append($("<p>").text(businessSelected.location.address3));
   addressEl.append($("<p>").text(businessSelected.location.city));
-<<<<<<< HEAD
   $(".detail-result-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl);
 }
 
@@ -169,7 +168,6 @@ function saveYelpResult() {
   localStorage.setItem("yelpResultSaved", JSON.stringify(yelpResultsSaved));
   console.log(index);
   $(".search-result-yelp").append(nameEl);
-=======
   
   var mapEl = $("<div></div>").addClass("map").attr("id", "map");
 
@@ -185,7 +183,6 @@ function saveYelpResult() {
     goBackButton,
     mapEl
   );
->>>>>>> fe30e04 (add map library)
 }
 
 var map = new ol.Map({
@@ -285,11 +282,8 @@ $(".search-result-display").on("click", ".yelp-result", displayMoreDetails);
 // $("button").on("click", "#gobackbutton", function() {
 $(document).on("click", "#gobackbutton", displayYelpResult);
 
-<<<<<<< HEAD
 $(".search-result-display").on("click", ".yelp-result", fetchDetails);
 // $("button").on("click", "#go-back-button", function() {
 $(document).on("click", "#go-back-button", displayYelpResult);
 $(document).on("click", "#yelp-save-button", saveYelpResult);
 $(document).on("click", ".yelp-result-saved", displayYelpSaved);
-=======
->>>>>>> fe30e04 (add map library)
