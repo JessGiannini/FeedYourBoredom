@@ -69,6 +69,28 @@ function listBusinessesSaved() {
     }
 }
 
+function displaySelectedTab() {
+  $(".tabs li").removeClass();
+  $(this).parent().addClass("is-active");
+  displayTabContent($(this).attr("id"));
+}
+
+function displayTabContent(idActive) {
+  if (idActive === "search-tab"){
+    $(".new-search").show();
+    $(".favorite-activity-box").hide();
+    $(".favorite-business-box").hide();
+  } else if (idActive === "activity-tab") {
+    $(".new-search").hide();
+    $(".favorite-activity-box").show();
+    $(".favorite-business-box").hide();
+  } else if (idActive === "business-tab") {
+    $(".new-search").hide();
+    $(".favorite-activity-box").hide();
+    $(".favorite-business-box").show();
+  }
+}
+
 // function to deal with bored api
 function submitEventHandlerBored() {
     event.preventDefault();
@@ -77,7 +99,7 @@ function submitEventHandlerBored() {
     // participants == "" ? "" : "participants=" + participants + "&";
     var typeSelected = $("#activity-type-select").val();
     // display the user input
-    // var participantsEl = $("<div>").text("participants: " + participants);
+    var participantsEl = $("<div>").text("participants suggested: " + participants);
     var typeEl = $("<div>").text("Type: " + typeSelected);
     $(".activity-result-display").html("");
     $(".activity-result-display").append(typeEl);
@@ -380,26 +402,29 @@ function submitEventHandlerYelp() {
 // TODO: style the results into a block set up
 
 // When the user clicks on the button, open the modal
-btn.onclick = function () {
-    modal.style.display = "block";
-};
+// btn.onclick = function () {
+//   modal.style.display = "block";
+// };
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-};
+// // When the user clicks on <span> (x), close the modal
+// span.onclick = function () {
+//   modal.style.display = "none";
+// };
 
 loadBusinessesSaved();
 loadActivitiesSaved();
+displayTabContent("search-tab");
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-};
+// window.onclick = function (event) {
+//   if (event.target == modal) {
+//     modal.style.display = "none";
+//   }
+// };
 $(".business-details-display").css("display", "none");
-// creates both submit buttons
+
+$(document).on("click", "a", displaySelectedTab);
+
 $(document).on("click", "#submit-button", submitEventHandlerBored);
 // this button is not located inside the modal
 $(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
