@@ -323,19 +323,20 @@ function submitEventHandlerYelp() {
             var index = 0;
             function getYelpResults(ind) {
                 dataFromYelp = []
+                var temp = 0;
                 
                 for (var i = ind; i < ind + 10; i++) {
                     dataFromYelp.push(data.businesses[i]);
                     var resEl = $("<div>");
-                    resEl.attr("data-index", "" + i);
+                    resEl.attr("data-index", "" + temp);
                     resEl.addClass("yelp-result");
                     var nameEl = $("<div>").text(data.businesses[i].name);
-                    nameEl.attr("data-index", "" + i);
+                    nameEl.attr("data-index", "" + temp);
                     var imgURL = data.businesses[i].image_url;
                     var distanceEl = $("<div>").text(parseInt(data.businesses[i].distance) + "m");
-                    distanceEl.attr("data-index", "" + i);
+                    distanceEl.attr("data-index", "" + temp);
                     var imgEl = $("<img>").attr("src", imgURL);
-                    imgEl.attr("data-index", "" + i);
+                    imgEl.attr("data-index", "" + temp);
                     imgEl.css("width", "100px");
                     imgEl.css("height", "100px");
                     resEl.append(nameEl, imgEl, distanceEl);
@@ -366,17 +367,8 @@ function submitEventHandlerYelp() {
                     });
                 });
 
-                
-
-                
             }
             getYelpResults(index);
-
-            
-
-            
-
-
         })
         .catch(function (err) {
             console.log(err);
