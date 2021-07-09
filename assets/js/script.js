@@ -4,6 +4,7 @@ var span = document.getElementsByClassName("close")[0];
 var modalHeader = $("h3").text("Please, fill out this form.");
 var dataFromYelp = [];
 var businessesSaved = [];
+var activitiesSaved = [];
 var activityType = [
   "education",
   "recreational",
@@ -28,6 +29,17 @@ var activityType = [
 
 
 
+
+
+function loadActivitiesSaved() {
+  activitiesSaved = JSON.parse(localStorage.getItem("activitiesSaved"));
+  if (activitiesSaved === null) {
+    activitiesSaved = [];
+  } else {
+    listActivitiesSaved();
+  }
+}
+
 // check localStorage
 //load and display the businesses saved if any
 function loadBusinessesSaved() {
@@ -39,12 +51,21 @@ function loadBusinessesSaved() {
   }
 }
 
+function listActivitiesSaved() {
+  for (var i = 0; i < activitiesSaved.length; i++) {
+    var nameEl = $("<div>").text(activitiesSaved[i].name);
+    nameEl.attr("data-id", activitiesSaved[i].id);
+    nameEl.addClass("activity-saved");
+    $(".favorite-activity-box").prepend(nameEl);
+  }
+}
+
 function listBusinessesSaved() {
   for (var i = 0; i < businessesSaved.length; i++) {
     var nameEl = $("<div>").text(businessesSaved[i].name);
     nameEl.attr("data-id", businessesSaved[i].id);
     nameEl.addClass("business-saved");
-    $(".search-saved-yelp").prepend(nameEl);
+    $(".favorite-business-box").prepend(nameEl);
   }
 }
 
@@ -53,14 +74,13 @@ function submitEventHandlerBored() {
   event.preventDefault();
   // var participants = $("#participants-input").val();
   // var participantsQueryParameter =
-    // participants == "" ? "" : "participants=" + participants + "&";
-  var typeSelected = $("#activity-type-select").val();
-
+  // participants == "" ? "" : "participants=" + participants + "&";
+  var typeSelected = $("#activity-type-select").val();  
   // display the user input
   // var participantsEl = $("<div>").text("participants: " + participants);
   var typeEl = $("<div>").text("Type: " + typeSelected);
-  $(".user-input-record").html("");
-  $(".user-input-record").append(typeEl);
+  $(".activity-result-display").html("");
+  $(".activity-result-display").append(typeEl);
   var requestURL =
     "http://www.boredapi.com/api/activity/?" +
     "type=" +
@@ -71,29 +91,47 @@ function submitEventHandlerBored() {
     })
     .then(function (data) {
       if (data.error != undefined) {
-        $(".user-input-record").append("No results found");
+        $(".activity-result-display").append("No results found");
         return;
-      }
-      //there is one more query parameter key: unique and can be used to search a certain activity
-      var activityEl = $("<h3>").text("Activity: " + data.activity);
-      // var participantsEl = $("<div>").text("participants: " + data.participants);
-      var priceEl = $("<div>").text("Price: " + data.price);
-      // var typeEl = $("<div>").text("type: " + data.type);
-      var accessibilityEl = $("<div>").text(
-        "Accessibility: " + data.accessibility
-      );
-      var participantsEl = $("<div>").text("Participants: Up to " + data.participants + " person(s)");
-    
-
-      // price and accessibility can be displayed using empty or colored star
-      $(".user-input-record").html("");
-      $(".user-input-record").append(activityEl, priceEl, accessibilityEl, participantsEl);
-      console.log(data);
+      } else {
+        displayActivityDetails(data);
+        var saveActivityButton = $("<button>").text("Star");
+        saveActivityButton.attr("id", "save-activity-button");
+        saveActivityButton.attr("data-id", data.key);
+        saveActivityButton.attr("data-name", data.activity);
+        $(".activity-result-display").append(saveActivityButton);
+      }      
     });
 }
 
 for (var i = 0; i < activityType.length; i++) {
   $("#activity-type-select").append($("<option>").text(activityType[i]));
+}
+
+function displayActivitySaved() {
+  var key = $(this).attr("data-id");
+  var requestURL =
+    "http://www.boredapi.com/api/activity/?key=" + key;
+  fetch(requestURL)
+    .then(function(response) {
+      return response.json()
+    })
+    .then(function(data) {
+      if (data != undefined) {
+        displayActivityDetails(data);
+      }
+    })
+}
+
+function displayActivityDetails(activityData) {
+  var activityEl = $("<h3>").text("Activity: " + activityData.activity);
+  var priceEl = $("<div>").text("Price: " + activityData.price);
+  // var typeEl = $("<div>").text("type: " + activityData.type);
+  var accessibilityEl = $("<div>").text("Accessibility: " + activityData.accessibility);
+  var participantsEl = $("<div>").text("Participants suggested " + activityData.participants + " person(s)");
+  // price and accessibility can be displayed using empty or colored star
+  $(".activity-result-display").html("");
+  $(".activity-result-display").append(activityEl, priceEl, accessibilityEl, participantsEl);
 }
 
 function displayBusinessSaved() {
@@ -121,16 +159,16 @@ function fetchDetails() {
   displayBusinessDetails(dataFromYelp[indexOfYelpResult]);
   var goBackButton = $("<button>").text("Go Back");
   goBackButton.attr("id", "go-back-button");
-  var saveBusinessButton = $("<button>").text("Save");
+  var saveBusinessButton = $("<button>").text("Star");
   saveBusinessButton.attr("id", "save-business-button");
   saveBusinessButton.attr("data-index", indexOfYelpResult);
-  $(".detail-result-display").append(goBackButton, saveBusinessButton);
+  $(".business-details-display").append(goBackButton, saveBusinessButton);
 }
 
 function displayBusinessDetails(businessSelected) {
-  $(".detail-result-display").css("display", "block");
-  $(".search-result-display").css("display", "none");
-  $(".detail-result-display").empty();
+  $(".business-details-display").css("display", "block");
+  $(".businesses-result-display").css("display", "none");
+  $(".business-details-display").empty();
   console.log(businessSelected);
   var nameEl = $("<div>").text(businessSelected.name);
   var imgURL = businessSelected.image_url;
@@ -146,7 +184,7 @@ function displayBusinessDetails(businessSelected) {
   addressEl.append($("<p>").text(businessSelected.location.address3));
   addressEl.append($("<p>").text(businessSelected.location.city));
   var mapEl = $("<div></div>").addClass("map").attr("id", "map");
-  $(".detail-result-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl, mapEl);
+  $(".business-details-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl, mapEl);
   $(document).ready(function() {
     var map = new ol.Map({
       target: 'map',
@@ -161,6 +199,41 @@ function displayBusinessDetails(businessSelected) {
       })
     });
   })
+}
+
+function saveBoredResult() {
+  var relistNeeded = false;
+  var name = $(this).attr("data-name");
+  var id = $(this).attr("data-id");
+  var resultToAdd = {
+    name: name,
+    id: id
+  }
+  console.log(resultToAdd);
+  var nameEl = $("<div>").text(name);
+  nameEl.attr("data-id", id);
+  nameEl.addClass("activity-saved");
+
+  if (activitiesSaved === null) {
+    activitiesSaved = [];
+  }
+
+  for (var i = 0; i < activitiesSaved.length; i++) {
+    if (activitiesSaved[i].id === id) {
+      activitiesSaved.splice(i, 1);
+      i--;
+      relistNeeded = true;
+    }
+  }
+  activitiesSaved.push(resultToAdd);
+  localStorage.setItem("activitiesSaved", JSON.stringify(activitiesSaved));
+  if (relistNeeded) {
+    $(".favorite-activity-box").empty();
+    console.log("relist");
+    listActivitiesSaved();
+  } else {
+    $(".favorite-activity-box").prepend(nameEl);
+  }
 }
 
 function saveYelpResult() {
@@ -187,25 +260,25 @@ function saveYelpResult() {
   businessesSaved.push(resultToAdd);
   localStorage.setItem("businessesSaved", JSON.stringify(businessesSaved));
   if (relistNeeded) {
-    $(".search-saved-yelp").empty();
+    $(".favorite-business-box").empty();
     console.log("relist");
     listBusinessesSaved();
   } else {
-    $(".search-saved-yelp").prepend(nameEl);
+    $(".favorite-business-box").prepend(nameEl);
   }
 }
 
 
 function displayYelpResult() {
-  $(".search-result-display").css("display", "flex");
-  $(".detail-result-display").css("display", "none");
+  $(".businesses-result-display").css("display", "flex");
+  $(".business-details-display").css("display", "none");
 }
 
 function submitEventHandlerYelp() {
   event.preventDefault();
-  $(".detail-result-display").css("display", "none");
-  $(".search-result-display").css("display", "flex");
-  $(".search-result-display").empty();
+  $(".business-details-display").css("display", "none");
+  $(".businesses-result-display").css("display", "flex");
+  $(".businesses-result-display").empty();
   var location = $("#city-input").val();
   var term = $("#term-input").val();
   var termQueryParameter = term === "" ? "" : "&term=" + term;
@@ -245,7 +318,7 @@ function submitEventHandlerYelp() {
         imgEl.css("width", "100px");
         imgEl.css("height", "100px");
         resEl.append(nameEl, imgEl, distanceEl);
-        $(".search-result-display").append(resEl);
+        $(".businesses-result-display").append(resEl);
       }
     })
     .catch(function (err) {
@@ -266,6 +339,7 @@ span.onclick = function () {
 };
 
 loadBusinessesSaved();
+loadActivitiesSaved();
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
@@ -273,13 +347,13 @@ window.onclick = function (event) {
     modal.style.display = "none";
   }
 };
-$(".detail-result-display").css("display", "none");
+$(".business-details-display").css("display", "none");
 // creates both submit buttons
 $(document).on("click", "#submit-button", submitEventHandlerBored);
 // this button is not located inside the modal
 $(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
 
-$(".search-result-display").on("click", ".yelp-result", fetchDetails);
+$(".businesses-result-display").on("click", ".yelp-result", fetchDetails);
 
 // $("button").on("click", "#go-back-button", function() {
 $(document).on("click", "#go-back-button", displayYelpResult);
@@ -287,3 +361,7 @@ $(document).on("click", "#go-back-button", displayYelpResult);
 $(document).on("click", "#save-business-button", saveYelpResult);
 
 $(document).on("click", ".business-saved", displayBusinessSaved);
+
+$(document).on("click", ".activity-saved", displayActivitySaved);
+
+$(document).on("click", "#save-activity-button", saveBoredResult);
