@@ -187,6 +187,8 @@ function displayYelpResult() {
 
 function submitEventHandlerYelp() {
   event.preventDefault();
+  $(".detail-result-display").css("display", "none");
+  $(".search-result-display").css("display", "flex");
   $(".search-result-display").empty();
   var location = $("#city-input").val();
   var term = $("#term-input").val();
