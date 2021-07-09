@@ -17,20 +17,6 @@ var activityType = [
   "busywork",
 ];
 
-// key: number of participants; value: all possible types of results
-// var activityType = {
-//   1: ["education", "recreational", "social", "diy", "charity", "cooking", "relaxation", "music", "busywork"],
-//   2: ["social"],
-//   3: ["social"],
-//   4: ["social", "music", "recreational"],
-//   5: ["social", "music"]
-// }
-// GREAT IDEA ^^^
-
-
-
-
-
 function loadActivitiesSaved() {
   activitiesSaved = JSON.parse(localStorage.getItem("activitiesSaved"));
   if (activitiesSaved === null) {
@@ -75,16 +61,14 @@ function submitEventHandlerBored() {
   // var participants = $("#participants-input").val();
   // var participantsQueryParameter =
   // participants == "" ? "" : "participants=" + participants + "&";
-  var typeSelected = $("#activity-type-select").val();  
+  var typeSelected = $("#activity-type-select").val();
   // display the user input
   // var participantsEl = $("<div>").text("participants: " + participants);
   var typeEl = $("<div>").text("Type: " + typeSelected);
   $(".activity-result-display").html("");
   $(".activity-result-display").append(typeEl);
   var requestURL =
-    "http://www.boredapi.com/api/activity/?" +
-    "type=" +
-    typeSelected;
+    "http://www.boredapi.com/api/activity/?" + "type=" + typeSelected;
   fetch(requestURL)
     .then(function (res) {
       return res.json();
@@ -95,12 +79,14 @@ function submitEventHandlerBored() {
         return;
       } else {
         displayActivityDetails(data);
-        var saveActivityButton = $("<button>").text("Star");
+        var saveActivityButton = $("<button>")
+          .addClass("icon")
+          .html("<i class= 'fas fa-heart'></i>");
         saveActivityButton.attr("id", "save-activity-button");
         saveActivityButton.attr("data-id", data.key);
         saveActivityButton.attr("data-name", data.activity);
         $(".activity-result-display").append(saveActivityButton);
-      }      
+      }
     });
 }
 
@@ -110,28 +96,36 @@ for (var i = 0; i < activityType.length; i++) {
 
 function displayActivitySaved() {
   var key = $(this).attr("data-id");
-  var requestURL =
-    "http://www.boredapi.com/api/activity/?key=" + key;
+  var requestURL = "http://www.boredapi.com/api/activity/?key=" + key;
   fetch(requestURL)
-    .then(function(response) {
-      return response.json()
+    .then(function (response) {
+      return response.json();
     })
-    .then(function(data) {
+    .then(function (data) {
       if (data != undefined) {
         displayActivityDetails(data);
       }
-    })
+    });
 }
 
 function displayActivityDetails(activityData) {
   var activityEl = $("<h3>").text("Activity: " + activityData.activity);
   var priceEl = $("<div>").text("Price: " + activityData.price);
   // var typeEl = $("<div>").text("type: " + activityData.type);
-  var accessibilityEl = $("<div>").text("Accessibility: " + activityData.accessibility);
-  var participantsEl = $("<div>").text("Participants suggested " + activityData.participants + " person(s)");
+  var accessibilityEl = $("<div>").text(
+    "Accessibility: " + activityData.accessibility
+  );
+  var participantsEl = $("<div>").text(
+    "Participants suggested " + activityData.participants + " person(s)"
+  );
   // price and accessibility can be displayed using empty or colored star
   $(".activity-result-display").html("");
-  $(".activity-result-display").append(activityEl, priceEl, accessibilityEl, participantsEl);
+  $(".activity-result-display").append(
+    activityEl,
+    priceEl,
+    accessibilityEl,
+    participantsEl
+  );
 }
 
 function displayBusinessSaved() {
@@ -144,22 +138,26 @@ function displayBusinessSaved() {
         "Bearer i5jzi0uL9To_HaeteYpdGCzthane6BIfOQaBq7cjio6JjWlK_xcMrzKEJXiMg2Zti8K2NnY-zkvyrGAyw8J7vqN7hpSRP_b71d2IiKyepW0oMrzrz_jw_IaEcdfkYHYx",
     },
   })
-    .then(function(response) {
-      return response.json()
+    .then(function (response) {
+      return response.json();
     })
-    .then(function(data) {
+    .then(function (data) {
       if (data != undefined) {
         displayBusinessDetails(data);
       }
-    })
+    });
 }
 
 function fetchDetails() {
   var indexOfYelpResult = $(this).attr("data-index");
   displayBusinessDetails(dataFromYelp[indexOfYelpResult]);
-  var goBackButton = $("<button>").text("Go Back");
+  var goBackButton = $("<button>")
+    .addClass("icon")
+    .html('<i class="fas fa-angle-double-left"></i>');
   goBackButton.attr("id", "go-back-button");
-  var saveBusinessButton = $("<button>").text("Star");
+  var saveBusinessButton = $("<button>")
+    .addClass("icon")
+    .html("<i class= 'fas fa-heart'></i>");
   saveBusinessButton.attr("id", "save-business-button");
   saveBusinessButton.attr("data-index", indexOfYelpResult);
   $(".business-details-display").append(goBackButton, saveBusinessButton);
@@ -176,7 +174,7 @@ function displayBusinessDetails(businessSelected) {
   var imgEl = $("<img>").attr("src", imgURL);
   imgEl.css("float", "right");
   imgEl.css("width", "300px");
-  imgEl.css("height", "300px");      
+  imgEl.css("height", "300px");
   var phoneEl = $("<div>").text("phone number: " + businessSelected.phone);
   var addressEl = $("<div>").text("address: ");
   addressEl.append($("<p>").text(businessSelected.location.address1));
@@ -184,21 +182,28 @@ function displayBusinessDetails(businessSelected) {
   addressEl.append($("<p>").text(businessSelected.location.address3));
   addressEl.append($("<p>").text(businessSelected.location.city));
   var mapEl = $("<div></div>").addClass("map").attr("id", "map");
-  $(".business-details-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl, mapEl);
-  $(document).ready(function() {
+  $(".business-details-display").append(
+    nameEl,
+    imgEl,
+    distanceEl,
+    addressEl,
+    phoneEl,
+    mapEl
+  );
+  $(document).ready(function () {
     var map = new ol.Map({
-      target: 'map',
+      target: "map",
       layers: [
         new ol.layer.Tile({
-          source: new ol.source.OSM()
-        })
+          source: new ol.source.OSM(),
+        }),
       ],
       view: new ol.View({
         center: ol.proj.fromLonLat([37.41, 8.82]),
-        zoom: 4
-      })
+        zoom: 4,
+      }),
     });
-  })
+  });
 }
 
 function saveBoredResult() {
@@ -207,8 +212,8 @@ function saveBoredResult() {
   var id = $(this).attr("data-id");
   var resultToAdd = {
     name: name,
-    id: id
-  }
+    id: id,
+  };
   console.log(resultToAdd);
   var nameEl = $("<div>").text(name);
   nameEl.attr("data-id", id);
@@ -245,8 +250,8 @@ function saveYelpResult() {
   nameEl.addClass("business-saved");
   var resultToAdd = {
     name: business.name,
-    id: business.id
-  }
+    id: business.id,
+  };
   if (businessesSaved === null) {
     businessesSaved = [];
   }
@@ -267,7 +272,6 @@ function saveYelpResult() {
     $(".favorite-business-box").prepend(nameEl);
   }
 }
-
 
 function displayYelpResult() {
   $(".businesses-result-display").css("display", "flex");
@@ -302,7 +306,7 @@ function submitEventHandlerYelp() {
     })
     .then(function (data) {
       console.log(data);
-      dataFromYelp = []
+      dataFromYelp = [];
       for (var i = 0; i < 10; i++) {
         dataFromYelp.push(data.businesses[i]);
         var resEl = $("<div>");
@@ -311,13 +315,16 @@ function submitEventHandlerYelp() {
         var nameEl = $("<div>").text(data.businesses[i].name);
         nameEl.attr("data-index", "" + i);
         var imgURL = data.businesses[i].image_url;
-        var distanceEl = $("<div>").text(parseInt(data.businesses[i].distance) + "m");
+        var distanceEl = $("<div>").text(
+          parseInt(data.businesses[i].distance) + "m"
+        );
         distanceEl.attr("data-index", "" + i);
         var imgEl = $("<img>").attr("src", imgURL);
         imgEl.attr("data-index", "" + i);
         imgEl.css("width", "100px");
         imgEl.css("height", "100px");
         resEl.append(nameEl, imgEl, distanceEl);
+        resEl.addClass("box", "media", "media-left", "image is-64x64");
         $(".businesses-result-display").append(resEl);
       }
     })
