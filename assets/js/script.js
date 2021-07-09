@@ -344,7 +344,10 @@ function submitEventHandlerYelp() {
             }
             getYelpResults(index);
 
-            
+            var nextBtn = $("<button>").text("Next");
+            nextBtn.attr("id", "next-results-button");
+            // nextBtn.attr("class", "button");
+            $(".businesses-result-display").append(nextBtn);
         })
         .catch(function (err) {
             console.log(err);
