@@ -69,6 +69,30 @@ function listBusinessesSaved() {
   }
 }
 
+function displaySelectedTab() {
+  $("#search-tab").removeClass();
+  $("#activity-tab").removeClass();
+  $("#business-tab").removeClass();
+  $(this).addClass("is-active");
+  displayTabContent($(this).attr("id"));
+}
+
+function displayTabContent(idActive) {
+  if (idActive === "search-tab"){
+    $(".new-search").show();
+    $(".favorite-activity-box").hide();
+    $(".favorite-business-box").hide();
+  } else if (idActive === "activity-tab") {
+    $(".new-search").hide();
+    $(".favorite-activity-box").show();
+    $(".favorite-business-box").hide();
+  } else if (idActive === "business-tab") {
+    $(".new-search").hide();
+    $(".favorite-activity-box").hide();
+    $(".favorite-business-box").show();
+  }
+}
+
 // function to deal with bored api
 function submitEventHandlerBored() {
   event.preventDefault();
@@ -340,6 +364,7 @@ function submitEventHandlerYelp() {
 
 loadBusinessesSaved();
 loadActivitiesSaved();
+displayTabContent("search-tab");
 
 // When the user clicks anywhere outside of the modal, close it
 // window.onclick = function (event) {
@@ -349,7 +374,7 @@ loadActivitiesSaved();
 // };
 $(".business-details-display").css("display", "none");
 
-$(document).on("click", "#save-activity-button", saveBoredResult);
+$(document).on("click", "a", displaySelectedTab);
 
 $(document).on("click", "#submit-button", submitEventHandlerBored);
 // this button is not located inside the modal

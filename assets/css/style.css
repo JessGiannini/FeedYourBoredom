@@ -53,20 +53,6 @@
   cursor: pointer;
 } */
 
-.search-section {
-  border: 2px solid var(--border-testcolor-);
-}
-
-.favorite-activity-box {
-  height: 200px;
-  border: 2px solid var(--border-testcolor-);
-}
-
-.favorite-business-box {
-  height: 200px;
-  border: 2px solid var(--border-testcolor-);
-}
-
 .activity-result-display {
   height: 200px;
   border: 2px solid var(--border-testcolor-);
