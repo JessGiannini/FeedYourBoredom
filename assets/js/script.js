@@ -341,10 +341,13 @@ function submitEventHandlerYelp() {
                     resEl.append(nameEl, imgEl, distanceEl);
                     $(".businesses-result-display").append(resEl);
                 }
-                var nextBtn = $("<button>").text("Next");
-                nextBtn.attr("id", "next-results-button");
-                nextBtn.attr("class", "button");
-                $(".businesses-result-display").append(nextBtn);
+                
+                if (index == 0) {
+                    var nextBtn = $("<button>").text("Next");
+                    nextBtn.attr("id", "next-results-button");
+                    nextBtn.attr("class", "button");
+                    $(".businesses-result-display").append(nextBtn);
+                }
 
                 $(document).on("click", "#next-results-button", function () {
                     $(".businesses-result-display").html("");
