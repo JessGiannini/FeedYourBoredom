@@ -21,6 +21,11 @@
 }
 /* end up title styling */
 
+h2 {
+  font-family: "Amatic SC", cursive;
+  font-size: 25px;
+}
+
 /* modal styling for activity search */
 .modal {
   display: none; /* Hidden by default */
