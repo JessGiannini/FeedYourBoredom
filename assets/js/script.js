@@ -323,7 +323,7 @@ function submitEventHandlerYelp() {
             var index = 0;
             function getYelpResults(ind) {
                 dataFromYelp = []
-
+                
                 for (var i = ind; i < ind + 10; i++) {
                     dataFromYelp.push(data.businesses[i]);
                     var resEl = $("<div>");
@@ -341,24 +341,39 @@ function submitEventHandlerYelp() {
                     resEl.append(nameEl, imgEl, distanceEl);
                     $(".businesses-result-display").append(resEl);
                 }
+                var nextBtn = $("<button>").text("Next");
+                nextBtn.attr("id", "next-results-button");
+                nextBtn.attr("class", "button");
+                $(".businesses-result-display").append(nextBtn);
+
+                $(document).on("click", "#next-results-button", function () {
+                    $(".businesses-result-display").html("");
+                    index = 10;
+                    getYelpResults(index);
+
+                    var prevBtn = $("<button>").text("Previous");
+                    prevBtn.attr("id", "prev-results-button");
+                    prevBtn.attr("class", "button");
+                    $(".businesses-result-display").append(prevBtn);
+
+                    $(document).on("click", "#prev-results-button", function () {
+                        $(".businesses-result-display").html("");
+                        index = 0;
+                        getYelpResults(index);
+                    });
+                });
+
+                
+
+                
             }
             getYelpResults(index);
 
-            var nextBtn = $("<button>").text("Next");
-            nextBtn.attr("id", "next-results-button");
-            nextBtn.attr("class", "button");
-            $(".businesses-result-display").append(nextBtn);
+            
 
-            $(document).on("click", "#next-results-button", function () {
-                $(".businesses-result-display").html("");
-                index = 10;
-                getYelpResults(index);
+            
 
-                var prevBtn = $("<button>").text("Previous");
-                prevBtn.attr("id", "prev-results-button");
-                prevBtn.attr("class", "button");
-                $(".businesses-result-display").append(prevBtn);
-            });
+
         })
         .catch(function (err) {
             console.log(err);
