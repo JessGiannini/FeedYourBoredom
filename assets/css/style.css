@@ -132,3 +132,7 @@ header {
     height: 300px;
     width: 300px;
   }
+
+#next-results-button {
+    height: 50px;
+}
