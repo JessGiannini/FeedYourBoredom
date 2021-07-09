@@ -186,7 +186,6 @@ function displayBusinessDetails(businessSelected) {
   addressEl.append($("<p>").text(businessSelected.location.city));
 
   var mapEl = $("<div></div>").addClass("map").attr("id", "map");
-  $(".business-details-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl, mapEl);
   $(document).ready(function() {
     var map = new ol.Map({
       target: 'map',
@@ -196,11 +195,13 @@ function displayBusinessDetails(businessSelected) {
         })
       ],
       view: new ol.View({
-        center: ol.proj.fromLonLat([37.41, 8.82]),
-        zoom: 4
+        center: ol.proj.fromLonLat([businessSelected.coordinates.longitude, businessSelected.coordinates.latitude]),
+        zoom: 15
       })
     });
   })
+
+  $(".business-details-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl, mapEl);
 }
 
 function saveBoredResult() {
