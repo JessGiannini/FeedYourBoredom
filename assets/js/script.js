@@ -186,7 +186,7 @@ function displayBusinessDetails(businessSelected) {
   addressEl.append($("<p>").text(businessSelected.location.city));
 
   var mapEl = $("<div></div>").addClass("map").attr("id", "map");
-  var pointFeature = new ol.Feature(new ol.geom.Point([businessSelected.coordinates.longitude, businessSelected.coordinates.latitude]));
+  // var pointFeature = new ol.Feature(new ol.geom.Point([businessSelected.coordinates.longitude, businessSelected.coordinates.latitude]));
   
   $(document).ready(function() {
     var map = new ol.Map({
@@ -195,24 +195,24 @@ function displayBusinessDetails(businessSelected) {
         new ol.layer.Tile({
           source: new ol.source.OSM()
         }),
-        new ol.layer.Vector({
-            source: new ol.source.Vector({
-                features: [pointFeature],
-            }),
-            style: new ol.style.Style({
-                image: new ol.style.Icon({
-                    anchor: [0.5, 46],
-                    anchorXUnits: 'fraction',
-                    anchorYUnits: 'pixels',
-                    opacity: 0.95,
-                    src: 'assets/pin.png',
-                }),
-            })
-        })
+        // new ol.layer.Vector({
+        //     source: new ol.source.Vector({
+        //         features: [pointFeature],
+        //     }),
+        //     style: new ol.style.Style({
+        //         image: new ol.style.Icon({
+        //             anchor: [0.5, 46],
+        //             anchorXUnits: 'fraction',
+        //             anchorYUnits: 'pixels',
+        //             opacity: 0.95,
+        //             src: 'assets/pin.png',
+        //         }),
+        //     })
+        // })
       ],
       view: new ol.View({
         center: ol.proj.fromLonLat([businessSelected.coordinates.longitude, businessSelected.coordinates.latitude]),
-        zoom: 15
+        zoom: 18
       })
     });
   })
