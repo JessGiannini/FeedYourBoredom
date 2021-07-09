@@ -74,25 +74,34 @@ header {
   border: 2px solid var(--border-testcolor-);
 }
 
-.search-result-section {
-  width: 70%;
-}
-
-.user-input-record {
+.favorite-activity-box {
   height: 200px;
   border: 2px solid var(--border-testcolor-);
 }
 
-.search-result-display {
+.favorite-business-box {
+  height: 200px;
+  border: 2px solid var(--border-testcolor-);
+}
+
+.search-result-section {
+  width: 70%;
+}
+
+.activity-result-display {
+  height: 200px;
+  border: 2px solid var(--border-testcolor-);
+}
+
+.businesses-result-display {
   display: flex;
   flex-wrap: wrap;
   height: 400px;
   border: 2px solid var(--border-testcolor-);
 }
 
-.detail-result-display {
+.business-details-display {
   height: 400px;
-
   border: 2px solid var(--border-testcolor-);
 }
 
@@ -106,7 +115,7 @@ header {
   margin: 10px;
 }
 
-.search-result-display {
+.businesses-result-display {
   display: flex;
   flex-wrap: wrap;
 }
