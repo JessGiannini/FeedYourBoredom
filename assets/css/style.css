@@ -75,7 +75,7 @@ header {
 }
 
 .favorite-activity-box {
-  height: 200px;
+  height: 600px;
   border: 2px solid var(--border-testcolor-);
 }
 
@@ -120,15 +120,15 @@ header {
   flex-wrap: wrap;
 }
 
-#mapid { 
-    height: 180px;  
+#mapid {
+  height: 180px;
 }
-  
+
 .search-result-yelp {
   height: 200px;
   border: 2px solid var(--border-testcolor-);
 }
 .map {
-    height: 300px;
-    width: 300px;
-  }
+  height: 300px;
+  width: 300px;
+}

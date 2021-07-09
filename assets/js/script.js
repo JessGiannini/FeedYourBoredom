@@ -21,6 +21,7 @@ function loadActivitiesSaved() {
   activitiesSaved = JSON.parse(localStorage.getItem("activitiesSaved"));
   if (activitiesSaved === null) {
     activitiesSaved = [];
+    listActivitiesSaved();
   } else {
     listActivitiesSaved();
   }
@@ -43,6 +44,12 @@ function listActivitiesSaved() {
     nameEl.attr("data-id", activitiesSaved[i].id);
     nameEl.addClass("activity-saved");
     $(".favorite-activity-box").prepend(nameEl);
+  }
+  if ($("#clear-activities").length === 0) {
+    var clearActivitiesButton = $("<button>")
+      .attr("id", "clear-activities")
+      .text("Clear");
+    $(".favorite-activity-box").append(clearActivitiesButton);
   }
 }
 
@@ -241,6 +248,11 @@ function saveBoredResult() {
   }
 }
 
+function clearActivities() {
+  localStorage.removeItem("activitiesSaved");
+  loadActivitiesSaved();
+}
+
 function saveYelpResult() {
   var index = $(this).attr("data-index");
   var business = dataFromYelp[index];
@@ -372,3 +384,5 @@ $(document).on("click", ".business-saved", displayBusinessSaved);
 $(document).on("click", ".activity-saved", displayActivitySaved);
 
 $(document).on("click", "#save-activity-button", saveBoredResult);
+
+$(document).on("click", "#clear-activities", clearActivities);
