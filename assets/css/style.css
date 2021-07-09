@@ -133,6 +133,6 @@ header {
     width: 300px;
   }
 
-#next-results-button {
+.button {
     height: 50px;
 }
