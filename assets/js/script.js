@@ -323,24 +323,25 @@ function submitEventHandlerYelp() {
             var index = 0;
             function getYelpResults(ind) {
                 dataFromYelp = []
-                var temp = 0;
+                var dataIndex = 0;
                 
                 for (var i = ind; i < ind + 10; i++) {
                     dataFromYelp.push(data.businesses[i]);
                     var resEl = $("<div>");
-                    resEl.attr("data-index", "" + temp);
+                    resEl.attr("data-index", "" + dataIndex);
                     resEl.addClass("yelp-result");
                     var nameEl = $("<div>").text(data.businesses[i].name);
-                    nameEl.attr("data-index", "" + temp);
+                    nameEl.attr("data-index", "" + dataIndex);
                     var imgURL = data.businesses[i].image_url;
                     var distanceEl = $("<div>").text(parseInt(data.businesses[i].distance) + "m");
-                    distanceEl.attr("data-index", "" + temp);
+                    distanceEl.attr("data-index", "" + dataIndex);
                     var imgEl = $("<img>").attr("src", imgURL);
-                    imgEl.attr("data-index", "" + temp);
+                    imgEl.attr("data-index", "" + dataIndex);
                     imgEl.css("width", "100px");
                     imgEl.css("height", "100px");
                     resEl.append(nameEl, imgEl, distanceEl);
                     $(".businesses-result-display").append(resEl);
+                    dataIndex++;
                 }
                 
                 if (index == 0) {
