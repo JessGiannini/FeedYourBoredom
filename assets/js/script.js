@@ -70,10 +70,8 @@ function listBusinessesSaved() {
 }
 
 function displaySelectedTab() {
-  $("#search-tab").removeClass();
-  $("#activity-tab").removeClass();
-  $("#business-tab").removeClass();
-  $(this).addClass("is-active");
+  $(".tabs li").removeClass();
+  $(this).parent().addClass("is-active");
   displayTabContent($(this).attr("id"));
 }
 
