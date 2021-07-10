@@ -374,16 +374,20 @@ function submitEventHandlerYelp() {
                     var resEl = $("<div>");
                     resEl.attr("data-index", "" + dataIndex);
                     resEl.addClass("yelp-result");
-                    var nameEl = $("<div>").text(data.businesses[i].name);
-                    nameEl.attr("data-index", "" + dataIndex);
+                    //var nameEl = $("<div>").text(data.businesses[i].name);
+                    //nameEl.attr("data-index", "" + dataIndex);
                     var imgURL = data.businesses[i].image_url;
-                    var distanceEl = $("<div>").text(parseInt(data.businesses[i].distance) + "m");
-                    distanceEl.attr("data-index", "" + dataIndex);
+                    //var distanceEl = $("<div>").text(parseInt(data.businesses[i].distance) + "m");
+                    //distanceEl.attr("data-index", "" + dataIndex);
                     var imgEl = $("<img>").attr("src", imgURL);
                     imgEl.attr("data-index", "" + dataIndex);
-                    imgEl.css("width", "100px");
-                    imgEl.css("height", "100px");
-                    resEl.append(nameEl, imgEl, distanceEl);
+                    imgEl.css("width", "125px");
+                    imgEl.css("height", "125px");
+                    var cardEl = $("<div>").attr("class", "card-image");
+                    cardEl.append(imgEl);
+                    
+                    //resEl.append(nameEl, cardEl, distanceEl);
+                    resEl.append(cardEl);
                     $(".businesses-result-display").append(resEl);
                     dataIndex++;
                 }
