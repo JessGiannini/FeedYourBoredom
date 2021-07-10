@@ -104,7 +104,7 @@ function submitEventHandlerBored() {
     $(".activity-result-display").html("");
     $(".activity-result-display").append(typeEl);
     var requestURL =
-        "http://www.boredapi.com/api/activity/?" +
+        "https://www.boredapi.com/api/activity/?" +
         "type=" +
         typeSelected;
     fetch(requestURL)
@@ -133,7 +133,7 @@ for (var i = 0; i < activityType.length; i++) {
 function displayActivitySaved() {
     var key = $(this).attr("data-id");
     var requestURL =
-        "http://www.boredapi.com/api/activity/?key=" + key;
+        "https://www.boredapi.com/api/activity/?key=" + key;
     fetch(requestURL)
         .then(function (response) {
             return response.json()
