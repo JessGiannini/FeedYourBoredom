@@ -99,7 +99,6 @@ function submitEventHandlerBored() {
     // participants == "" ? "" : "participants=" + participants + "&";
     var typeSelected = $("#activity-type-select").val();
     // display the user input
-    var participantsEl = $("<div>").text("participants suggested: " + participants);
     var typeEl = $("<div>").text("Type: " + typeSelected);
     $(".activity-result-display").html("");
     $(".activity-result-display").append(typeEl);
@@ -150,7 +149,7 @@ function displayActivityDetails(activityData) {
     var priceEl = $("<div>").text("Price: " + activityData.price);
     // var typeEl = $("<div>").text("type: " + activityData.type);
     var accessibilityEl = $("<div>").text("Accessibility: " + activityData.accessibility);
-    var participantsEl = $("<div>").text("Participants suggested " + activityData.participants + " person(s)");
+    var participantsEl = $("<div>").text("Participants suggested: " + activityData.participants + " person(s)");
     // price and accessibility can be displayed using empty or colored star
     $(".activity-result-display").html("");
     $(".activity-result-display").append(activityEl, priceEl, accessibilityEl, participantsEl);
@@ -188,8 +187,8 @@ function fetchDetails() {
 }
 
 function displayBusinessDetails(businessSelected) {
-    $(".business-details-display").css("display", "block");
-    $(".businesses-result-display").css("display", "none");
+    $(".business-details-display").show();
+    $(".businesses-result-display").hide();
     $(".business-details-display").empty();
     console.log(businessSelected);
     var nameEl = $("<div>").text(businessSelected.name);
@@ -311,20 +310,27 @@ function saveYelpResult() {
 
 function displayYelpResult() {
     $(".businesses-result-display").css("display", "flex");
-    $(".business-details-display").css("display", "none");
+    $(".business-details-display").hide();
 }
 
 function submitEventHandlerYelp() {
     event.preventDefault();
-    $(".business-details-display").css("display", "none");
+    $(".business-details-display").hide();
     $(".businesses-result-display").css("display", "flex");
     $(".businesses-result-display").empty();
     var location = $("#city-input").val();
     var term = $("#term-input").val();
     var termQueryParameter = term === "" ? "" : "&term=" + term;
+    var priceQueryParameter = "";
     // drop down menu for selecting budget
     price = $("#price-select").val();
-    var priceQueryParameter = price === "" ? "" : "&price=" + price.length;
+    console.log(price);
+    if (price.length != 0 && !price.includes("")) {
+        for (var priceSelected of price) {
+            priceQueryParameter += (priceSelected.length + ",");
+        }
+        priceQueryParameter = "&price=" + priceQueryParameter.slice(0, -1);
+    }
     var requestURL =
         "https://cors.bridged.cc/https://api.yelp.com/v3/businesses/search?location=" +
         location +
@@ -421,9 +427,30 @@ displayTabContent("search-tab");
 //     modal.style.display = "none";
 //   }
 // };
-$(".business-details-display").css("display", "none");
+$(".business-details-display").hide();
 
 $(document).on("click", "a", displaySelectedTab);
+
+$(document).on("click", ".is-multiple", function () {
+    $(this).children("select").first().attr("size", "5");
+});
+
+$(document).on("focusout", ".is-multiple", function () {
+    $(this).children("select").first().attr("size", "1");
+    $(this).hide();
+    $("#price-selected").text("");
+    var price = $("#price-select").val();
+    for (var priceSelected of price) {
+        $("#price-selected").append(priceSelected + " ");
+    }
+    $("#price-selected").removeClass().show();
+})
+
+$(document).on("click", "#price-selected", function () {
+    $("#price-selected").hide();
+    $(".is-multiple").show();
+})
+
 
 $(document).on("click", "#submit-button", submitEventHandlerBored);
 // this button is not located inside the modal
