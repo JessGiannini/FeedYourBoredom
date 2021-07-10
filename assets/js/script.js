@@ -5,6 +5,7 @@ var modalHeader = $("h3").text("Please, fill out this form.");
 var dataFromYelp = [];
 var businessesSaved = [];
 var activitiesSaved = [];
+var largeMap;
 var activityType = [
     "education",
     "recreational",
@@ -206,12 +207,12 @@ function displayBusinessDetails(businessSelected) {
     addressEl.append($("<p>").text(businessSelected.location.address3));
     addressEl.append($("<p>").text(businessSelected.location.city));
 
-    var mapEl = $("<div></div>").addClass("map").attr("id", "map");
+    var mapEl = $("<div></div>").addClass("map").attr("id", "small-map");
     // var pointFeature = new ol.Feature(new ol.geom.Point([businessSelected.coordinates.longitude, businessSelected.coordinates.latitude]));
 
     $(document).ready(function () {
         var map = new ol.Map({
-            target: 'map',
+            target: 'small-map',
             layers: [
                 new ol.layer.Tile({
                     source: new ol.source.OSM()
@@ -237,8 +238,30 @@ function displayBusinessDetails(businessSelected) {
             })
         });
     })
-
     $(".business-details-display").append(nameEl, imgEl, distanceEl, addressEl, phoneEl, mapEl);
+
+    // create map modal
+    var mapModal = $("<div>").addClass("modal").attr("id", "map-modal");
+    mapModal.html('<div class="modal-background"></div>'
+                + '<div class="modal-content">'
+                    + '<div id="large-map" class="map"></div>'
+                + '</div>'
+                + '<button id="map-modal-close" class="modal-close is-large" aria-label="close">X</button>');  
+    $(document).ready(function () {
+        largeMap = new ol.Map({
+            target: 'large-map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                }),
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([businessSelected.coordinates.longitude, businessSelected.coordinates.latitude]),
+                zoom: 18
+            })
+        });
+    })
+    $(".business-details-display").append(mapModal);
 }
 
 function saveBoredResult() {
@@ -401,19 +424,6 @@ function submitEventHandlerYelp() {
         });
 }
 
-// the above funtion displays way to many results on the web page
-// TODO: style the results into a block set up
-
-// When the user clicks on the button, open the modal
-// btn.onclick = function () {
-//   modal.style.display = "block";
-// };
-
-// // When the user clicks on <span> (x), close the modal
-// span.onclick = function () {
-//   modal.style.display = "none";
-// };
-
 loadBusinessesSaved();
 loadActivitiesSaved();
 displayTabContent("search-tab");
@@ -450,12 +460,11 @@ $(document).on("click", "#price-selected", function () {
 
 
 $(document).on("click", "#submit-button", submitEventHandlerBored);
-// this button is not located inside the modal
+
 $(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
 
 $(".businesses-result-display").on("click", ".yelp-result", fetchDetails);
 
-// $("button").on("click", "#go-back-button", function() {
 $(document).on("click", "#go-back-button", displayYelpResult);
 
 $(document).on("click", "#save-business-button", saveYelpResult);
@@ -465,3 +474,19 @@ $(document).on("click", ".business-saved", displayBusinessSaved);
 $(document).on("click", ".activity-saved", displayActivitySaved);
 
 $(document).on("click", "#save-activity-button", saveBoredResult);
+
+$(document).on("click", "#small-map", function() {
+    $("#map-modal").show();
+    largeMap.updateSize();
+});
+
+$(document).on("click", "#map-modal-close", function() {
+    $(this).closest(".modal").hide();
+});
+
+$(document).on("click", "#map-modal", function(event) {
+    if (event.target.nodeName.toLowerCase() !== "canvas") {
+        $("#map-modal").hide();
+    }
+});
+
