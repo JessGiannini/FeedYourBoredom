@@ -9,7 +9,7 @@ var activityType = [
     "education",
     "recreational",
     "social",
-    "DIY",
+    "diy",
     "charity",
     "cooking",
     "relaxation",
