@@ -9,7 +9,7 @@ var activityType = [
     "education",
     "recreational",
     "social",
-    "diy",
+    "DIY",
     "charity",
     "cooking",
     "relaxation",
@@ -55,7 +55,7 @@ function listActivitiesSaved() {
     for (var i = 0; i < activitiesSaved.length; i++) {
         var nameEl = $("<div>").text(activitiesSaved[i].name);
         nameEl.attr("data-id", activitiesSaved[i].id);
-        nameEl.addClass("activity-saved");
+        nameEl.addClass("activity-saved panel-block");
         $(".favorite-activity-box").prepend(nameEl);
     }
 }
@@ -64,7 +64,7 @@ function listBusinessesSaved() {
     for (var i = 0; i < businessesSaved.length; i++) {
         var nameEl = $("<div>").text(businessesSaved[i].name);
         nameEl.attr("data-id", businessesSaved[i].id);
-        nameEl.addClass("business-saved");
+        nameEl.addClass("business-saved panel-block");
         $(".favorite-business-box").prepend(nameEl);
     }
 }
@@ -249,10 +249,9 @@ function saveBoredResult() {
         name: name,
         id: id
     }
-    console.log(resultToAdd);
     var nameEl = $("<div>").text(name);
     nameEl.attr("data-id", id);
-    nameEl.addClass("activity-saved");
+    nameEl.addClass("activity-saved panel-block");
 
     if (activitiesSaved === null) {
         activitiesSaved = [];
@@ -268,8 +267,7 @@ function saveBoredResult() {
     activitiesSaved.push(resultToAdd);
     localStorage.setItem("activitiesSaved", JSON.stringify(activitiesSaved));
     if (relistNeeded) {
-        $(".favorite-activity-box").empty();
-        console.log("relist");
+        $(".favorite-activity-box").children(".activity-saved").remove();
         listActivitiesSaved();
     } else {
         $(".favorite-activity-box").prepend(nameEl);
@@ -282,7 +280,7 @@ function saveYelpResult() {
     var nameEl = $("<div>").text(business.name);
     var relistNeeded = false;
     nameEl.attr("data-id", business.id);
-    nameEl.addClass("business-saved");
+    nameEl.addClass("business-saved panel-block");
     var resultToAdd = {
         name: business.name,
         id: business.id
@@ -300,8 +298,7 @@ function saveYelpResult() {
     businessesSaved.push(resultToAdd);
     localStorage.setItem("businessesSaved", JSON.stringify(businessesSaved));
     if (relistNeeded) {
-        $(".favorite-business-box").empty();
-        console.log("relist");
+        $(".favorite-business-box").children(".business-saved").remove();
         listBusinessesSaved();
     } else {
         $(".favorite-business-box").prepend(nameEl);

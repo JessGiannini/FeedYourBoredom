@@ -30,7 +30,7 @@
     <div class="container mt-3">
         <div class="columns">
             <div class="search-section column is-3">
-                <div class="tabs is-boxed">
+                <div class="tabs is-boxed is-fullwidth">
                     <ul>
                       <li class="is-active"><a id="search-tab" >Search</a></li>
                       <li><a id="activity-tab">Activity Saved</a></li>
@@ -73,8 +73,20 @@
                     </div>
                 </div>
                 <!-- the above section needs to be added to the modal pop up -->
-                <div class="favorite-activity-box"></div> 
-                <div class="favorite-business-box"></div>                   
+                <div class="favorite-activity-box panel">
+                    <div class="panel-block">
+                        <button id="clear-activity-saved-button" class="button is-outlined is-fullwidth has-background-danger-dark">
+                          Clear all saved
+                        </button>
+                      </div>
+                </div> 
+                <div class="favorite-business-box panel">
+                    <div class="panel-block">
+                        <button id="clear-business-saved-button" class="button is-outlined is-fullwidth has-background-danger-dark">
+                          Clear all saved
+                        </button>
+                      </div>
+                </div>                   
             </div>
             <div class="search-result-section column is-9">
                 <div class="activity-result-display">

@@ -83,7 +83,8 @@
   height: 200px;
   border: 2px solid var(--border-testcolor-);
 }
+
 .map {
     height: 300px;
     width: 300px;
-  }
+}
