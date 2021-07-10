@@ -83,3 +83,11 @@
 #business-details-image {
   max-width: 400px;
 }
+
+.card-image {
+    margin: 15px;
+}
+
+.card-header-title {
+    font-size: small;
+}
