@@ -386,8 +386,11 @@ function submitEventHandlerYelp() {
                     var cardEl = $("<div>").attr("class", "card-image");
                     cardEl.append(imgEl);
                     
+                    var cardHeaderEl = $("<header>").attr("class", "card-header");
+                    var cardTitleEl = $("<p>").attr("class", "card-header-title").text(data.businesses[i].name);
+                    cardHeaderEl.append(cardTitleEl);
                     //resEl.append(nameEl, cardEl, distanceEl);
-                    resEl.append(cardEl);
+                    resEl.append(cardEl, cardHeaderEl);
                     $(".businesses-result-display").append(resEl);
                     dataIndex++;
                 }
