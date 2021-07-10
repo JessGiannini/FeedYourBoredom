@@ -17,91 +17,89 @@
 </head>
 
 <body>
-    <section class="hero is-info">
+    <header class="hero is-info">
         <div class="hero-body">
-            <p class="title">
+            <p class="title has-text-centered">
                 Feed Your Boredom
             </p>
-            <p class="subtitle">
-                Restaurant and Activity Selector
+            <p class="subtitle has-text-centered mt-3 is-size-3-desktop">
+                Activity and Business Selector
             </p>
         </div>
-    </section>
-    <header>
-        <h1>FEED YOUR BOREDOM</h1>
     </header>
-    <!-- side bar with search button to trigger modal -->
-    <div class="container">
-        <div class="search-section">
-            <div class="new-search">
-                <div class="box search">
-                    <button class="button is-warning is-rounded" id="search-btn" class="btn">Activity Search</button>
+    <div class="container mt-3">
+        <div class="columns">
+            <div class="search-section column is-3">
+                <div class="tabs is-boxed is-fullwidth">
+                    <ul>
+                      <li class="is-active"><a id="search-tab" >Search</a></li>
+                      <li><a id="activity-tab">Activity Saved</a></li>
+                      <li><a id="business-tab">Business Saved</a></li>
+                    </ul>
                 </div>
-                <form id="user-modal-1" class="modal">
-                    <!-- Modal content -->
-                    <div class="modal-survey">
-                        <span class="close">&times;</span>
-                        <h3>Some text in the Modal..</h3>
-
-                        <div class="select">
-                            <select id="activity-type-select">
-                            </select>
-                        </div>
-                        <input class="button is-warning is-rounded" id="submit-button" type="submit">
-                    </div>
-                </form>
-                <!-- not displaying as a modal, located in side bar, pertains to YELP -->
-                <!-- <form class="box">
+                <div class="new-search">
                     <div class="field">
-                        <label class="label">Email</label>
+                        <label class="label mb-0" for="activity-type-select">Choose an activity type</label>
                         <div class="control">
-                            <input class="input" type="email" placeholder="e.g. alex@example.com">
+                            <div class="select my-2">
+                                <select id="activity-type-select">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <button id="submit-button" class="button is-warning is-rounded" type="submit">Search</button>
                         </div>
                     </div>
-                
-                    <div class="field">
-                        <label class="label">Password</label>
+                    <div class="field mt-5">
+                        <label class="label mb-0" for="business-search-form">Search for interested businesses</label>
+                        <input class="input my-2" id="city-input" type="text" placeholder="*City Name">
+                        <input class="input mb-2" id="term-input" type="text" placeholder="Key word">
+                        <label class="label" for="price-select">Select price range</label>
                         <div class="control">
-                            <input class="input" type="password" placeholder="********">
+                            <div class="select is-multiple">
+                                <select name="" multiple size="1" id="price-select">
+                                    <option value=""></option>
+                                    <option value="$">$</option>
+                                    <option value="$$">$$</option>
+                                    <option value="$$$">$$$</option>
+                                    <option value="$$$$">$$$$</option>
+                                </select>
+                            </div>
+                            <div id="price-selected" class="is-hidden"></div>
+                        </div>
+                        <div class="control">
+                            <button id="submit-button-yelp" class="button is-warning is-rounded mt-1" type="submit">Search</button>
                         </div>
                     </div>
-                
-                    <button class="button is-primary">Sign in</button>
-                </form> -->
-                <form class="box" id="user-modal-2" action="">
-                    <input class="input" id="city-input" type="text" placeholder="City Name">
-                    <input class="input" id="term-input" type="text" placeholder="Restaurant, etc.">
-                    <div class="select">
-                        <select name="" id="price-select">
-                            <option value=""></option>
-                            <option value="$">$</option>
-                            <option value="$$">$$</option>
-                            <option value="$$$">$$$</option>
-                            <option value="$$$$">$$$$</option>
-                            <option value="$$$$$">$$$$$</option>
-                        </select>
-                    </div>
-                    <input class="button is-warning is-rounded" id="submit-button-yelp" type="submit">
-                </form>
-            </div>
-            <!-- the above section needs to be added to the modal pop up -->
-            <div class="favorite-box">
-                <div class="favorite-activity-box">
+                </div>
+                <!-- the above section needs to be added to the modal pop up -->
+                <div class="favorite-activity-box panel">
+                    <div class="panel-block">
+                        <button id="clear-activity-saved-button" class="button is-outlined is-fullwidth has-background-danger-dark">
+                          Clear all saved
+                        </button>
+                      </div>
                 </div> 
-                <div class="favorite-business-box">
-                </div>                
+                <div class="favorite-business-box panel">
+                    <div class="panel-block">
+                        <button id="clear-business-saved-button" class="button is-outlined is-fullwidth has-background-danger-dark">
+                          Clear all saved
+                        </button>
+                      </div>
+                </div>                   
             </div>
-        </div>
-        <div class="search-result-section">
-            <div class="activity-result-display">
-                <h2>Activity Results</h2>
-            </div>
-            <div class="businesses-result-display">
-                <h2>Restaurant Results</h2>
-            </div>
-            <div class="business-details-display">
-                <h2>business-details-display</h2>
-                <div id="mapid"></div>
+            <div class="search-result-section column is-9">
+                <div class="activity-result-display">
+                    <h2>Activity Results</h2>
+                </div>
+                <div class="businesses-result-display">
+                    <h2>Restaurant Results</h2>
+                </div>
+                <div class="business-details-display">
+                    <h2>business-details-display</h2>
+                    <div id="mapid"></div>
+                </div>
+                <div class="map" id="map"></div>
             </div>
         </div>
     </div>

@@ -55,7 +55,7 @@ function listActivitiesSaved() {
     for (var i = 0; i < activitiesSaved.length; i++) {
         var nameEl = $("<div>").text(activitiesSaved[i].name);
         nameEl.attr("data-id", activitiesSaved[i].id);
-        nameEl.addClass("activity-saved");
+        nameEl.addClass("activity-saved panel-block");
         $(".favorite-activity-box").prepend(nameEl);
     }
 }
@@ -64,9 +64,31 @@ function listBusinessesSaved() {
     for (var i = 0; i < businessesSaved.length; i++) {
         var nameEl = $("<div>").text(businessesSaved[i].name);
         nameEl.attr("data-id", businessesSaved[i].id);
-        nameEl.addClass("business-saved");
+        nameEl.addClass("business-saved panel-block");
         $(".favorite-business-box").prepend(nameEl);
     }
+}
+
+function displaySelectedTab() {
+  $(".tabs li").removeClass();
+  $(this).parent().addClass("is-active");
+  displayTabContent($(this).attr("id"));
+}
+
+function displayTabContent(idActive) {
+  if (idActive === "search-tab"){
+    $(".new-search").show();
+    $(".favorite-activity-box").hide();
+    $(".favorite-business-box").hide();
+  } else if (idActive === "activity-tab") {
+    $(".new-search").hide();
+    $(".favorite-activity-box").show();
+    $(".favorite-business-box").hide();
+  } else if (idActive === "business-tab") {
+    $(".new-search").hide();
+    $(".favorite-activity-box").hide();
+    $(".favorite-business-box").show();
+  }
 }
 
 // function to deal with bored api
@@ -77,7 +99,6 @@ function submitEventHandlerBored() {
     // participants == "" ? "" : "participants=" + participants + "&";
     var typeSelected = $("#activity-type-select").val();
     // display the user input
-    // var participantsEl = $("<div>").text("participants: " + participants);
     var typeEl = $("<div>").text("Type: " + typeSelected);
     $(".activity-result-display").html("");
     $(".activity-result-display").append(typeEl);
@@ -128,7 +149,7 @@ function displayActivityDetails(activityData) {
     var priceEl = $("<div>").text("Price: " + activityData.price);
     // var typeEl = $("<div>").text("type: " + activityData.type);
     var accessibilityEl = $("<div>").text("Accessibility: " + activityData.accessibility);
-    var participantsEl = $("<div>").text("Participants suggested " + activityData.participants + " person(s)");
+    var participantsEl = $("<div>").text("Participants suggested: " + activityData.participants + " person(s)");
     // price and accessibility can be displayed using empty or colored star
     $(".activity-result-display").html("");
     $(".activity-result-display").append(activityEl, priceEl, accessibilityEl, participantsEl);
@@ -166,8 +187,8 @@ function fetchDetails() {
 }
 
 function displayBusinessDetails(businessSelected) {
-    $(".business-details-display").css("display", "block");
-    $(".businesses-result-display").css("display", "none");
+    $(".business-details-display").show();
+    $(".businesses-result-display").hide();
     $(".business-details-display").empty();
     console.log(businessSelected);
     var nameEl = $("<div>").text(businessSelected.name);
@@ -228,10 +249,9 @@ function saveBoredResult() {
         name: name,
         id: id
     }
-    console.log(resultToAdd);
     var nameEl = $("<div>").text(name);
     nameEl.attr("data-id", id);
-    nameEl.addClass("activity-saved");
+    nameEl.addClass("activity-saved panel-block");
 
     if (activitiesSaved === null) {
         activitiesSaved = [];
@@ -247,8 +267,7 @@ function saveBoredResult() {
     activitiesSaved.push(resultToAdd);
     localStorage.setItem("activitiesSaved", JSON.stringify(activitiesSaved));
     if (relistNeeded) {
-        $(".favorite-activity-box").empty();
-        console.log("relist");
+        $(".favorite-activity-box").children(".activity-saved").remove();
         listActivitiesSaved();
     } else {
         $(".favorite-activity-box").prepend(nameEl);
@@ -261,7 +280,7 @@ function saveYelpResult() {
     var nameEl = $("<div>").text(business.name);
     var relistNeeded = false;
     nameEl.attr("data-id", business.id);
-    nameEl.addClass("business-saved");
+    nameEl.addClass("business-saved panel-block");
     var resultToAdd = {
         name: business.name,
         id: business.id
@@ -279,8 +298,7 @@ function saveYelpResult() {
     businessesSaved.push(resultToAdd);
     localStorage.setItem("businessesSaved", JSON.stringify(businessesSaved));
     if (relistNeeded) {
-        $(".favorite-business-box").empty();
-        console.log("relist");
+        $(".favorite-business-box").children(".business-saved").remove();
         listBusinessesSaved();
     } else {
         $(".favorite-business-box").prepend(nameEl);
@@ -289,20 +307,27 @@ function saveYelpResult() {
 
 function displayYelpResult() {
     $(".businesses-result-display").css("display", "flex");
-    $(".business-details-display").css("display", "none");
+    $(".business-details-display").hide();
 }
 
 function submitEventHandlerYelp() {
     event.preventDefault();
-    $(".business-details-display").css("display", "none");
+    $(".business-details-display").hide();
     $(".businesses-result-display").css("display", "flex");
     $(".businesses-result-display").empty();
     var location = $("#city-input").val();
     var term = $("#term-input").val();
     var termQueryParameter = term === "" ? "" : "&term=" + term;
+    var priceQueryParameter = "";
     // drop down menu for selecting budget
     price = $("#price-select").val();
-    var priceQueryParameter = price === "" ? "" : "&price=" + price.length;
+    console.log(price);
+    if (price.length != 0 && !price.includes("")) {
+        for (var priceSelected of price) {
+            priceQueryParameter += (priceSelected.length + ",");
+        }
+        priceQueryParameter = "&price=" + priceQueryParameter.slice(0, -1);
+    }
     var requestURL =
         "https://cors.bridged.cc/https://api.yelp.com/v3/businesses/search?location=" +
         location +
@@ -380,26 +405,50 @@ function submitEventHandlerYelp() {
 // TODO: style the results into a block set up
 
 // When the user clicks on the button, open the modal
-btn.onclick = function () {
-    modal.style.display = "block";
-};
+// btn.onclick = function () {
+//   modal.style.display = "block";
+// };
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-};
+// // When the user clicks on <span> (x), close the modal
+// span.onclick = function () {
+//   modal.style.display = "none";
+// };
 
 loadBusinessesSaved();
 loadActivitiesSaved();
+displayTabContent("search-tab");
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+// window.onclick = function (event) {
+//   if (event.target == modal) {
+//     modal.style.display = "none";
+//   }
+// };
+$(".business-details-display").hide();
+
+$(document).on("click", "a", displaySelectedTab);
+
+$(document).on("click", ".is-multiple", function () {
+    $(this).children("select").first().attr("size", "5");
+});
+
+$(document).on("focusout", ".is-multiple", function () {
+    $(this).children("select").first().attr("size", "1");
+    $(this).hide();
+    $("#price-selected").text("");
+    var price = $("#price-select").val();
+    for (var priceSelected of price) {
+        $("#price-selected").append(priceSelected + " ");
     }
-};
-$(".business-details-display").css("display", "none");
-// creates both submit buttons
+    $("#price-selected").removeClass().show();
+})
+
+$(document).on("click", "#price-selected", function () {
+    $("#price-selected").hide();
+    $(".is-multiple").show();
+})
+
+
 $(document).on("click", "#submit-button", submitEventHandlerBored);
 // this button is not located inside the modal
 $(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
