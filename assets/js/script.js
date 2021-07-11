@@ -434,8 +434,12 @@ $(document).on("focusout", ".is-multiple", function () {
     $(this).hide();
     $("#price-selected").text("");
     var price = $("#price-select").val();
-    for (var priceSelected of price) {
-        $("#price-selected").append(priceSelected + " ");
+    if (price.length == 0 || price.includes("")) {
+        $("#price-selected").append("Any price range");
+    } else {
+        for (var priceSelected of price) {
+            $("#price-selected").append(priceSelected + " ");
+        }
     }
     $("#price-selected").removeClass().show();
 })

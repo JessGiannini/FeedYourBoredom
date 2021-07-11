@@ -41,7 +41,7 @@
 .businesses-result-display {
   display: flex;
   flex-wrap: wrap;
-  height: 400px;
+  min-height: 400px;
   border: 2px solid var(--border-testcolor-);
 }
 
