@@ -18,16 +18,6 @@ var activityType = [
   "busywork",
 ];
 
-// key: number of participants; value: all possible types of results
-// var activityType = {
-//   1: ["education", "recreational", "social", "diy", "charity", "cooking", "relaxation", "music", "busywork"],
-//   2: ["social"],
-//   3: ["social"],
-//   4: ["social", "music", "recreational"],
-//   5: ["social", "music"]
-// }
-// GREAT IDEA ^^^
-
 function loadActivitiesSaved() {
   activitiesSaved = JSON.parse(localStorage.getItem("activitiesSaved"));
   if (activitiesSaved === null) {
