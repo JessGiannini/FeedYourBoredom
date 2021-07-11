@@ -93,20 +93,10 @@ function displayTabContent(idActive) {
 }
 
 // function to deal with bored api
-function submitEventHandlerBored() {
+function submitEventHandlerBored(event) {
     event.preventDefault();
-    // var participants = $("#participants-input").val();
-    // var participantsQueryParameter =
-    // participants == "" ? "" : "participants=" + participants + "&";
-    var typeSelected = $("#activity-type-select").val();
-    // display the user input
-    var typeEl = $("<div>").text("Type: " + typeSelected);
-    $(".activity-result-display").html("");
-    $(".activity-result-display").append(typeEl);
     var requestURL =
-        "https://www.boredapi.com/api/activity/?" +
-        "type=" +
-        typeSelected;
+        "https://www.boredapi.com/api/activity/?type=" + $("#activity-type-select").val();
     fetch(requestURL)
         .then(function (res) {
             return res.json();
@@ -117,10 +107,7 @@ function submitEventHandlerBored() {
                 return;
             } else {
                 displayActivityDetails(data);
-                var saveActivityButton = $("<button>").text("Star");
-                saveActivityButton.attr("id", "save-activity-button");
-                saveActivityButton.attr("data-id", data.key);
-                saveActivityButton.attr("data-name", data.activity);
+                var saveActivityButton = $("<button>").text("Star").attr("id", "save-activity-button").attr("data-id", data.key).attr("data-name", data.activity).addClass("button mb-3 ml-5");
                 $(".activity-result-display").append(saveActivityButton);
             }
         });
@@ -146,14 +133,18 @@ function displayActivitySaved() {
 }
 
 function displayActivityDetails(activityData) {
-    var activityEl = $("<h3>").text("Activity: " + activityData.activity);
-    var priceEl = $("<div>").text("Price: " + activityData.price);
-    // var typeEl = $("<div>").text("type: " + activityData.type);
-    var accessibilityEl = $("<div>").text("Accessibility: " + activityData.accessibility);
-    var participantsEl = $("<div>").text("Participants suggested: " + activityData.participants + " person(s)");
+    var activityEl = $("<div>").text(activityData.activity).addClass("card-header-title is-size-3");
+    var cardHeader = $("<div>").addClass("card-header").append(activityEl);
+    var priceLabel = $("<span>").text("Price: ").addClass("has-text-weight-bold");
+    var priceEl = $("<div>").append(priceLabel).append(" " + activityData.price * 10 + "/10");
+    var accessibilityLabel = $("<span>").text("Accessibility: ").addClass("has-text-weight-bold");
+    var accessibilityEl = $("<div>").append(accessibilityLabel).append(" " + activityData.accessibility * 10 + "/10");
+    var participantsLabel = $("<span>").text("Participants suggested: ").addClass("has-text-weight-bold");
+    var participantsEl = $("<div>").append(participantsLabel).append(" " + activityData.participants + " person(s)");
+    var cardContent = $("<div>").addClass("card-content").append(priceEl, accessibilityEl, participantsEl);
     // price and accessibility can be displayed using empty or colored star
     $(".activity-result-display").html("");
-    $(".activity-result-display").append(activityEl, priceEl, accessibilityEl, participantsEl);
+    $(".activity-result-display").append(cardHeader, cardContent);
 }
 
 function displayBusinessSaved() {
@@ -443,8 +434,12 @@ $(document).on("focusout", ".is-multiple", function () {
     $(this).hide();
     $("#price-selected").text("");
     var price = $("#price-select").val();
-    for (var priceSelected of price) {
-        $("#price-selected").append(priceSelected + " ");
+    if (price.length == 0 || price.includes("")) {
+        $("#price-selected").append("Any price range");
+    } else {
+        for (var priceSelected of price) {
+            $("#price-selected").append(priceSelected + " ");
+        }
     }
     $("#price-selected").removeClass().show();
 })
