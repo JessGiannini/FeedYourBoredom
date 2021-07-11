@@ -223,7 +223,7 @@ function displayBusinessDetails(businessSelected) {
   var cardContent = $("<div>").addClass("card-content  p-3");
   var nameEl = $("<div>")
     .text(businessSelected.name)
-    .addClass("is-size-3 has-text-weight-bold");
+    .addClass("is-size-3-desktop is-size-4-tablet is-size-5-mobile has-text-weight-bold");
   var priceLabel = $("<span>").text("Price:").addClass("has-text-weight-bold");
   var priceEl = $("<div>")
     .append(priceLabel)
@@ -283,7 +283,7 @@ function displayBusinessDetails(businessSelected) {
     addressEl,
     mapEl
   );
-  $(".business-details-display").append(cardContent, imgEl);
+  $(".business-details-display").append(imgEl, cardContent);
   // var pointFeature = new ol.Feature(new ol.geom.Point([businessSelected.coordinates.longitude, businessSelected.coordinates.latitude]));
 
   $(document).ready(function () {
@@ -308,9 +308,9 @@ function displayBusinessDetails(businessSelected) {
   var mapModal = $("<div>").addClass("modal").attr("id", "map-modal");
   mapModal.html(
     '<div class="modal-background"></div>' +
-      '<div class="modal-content">' +
-      '<div id="large-map" class="map"></div>' +
-      "</div>" +
+      '<div class="modal-content ml-auto mr-auto">' +
+        '<div id="large-map" class="map"></div>' +
+      '</div>' +
       '<button id="map-modal-close" class="modal-close is-large" aria-label="close">X</button>'
   );
   $(document).ready(function () {

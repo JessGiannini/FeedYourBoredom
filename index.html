@@ -22,78 +22,79 @@
             <p class="title has-text-centered">
                 Feed Your Boredom
             </p>
-            <p class="subtitle has-text-centered mt-3 is-size-3-desktop">
+            <p class="subtitle has-text-centered mt-3 is-size-3-desktop is-size-5-mobile">
                 Activity and Business Selector
             </p>
         </div>
     </header>
-    <div class="container mt-3">
+    <div class="container mt-3 p-3">
         <div class="columns">
             <div class="search-section column is-3">
-                <div class="tabs is-boxed is-fullwidth">
-                    <ul>
-                      <li class="is-active"><a id="search-tab" >Search</a></li>
-                      <li><a id="activity-tab">Activity Saved</a></li>
-                      <li><a id="business-tab">Business Saved</a></li>
-                    </ul>
-                </div>
-                <div class="new-search">
-                    <div class="field">
-                        <label class="label mb-0" for="activity-type-select">Choose an activity type</label>
-                        <div class="control">
-                            <div class="select my-2">
-                                <select id="activity-type-select">
-                                </select>
+                <div class="search-panel">
+                    <div class="tabs is-boxed is-fullwidth">
+                        <ul>
+                          <li class="is-active"><a id="search-tab" class="p-1">Search</a></li>
+                          <li><a id="activity-tab" class="p-1">Activity</a></li>
+                          <li><a id="business-tab" class="p-1">Business</a></li>
+                        </ul>
+                    </div>
+                    <div class="new-search">
+                        <div class="field">
+                            <label class="label mb-0" for="activity-type-select">Choose an activity type</label>
+                            <div class="control">
+                                <div class="select my-2">
+                                    <select id="activity-type-select">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control">
+                                <button id="submit-button" class="button is-warning is-rounded" type="submit">Search</button>
                             </div>
                         </div>
-                        <div class="control">
-                            <button id="submit-button" class="button is-warning is-rounded" type="submit">Search</button>
-                        </div>
-                    </div>
-                    <div class="field mt-5">
-                        <label class="label mb-0" for="business-search-form">Search for interested businesses</label>
-                        <input class="input my-2" id="city-input" type="text" placeholder="*City Name">
-                        <input class="input mb-2" id="term-input" type="text" placeholder="Key word">
-                        <label class="label" for="price-select">Select price range</label>
-                        <div class="control">
-                            <div class="select is-multiple">
-                                <select name="" multiple size="1" id="price-select">
-                                    <option value="Any Price Range">Any Price Range</option>
-                                    <option value="$">$</option>
-                                    <option value="$$">$$</option>
-                                    <option value="$$$">$$$</option>
-                                    <option value="$$$$">$$$$</option>
-                                </select>
+                        <div class="field mt-5">
+                            <label class="label mb-0" for="business-search-form">Search for interested businesses</label>
+                            <input class="input my-2" id="city-input" type="text" placeholder="* Location">
+                            <input class="input mb-2" id="term-input" type="text" placeholder="Key word">
+                            <label class="label" for="price-select">Select price range</label>
+                            <div class="control">
+                                <div class="select is-multiple">
+                                    <select name="" multiple size="1" id="price-select">
+                                        <option value="Any Price Range">Any Price Range</option>
+                                        <option value="$">$</option>
+                                        <option value="$$">$$</option>
+                                        <option value="$$$">$$$</option>
+                                        <option value="$$$$">$$$$</option>
+                                    </select>
+                                </div>
+                                <div id="price-selected" class="is-hidden"></div>
                             </div>
-                            <div id="price-selected" class="is-hidden"></div>
-                        </div>
-                        <div class="control">
-                            <button id="submit-button-yelp" class="button is-warning is-rounded mt-1" type="submit">Search</button>
+                            <div class="control">
+                                <button id="submit-button-yelp" class="button is-warning is-rounded mt-1" type="submit">Search</button>
+                            </div>
                         </div>
                     </div>
+                    <div class="favorite-activity-box panel">
+                        <div class="panel-block">
+                            <button id="clear-activity-saved-button" class="button is-outlined is-fullwidth has-background-danger-dark">
+                                Clear all saved
+                            </button>
+                        </div>
+                    </div> 
+                    <div class="favorite-business-box panel">
+                        <div class="panel-block">
+                            <button id="clear-business-saved-button" class="button is-outlined is-fullwidth has-background-danger-dark">
+                                Clear all saved
+                            </button>
+                        </div>
+                    </div> 
                 </div>
-                <!-- the above section needs to be added to the modal pop up -->
-                <div class="favorite-activity-box panel">
-                    <div class="panel-block">
-                        <button id="clear-activity-saved-button" class="button is-outlined is-fullwidth has-background-danger-dark">
-                          Clear all saved
-                        </button>
-                      </div>
-                </div> 
-                <div class="favorite-business-box panel">
-                    <div class="panel-block">
-                        <button id="clear-business-saved-button" class="button is-outlined is-fullwidth has-background-danger-dark">
-                          Clear all saved
-                        </button>
-                      </div>
-                </div>                   
             </div>
             <div class="search-result-section column is-9">
-                <div class="activity-result-display card">
+                <div class="activity-result-display card p-3">
                 </div>
-                <div class="businesses-result-display">
+                <div class="businesses-result-display p-3">
                 </div>
-                <div class="business-details-display p-1 card is-flex is-flex-direction-row is-justify-content-space-between">
+                <div class="business-details-display card is-flex is-flex-wrap-wrap is-justify-content-center">
                 </div>
             </div>
         </div>
