@@ -248,7 +248,7 @@ function displayBusinessDetails(businessSelected) {
   var imgURL = businessSelected.image_url;
   var imgEl = $("<img>")
     .attr("src", imgURL)
-    .attr("alt", "image for the business")
+    .attr("alt", "Image for Business")
     .addClass("card-image p-3")
     .attr("id", "business-details-image");
   var mapEl = $("<div></div>")
@@ -446,6 +446,7 @@ function submitEventHandlerYelp() {
           distanceEl.attr("data-index", "" + dataIndex);
           var imgEl = $("<img>").attr("src", imgURL);
           imgEl.attr("data-index", "" + dataIndex);
+          imgEl.attr("alt", "Image for Business");
           imgEl.css("width", "100px");
           imgEl.css("height", "100px");
           resEl.append(nameEl, imgEl, distanceEl);
