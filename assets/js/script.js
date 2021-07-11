@@ -200,11 +200,15 @@ function fetchDetails() {
   displayBusinessDetails(dataFromYelp[indexOfYelpResult]);
   var goBackButton = $("<button>")
     .addClass("icon")
-    .html('<i class="fas fa-undo"></i>');
-  goBackButton.attr("id", "go-back-button");
+    .html('<i class="fas fa-undo"></i>')
+    .attr("id", "go-back-button")
+    .addClass("button");
   var saveBusinessButton = $("<button>")
     .addClass("icon")
-    .html("<i class= 'fas fa-heart'></i>");
+    .html("<i class= 'fas fa-heart'></i>")
+    .attr("id", "save-business-button")
+    .attr("data-index", indexOfYelpResult)
+    .addClass("button");
   var cardFooter = $("<div>")
     .addClass("mt-2 is-flex is-justify-content-space-between")
     .append(goBackButton, saveBusinessButton);
