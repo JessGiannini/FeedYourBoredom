@@ -29,9 +29,13 @@
 }
 
 .modal-content {
-  margin-top: 20px;
-  width: 80%;
-} 
+  max-width: 800px;
+  width: 90%;
+}
+
+#message-modal .modal-content {
+  width: 70%;
+}
 
 #large-map {
   height: 800px;
@@ -44,20 +48,6 @@
   .title {
     font-size: 5rem;
   }
-
-  #large-map {
-    height: 600px;
-    width: 600px;
-  }
-
-  .business-details-display .card-content, .business-details-display img {
-    max-width: 100%;
-  }
-
-  .business-details-display img {
-    max-height: 500px;
-  }
-  
 }
 
 @media screen and (max-width: 767px) {
@@ -65,14 +55,8 @@
     font-size: 3rem;
   }
 
-  #large-map {
-    height: 600px;
-    width: 500px;
-    margin-left: 0px;
-    margin-right: 0px;
-  }
-
   .business-details-display .card-content, .business-details-display img {
     width: 100%;
   }
+
 }

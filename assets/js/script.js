@@ -1,7 +1,3 @@
-var modal = document.getElementById("user-modal-1");
-var btn = document.getElementById("search-btn");
-var span = document.getElementsByClassName("close")[0];
-var modalHeader = $("h3").text("Please, fill out this form.");
 var dataFromYelp = [];
 var businessesSaved = [];
 var activitiesSaved = [];
@@ -138,21 +134,21 @@ function displayActivitySaved() {
 function displayActivityDetails(activityData) {
   var activityEl = $("<div>")
     .text(activityData.activity)
-    .addClass("card-header-title is-size-3");
+    .addClass("card-header-title");
   var cardHeader = $("<div>").addClass("card-header").append(activityEl);
-  var priceLabel = $("<span>").text("Price: ").addClass("has-text-weight-bold");
+  var priceLabel = $("<span>").text("Price: ").addClass("has-text-weight-semibold");
   var priceEl = $("<div>")
     .append(priceLabel)
     .append(" " + activityData.price * 10 + "/10");
   var accessibilityLabel = $("<span>")
     .text("Accessibility: ")
-    .addClass("has-text-weight-bold");
+    .addClass("has-text-weight-semibold");
   var accessibilityEl = $("<div>")
     .append(accessibilityLabel)
     .append(" " + activityData.accessibility * 10 + "/10");
   var participantsLabel = $("<span>")
     .text("Participants suggested: ")
-    .addClass("has-text-weight-bold");
+    .addClass("has-text-weight-semibold");
   var participantsEl = $("<div>")
     .append(participantsLabel)
     .append(" " + activityData.participants + " person(s)");
@@ -213,28 +209,28 @@ function displayBusinessDetails(businessSelected) {
   var cardContent = $("<div>").addClass("card-content  p-3");
   var nameEl = $("<div>")
     .text(businessSelected.name)
-    .addClass("is-size-3-desktop is-size-4-tablet is-size-5-mobile has-text-weight-bold");
-  var priceLabel = $("<span>").text("Price:").addClass("has-text-weight-bold");
+    .addClass("is-size-4-desktop is-size-5-touch has-text-weight-bold");
+  var priceLabel = $("<span>").text("Price:").addClass("has-text-weight-semibold");
   var priceEl = $("<div>")
     .append(priceLabel)
     .append(" " + businessSelected.price);
   var ratingLabel = $("<span>")
     .text("Rating:")
-    .addClass("has-text-weight-bold");
+    .addClass("has-text-weight-semibold");
   var ratingEl = $("<div>")
     .append(ratingLabel)
     .append(" " + businessSelected.rating + "/5");
   var distance = parseInt(businessSelected.distance);
   var distanceLabel = $("<span>")
     .text("Distance from the center of the city:")
-    .addClass("has-text-weight-bold");
+    .addClass("has-text-weight-semibold");
   var distanceEl = $("<div>");
   var phoneNumber = $("<a>")
     .text(businessSelected.phone)
     .attr("href", "tel:" + businessSelected.phone);
   var phoneLabel = $("<span>")
     .text("Phone number: ")
-    .addClass("has-text-weight-bold");
+    .addClass("has-text-weight-semibold");
   var phoneEl = $("<div>").append(phoneLabel).append(phoneNumber);
   var address = $("<a>")
     .append($("<p>").text(businessSelected.location.address1))
@@ -243,7 +239,7 @@ function displayBusinessDetails(businessSelected) {
     .append($("<p>").text(businessSelected.location.city));
   var addressLabel = $("<span>")
     .text("Address: ")
-    .addClass("has-text-weight-bold");
+    .addClass("has-text-weight-semibold");
   var addressEl = $("<div>").append(addressLabel).append(address);
   var imgURL = businessSelected.image_url;
   var imgEl = $("<img>")
@@ -298,11 +294,12 @@ function displayBusinessDetails(businessSelected) {
   var mapModal = $("<div>").addClass("modal").attr("id", "map-modal");
   mapModal.html(
     '<div class="modal-background"></div>' +
-      '<div class="modal-content ml-auto mr-auto">' +
-        '<div id="large-map" class="map"></div>' +
-      '</div>' +
-      '<button id="map-modal-close" class="modal-close is-large" aria-label="close">X</button>'
+    '<div class="modal-content">' +
+      '<div id="large-map" class="map"></div>' +
+    '</div>' +
+    '<button id="map-modal-close" class="modal-close is-large" aria-label="close">X</button>'
   );
+
   $(document).ready(function () {
     largeMap = new ol.Map({
       target: "large-map",
@@ -490,22 +487,26 @@ function submitEventHandlerYelp() {
         }
         getYelpResults(index);
       }
-      // if (message !== "") {
-      //   var messageModal = $("<div>").addClass("modal").attr("id", "message-modal");
-      //   messageModal.html(
-      //     '<div class="modal-background"></div>' +
-      //       '<div class="modal-content ml-auto mr-auto">' +
-      //         '<div id="hint-message">' +
-      //           message +                  
-      //         '</div>' +
-      //       '</div>' +
-      //       '<button id="map-modal-close" class="modal-close is-large" aria-label="close">X</button>'
-      //   );
-      //   (".businesses-result-display").append(messageModal);
-      // }
+      if (message !== "") {
+        message = message.substring(0, 1).toUpperCase() + message.substring(1);
+        var messageModal = $("<div>").addClass("modal").attr("id", "message-modal");
+        messageModal.html(
+          '<div class="modal-background"></div>' +
+          '<div class="modal-content">' +
+            '<div class="card">' +
+              '<div class="card-header-title py-5 has-text-centered">' +
+                message +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<button id="map-modal-close" class="modal-close is-large" aria-label="close">X</button>'
+        );
+        $(".businesses-result-display").append(messageModal);
+        $("#message-modal").addClass("is-active");
+      }
     })
     .catch(function (err) {
-      
+      console.log(err);
     });
 }
 
@@ -563,16 +564,21 @@ $(document).on("click", "#clear-activity-saved-button", clearActivities);
 $(document).on("click", "#clear-business-saved-button", clearBusinesses);
 
 $(document).on("click", "#small-map", function () {
-  $("#map-modal").show();
+  console.log("small-map is clicked");
+  $("#map-modal").addClass("is-active");
   largeMap.updateSize();
 });
 
-$(document).on("click", "#map-modal-close", function () {
-  $(this).closest(".modal").hide();
+$(document).on("click", ".modal-close", function () {
+  console.log(this);
+  $(this).closest(".modal").removeClass("is-active");
 });
 
-$(document).on("click", "#map-modal", function (event) {
-  if (event.target.nodeName.toLowerCase() !== "canvas" && event.target.nodeName.toLowerCase() !== "button") {
-    $("#map-modal").hide();
+$(document).on("click", ".modal", function (event) {
+  if ($(event.target).hasClass("modal-background")) {
+    $(this).removeClass("is-active");
+    console.log("I am executed")
   }
+  console.log(event.target);
+  console.log(this);
 });
