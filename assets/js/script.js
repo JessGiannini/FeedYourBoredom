@@ -381,16 +381,19 @@ function submitEventHandlerYelp() {
                     //distanceEl.attr("data-index", "" + dataIndex);
                     var imgEl = $("<img>").attr("src", imgURL);
                     imgEl.attr("data-index", "" + dataIndex);
-                    imgEl.css("width", "125px");
-                    imgEl.css("height", "125px");
-                    var cardEl = $("<div>").attr("class", "card-image");
-                    cardEl.append(imgEl);
+                    imgEl.css("width", "140px");
+                    imgEl.css("height", "140px");
+                    var cardImgEl = $("<div>").attr("class", "card-image");
+                    cardImgEl.append(imgEl);
                     
                     var cardHeaderEl = $("<header>").attr("class", "card-header");
                     var cardTitleEl = $("<p>").attr("class", "card-header-title").text(data.businesses[i].name);
                     cardHeaderEl.append(cardTitleEl);
+
+                    var cardEl = $("<div>").attr("class", "card");
                     //resEl.append(nameEl, cardEl, distanceEl);
-                    resEl.append(cardEl, cardHeaderEl);
+                    cardEl.append(cardImgEl, cardHeaderEl);
+                    resEl.append(cardEl);
                     $(".businesses-result-display").append(resEl);
                     dataIndex++;
                 }

@@ -84,10 +84,11 @@
   max-width: 400px;
 }
 
-.card-image {
+.card {
     margin: 15px;
 }
 
 .card-header-title {
     font-size: small;
+    width: 140px;
 }
