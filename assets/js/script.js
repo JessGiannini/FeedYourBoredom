@@ -414,7 +414,7 @@ function submitEventHandlerYelp() {
   // drop down menu for selecting budget
   price = $("#price-select").val();
   console.log(price);
-  if (price.length != 0 && !price.includes("")) {
+  if (price.length != 0 && !price.includes("Any Price Range")) {
     for (var priceSelected of price) {
       priceQueryParameter += priceSelected.length + ",";
     }
@@ -495,14 +495,11 @@ function submitEventHandlerYelp() {
 }
 
 loadBusinessesSaved();
+
 loadActivitiesSaved();
+
 displayTabContent("search-tab");
-// When the user clicks anywhere outside of the modal, close it
-// window.onclick = function (event) {
-//   if (event.target == modal) {
-//     modal.style.display = "none";
-//   }
-// };
+
 $(".business-details-display").removeClass("is-flex").addClass("is-hidden");
 
 $(document).on("click", "a", displaySelectedTab);
@@ -516,12 +513,11 @@ $(document).on("focusout", ".is-multiple", function () {
   $(this).hide();
   $("#price-selected").text("");
   var price = $("#price-select").val();
-  if (price.length == 0 || price.includes("")) {
-    $("#price-selected").append("Any price range");
-  } else {
-    for (var priceSelected of price) {
-      $("#price-selected").append(priceSelected + " ");
-    }
+  if (price.length == 0 || price.includes("Any Price Range")) {
+    price = ["Any Price Range"];
+  }
+  for (var priceSelected of price) {
+    $("#price-selected").append(priceSelected + " ");
   }
   $("#price-selected").removeClass().show();
 });
