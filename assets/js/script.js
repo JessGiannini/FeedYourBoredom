@@ -557,7 +557,7 @@ $(document).on("click", "#map-modal-close", function () {
 });
 
 $(document).on("click", "#map-modal", function (event) {
-  if (event.target.nodeName.toLowerCase() !== "canvas") {
+  if (event.target.nodeName.toLowerCase() !== "canvas" && event.target.nodeName.toLowerCase() !== "button") {
     $("#map-modal").hide();
   }
 });
