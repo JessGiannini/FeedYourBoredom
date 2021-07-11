@@ -427,61 +427,85 @@ function submitEventHandlerYelp() {
     })
     .then(function (data) {
       console.log(data);
-      var index = 0;
-      function getYelpResults(ind) {
-        dataFromYelp = [];
-        var dataIndex = 0;
-
-        for (var i = ind; i < ind + 10; i++) {
-          dataFromYelp.push(data.businesses[i]);
-          var resEl = $("<div>");
-          resEl.attr("data-index", "" + dataIndex);
-          resEl.addClass("yelp-result");
-          var nameEl = $("<div>").text(data.businesses[i].name);
-          nameEl.attr("data-index", "" + dataIndex);
-          var imgURL = data.businesses[i].image_url;
-          var distanceEl = $("<div>").text(
-            parseInt(data.businesses[i].distance) + "m"
-          );
-          distanceEl.attr("data-index", "" + dataIndex);
-          var imgEl = $("<img>").attr("src", imgURL);
-          imgEl.attr("data-index", "" + dataIndex);
-          imgEl.attr("alt", "Image for Business");
-          imgEl.css("width", "100px");
-          imgEl.css("height", "100px");
-          resEl.append(nameEl, imgEl, distanceEl);
-          $(".businesses-result-display").append(resEl);
-          dataIndex++;
+      var message ="";
+      if (data.error !== undefined) {
+        if (data.error.code === "VALIDATION_ERROR") {
+          message = data.error.field + data.error.description.substring(2);
+        } else if (data.error.code === "LOCATION_NOT_FOUND") {
+          message = data.error.description;
         }
+      } else if(data.businesses.length === 0) {
+        message = "No business found";
+      } else {
+        var index = 0;
+        function getYelpResults(ind) {
+          dataFromYelp = [];
+          var dataIndex = 0;
 
-        if (index == 0) {
-          var nextBtn = $("<button>").text("Next");
-          nextBtn.attr("id", "next-results-button");
-          nextBtn.attr("class", "button");
-          $(".businesses-result-display").append(nextBtn);
-        }
+          for (var i = ind; i < ind + 10; i++) {
+            dataFromYelp.push(data.businesses[i]);
+            var resEl = $("<div>");
+            resEl.attr("data-index", "" + dataIndex);
+            resEl.addClass("yelp-result");
+            var nameEl = $("<div>").text(data.businesses[i].name);
+            nameEl.attr("data-index", "" + dataIndex);
+            var imgURL = data.businesses[i].image_url;
+            var distanceEl = $("<div>").text(
+              parseInt(data.businesses[i].distance) + "m"
+            );
+            distanceEl.attr("data-index", "" + dataIndex);
+            var imgEl = $("<img>").attr("src", imgURL);
+            imgEl.attr("data-index", "" + dataIndex);
+            imgEl.attr("alt", "Image for Business");
+            imgEl.css("width", "100px");
+            imgEl.css("height", "100px");
+            resEl.append(nameEl, imgEl, distanceEl);
+            $(".businesses-result-display").append(resEl);
+            dataIndex++;
+          }
 
-        $(document).on("click", "#next-results-button", function () {
-          $(".businesses-result-display").html("");
-          index = 10;
-          getYelpResults(index);
+          if (index == 0) {
+            var nextBtn = $("<button>").text("Next");
+            nextBtn.attr("id", "next-results-button");
+            nextBtn.attr("class", "button");
+            $(".businesses-result-display").append(nextBtn);
+          }
 
-          var prevBtn = $("<button>").text("Previous");
-          prevBtn.attr("id", "prev-results-button");
-          prevBtn.attr("class", "button");
-          $(".businesses-result-display").append(prevBtn);
-
-          $(document).on("click", "#prev-results-button", function () {
+          $(document).on("click", "#next-results-button", function () {
             $(".businesses-result-display").html("");
-            index = 0;
+            index = 10;
             getYelpResults(index);
+
+            var prevBtn = $("<button>").text("Previous");
+            prevBtn.attr("id", "prev-results-button");
+            prevBtn.attr("class", "button");
+            $(".businesses-result-display").append(prevBtn);
+
+            $(document).on("click", "#prev-results-button", function () {
+              $(".businesses-result-display").html("");
+              index = 0;
+              getYelpResults(index);
+            });
           });
-        });
+        }
+        getYelpResults(index);
       }
-      getYelpResults(index);
+      // if (message !== "") {
+      //   var messageModal = $("<div>").addClass("modal").attr("id", "message-modal");
+      //   messageModal.html(
+      //     '<div class="modal-background"></div>' +
+      //       '<div class="modal-content ml-auto mr-auto">' +
+      //         '<div id="hint-message">' +
+      //           message +                  
+      //         '</div>' +
+      //       '</div>' +
+      //       '<button id="map-modal-close" class="modal-close is-large" aria-label="close">X</button>'
+      //   );
+      //   (".businesses-result-display").append(messageModal);
+      // }
     })
     .catch(function (err) {
-      console.log(err);
+      
     });
 }
 
