@@ -564,9 +564,10 @@ $(document).on("click", "#clear-activity-saved-button", clearActivities);
 $(document).on("click", "#clear-business-saved-button", clearBusinesses);
 
 $(document).on("click", "#small-map", function () {
-  console.log("small-map is clicked");
-  $("#map-modal").addClass("is-active");
-  largeMap.updateSize();
+  if (event.target.nodeName.toLowerCase() !== "button") {
+    $("#map-modal").addClass("is-active");
+    largeMap.updateSize();
+  }
 });
 
 $(document).on("click", ".modal-close", function () {
