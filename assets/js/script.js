@@ -399,7 +399,7 @@ function submitEventHandlerYelp() {
                 }
                 
                 if (index == 0) {
-                    var nextBtn = $("<button>").text("Next");
+                    var nextBtn = $("<button>").text(">");
                     nextBtn.attr("id", "next-results-button");
                     nextBtn.attr("class", "button");
                     $(".businesses-result-display").append(nextBtn);
@@ -410,7 +410,7 @@ function submitEventHandlerYelp() {
                     index = 10;
                     getYelpResults(index);
 
-                    var prevBtn = $("<button>").text("Previous");
+                    var prevBtn = $("<button>").text("<");
                     prevBtn.attr("id", "prev-results-button");
                     prevBtn.attr("class", "button");
                     $(".businesses-result-display").append(prevBtn);
