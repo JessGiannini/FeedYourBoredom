@@ -434,13 +434,13 @@ function submitEventHandlerYelp() {
       } else if(data.businesses.length === 0) {
         message = "No business found";
       } else {
-        var prevBtn = $("<button>").text("<").attr("id", "prev-results-button").addClass("button m-auto p-0").css("min-height", "150px").css("width", "30px");
+        var prevBtn = $("<button>").text("<").attr("id", "prev-results-button").addClass("button m-auto p-0").css("height", "150px").css("width", "30px");
         var prevBtnCol = $("<div>").addClass("button-column column is-1 is-flex").append(prevBtn);
-        var nextBtn = $("<button>").text(">").attr("id", "next-results-button").addClass("button m-auto p-0").css("min-height", "150px").css("width", "30px");
+        var nextBtn = $("<button>").text(">").attr("id", "next-results-button").addClass("button m-auto p-0").css("height", "150px").css("width", "30px");
         var nextBtnCol = $("<div>").addClass("button-column column is-1 is-flex").append(nextBtn);
         var businessesListCol = $("<div>").addClass("businesses-list-column column is-10");
         var businessesResultColumns = $("<div>").addClass("businesses-result-columns columns").css("width", "100%").append(prevBtnCol, businessesListCol, nextBtnCol);
-        
+        ajustPage();
         $(".businesses-result-display").html("").append(businessesResultColumns);
         dataFromYelp = data.businesses;        
         displayBusinessesResult(0);
@@ -469,7 +469,16 @@ function submitEventHandlerYelp() {
     });
 }
 
-// dataFromYelp
+function ajustPage() {
+  if ($(window).width() > 768) {
+    $("#prev-results-button").css("height", "150px").css("width", "30px").text("<");
+    $("#next-results-button").css("height", "150px").css("width", "30px").text(">");
+  } else {
+    $("#prev-results-button").css("height", "30px").css("width", "150px").text("^");
+    $("#next-results-button").css("height", "30px").css("width", "150px").text(">");
+  }
+}
+
 function displayBusinessesResult (indexStart) {
   if (indexStart >= dataFromYelp.length) {
     return;
@@ -598,4 +607,8 @@ $(document).on("click", ".modal", function (event) {
   }
   console.log(event.target);
   console.log(this);
+});
+
+$(window).resize(function() {
+  ajustPage();
 });
