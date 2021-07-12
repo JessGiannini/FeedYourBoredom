@@ -134,7 +134,8 @@ function displayActivitySaved() {
 function displayActivityDetails(activityData) {
   var activityEl = $("<div>")
     .text(activityData.activity)
-    .addClass("card-header-title");
+    .addClass("card-header-title")
+    .attr("id", "activity-title");
   var cardHeader = $("<div>").addClass("card-header").append(activityEl);
   var priceLabel = $("<span>").text("Price: ").addClass("has-text-weight-semibold");
   var priceEl = $("<div>")
@@ -457,7 +458,7 @@ function submitEventHandlerYelp() {
             cardImgEl.append(imgEl);
                     
             var cardHeaderEl = $("<header>").attr("class", "card-header");
-            var cardTitleEl = $("<p>").attr("class", "card-header-title").text(data.businesses[i].name);
+            var cardTitleEl = $("<p>").attr("class", "card-header-title").attr("id", "restaurant-title").text(data.businesses[i].name);
             cardHeaderEl.append(cardTitleEl);
             
             var cardEl = $("<div>").attr("class", "card");
