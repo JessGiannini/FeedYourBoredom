@@ -566,7 +566,7 @@ function displayBusinessesResult(indexStart) {
       .append(imgEl);
     var cardContentEl = $("<p>")
       .addClass(
-        "card-content  is-flex has-text-centered has-text-weight-semibold p-1"
+        "card-content has-text-centered has-text-weight-semibold p-1"
       )
       .text(dataFromYelp[i].name);
     var cardEl = $("<div>")
