@@ -17,10 +17,10 @@ var activityType = [
   "busywork",
 ];
 
-var actPlaceholderEl = $("<p>").attr("class", "instruction").text("Please select the type of activity...");
+var actPlaceholderEl = $("<p>").attr("class", "instruction").text("Please select the type of activity to see your results");
 activityDisplayEl.append(actPlaceholderEl);
 
-var busPlaceholderEl = $("<p>").attr("class", "instruction").text("Please type in the city...");
+var busPlaceholderEl = $("<p>").attr("class", "instruction").text("Please type in the city to see your results");
 businessDisplayEl.append(busPlaceholderEl);
 
 function loadActivitiesSaved() {
