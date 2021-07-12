@@ -44,6 +44,8 @@
   margin-right: auto;
 }
 
+
+/* since card class is used widely, this may have some unexpected effect */
 .card {
     margin: 15px;
 }
@@ -61,15 +63,19 @@
     color: lightgrey;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 1023px) {
   .title {
     font-size: 5rem;
   }
 }
   
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
   .title {
     font-size: 3rem;
+  }
+
+  .yelp-result {
+    width: 33%;
   }
 
   .business-details-display .card-content, .business-details-display img {

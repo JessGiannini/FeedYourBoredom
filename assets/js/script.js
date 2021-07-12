@@ -5,6 +5,8 @@ var dataFromYelp = [];
 var businessesSaved = [];
 var activitiesSaved = [];
 var largeMap;
+var numOfResultsInList = 8;
+var indexOfFirstBusinessDisplayed;
 var activityType = [
   "education",
   "recreational",
@@ -122,9 +124,7 @@ function submitEventHandlerBored(event) {
     });
 }
 
-for (var i = 0; i < activityType.length; i++) {
-  $("#activity-type-select").append($("<option>").text(activityType[i]));
-}
+
 
 function displayActivitySaved() {
   var key = $(this).attr("data-id");
@@ -143,8 +143,8 @@ function displayActivitySaved() {
 function displayActivityDetails(activityData) {
   var activityEl = $("<div>")
     .text(activityData.activity)
-    .addClass("card-header-title")
-    .attr("id", "activity-title");
+    .attr("id", "activity-title")
+    .addClass("card-header-title is-size-4-desktop is-size-5-touch");
   var cardHeader = $("<div>").addClass("card-header").append(activityEl);
   var priceLabel = $("<span>").text("Price: ").addClass("has-text-weight-semibold");
   var priceEl = $("<div>")
@@ -444,66 +444,18 @@ function submitEventHandlerYelp() {
       } else if(data.businesses.length === 0) {
         message = "No business found";
       } else {
-        var index = 0;
-        function getYelpResults(ind) {
-          dataFromYelp = [];
-          var dataIndex = 0;
-
-          for (var i = ind; i < ind + 10; i++) {
-            dataFromYelp.push(data.businesses[i]);
-            var resEl = $("<div>");
-            resEl.attr("data-index", "" + dataIndex);
-            resEl.addClass("yelp-result");
-            //var nameEl = $("<div>").text(data.businesses[i].name);
-            //nameEl.attr("data-index", "" + dataIndex);
-            var imgURL = data.businesses[i].image_url;
-            //var distanceEl = $("<div>").text(parseInt(data.businesses[i].distance) + "m");
-            //distanceEl.attr("data-index", "" + dataIndex);
-            var imgEl = $("<img>").attr("src", imgURL);
-            imgEl.attr("data-index", "" + dataIndex);
-            imgEl.css("width", "140px");
-            imgEl.css("height", "140px");
-            var cardImgEl = $("<div>").attr("class", "card-image");
-            cardImgEl.append(imgEl);
-                    
-            var cardHeaderEl = $("<header>").attr("class", "card-header");
-            var cardTitleEl = $("<p>").attr("class", "card-header-title").attr("id", "restaurant-title").text(data.businesses[i].name);
-            cardHeaderEl.append(cardTitleEl);
-            
-            var cardEl = $("<div>").attr("class", "card");
-            //resEl.append(nameEl, cardEl, distanceEl);
-            cardEl.append(cardImgEl, cardHeaderEl);
-            resEl.append(cardEl);
-            businessDisplayEl.append(resEl);
-            dataIndex++;
-          }
-
-          if (index == 0) {
-            var nextBtn = $("<button>").text(">");
-            nextBtn.attr("id", "next-results-button");
-            nextBtn.attr("class", "button");
-            businessDisplayEl.append(nextBtn);
-          }
-
-          $(document).on("click", "#next-results-button", function () {
-            businessDisplayEl.empty();
-            index = 10;
-            getYelpResults(index);
-
-            var prevBtn = $("<button>").text("<");
-            prevBtn.attr("id", "prev-results-button");
-            prevBtn.attr("class", "button");
-            businessDisplayEl.append(prevBtn);
-
-            $(document).on("click", "#prev-results-button", function () {
-              businessDisplayEl.empty();
-              index = 0;
-              getYelpResults(index);
-            });
-          });
-        }
-        getYelpResults(index);
+        var prevBtn = $("<button>").text("<").attr("id", "prev-results-button").addClass("button m-auto p-0").css("height", "150px").css("width", "30px");
+        var prevBtnCol = $("<div>").addClass("button-column column is-1 is-flex").append(prevBtn);
+        var nextBtn = $("<button>").text(">").attr("id", "next-results-button").addClass("button m-auto p-0").css("height", "150px").css("width", "30px");
+        var nextBtnCol = $("<div>").addClass("button-column column is-1 is-flex").append(nextBtn);
+        var businessesListCol = $("<div>").addClass("businesses-list-column column is-10");
+        var businessesResultColumns = $("<div>").addClass("businesses-result-columns columns").css("width", "100%").append(prevBtnCol, businessesListCol, nextBtnCol);
+        ajustPage();
+        $(".businesses-result-display").html("").append(businessesResultColumns);
+        dataFromYelp = data.businesses;        
+        displayBusinessesResult(0);
       }
+
       if (message !== "") {
         message = message.substring(0, 1).toUpperCase() + message.substring(1);
         var messageModal = $("<div>").addClass("modal").attr("id", "message-modal");
@@ -527,13 +479,47 @@ function submitEventHandlerYelp() {
     });
 }
 
+function ajustPage() {
+  if ($(window).width() > 768) {
+    $("#prev-results-button").css("height", "150px").css("width", "30px").text("<");
+    $("#next-results-button").css("height", "150px").css("width", "30px").text(">");
+  } else {
+    $("#prev-results-button").css("height", "30px").css("width", "150px").text("^");
+    $("#next-results-button").css("height", "30px").css("width", "150px").text(">");
+  }
+}
+
+function displayBusinessesResult (indexStart) {
+  if (indexStart >= dataFromYelp.length) {
+    return;
+  }
+  if (indexStart <= 0) {
+    indexStart = 0;
+  }
+  indexOfFirstBusinessDisplayed = indexStart;
+  $(".businesses-list-column").html("");
+  var businessesList = $("<div>").addClass("columns is-flex is-flex-wrap-wrap").appendTo($(".businesses-list-column"));
+  for (var i = indexStart; i < indexStart + numOfResultsInList && i < dataFromYelp.length; i++) {
+    var resEl = $("<div>").attr("data-index", "" + i).addClass("yelp-result column is-one-quarter-desktop is-half-touch is-one-third-tablet").appendTo(businessesList);
+    var imgEl = $("<img>").attr("src", dataFromYelp[i].image_url).attr("data-index", "" + i).attr("alt", "Image for Business").css("width", "100%").css("height", "180px").css("max-width", "200px");
+    var cardImgEl = $("<div>").addClass("card-image is-flex is-justify-content-center").append(imgEl);
+    var cardContentEl = $("<p>").addClass("card-content  is-flex has-text-centered has-text-weight-semibold p-1").text(dataFromYelp[i].name);
+    var cardEl = $("<div>").addClass("card m-0").append(cardImgEl, cardContentEl).css("width", "100%").css("height", "100%").appendTo(resEl);
+    resEl.append(cardEl);
+  }
+}
+
 loadBusinessesSaved();
 
 loadActivitiesSaved();
 
 displayTabContent("search-tab");
 
-businessDetailsEl.removeClass("is-flex").addClass("is-hidden");
+for (var i = 0; i < activityType.length; i++) {
+  $("#activity-type-select").append($("<option>").text(activityType[i]));
+}
+
+$(".business-details-display").removeClass("is-flex").addClass("is-hidden");
 
 $(document).on("click", "a", displaySelectedTab);
 
@@ -565,6 +551,14 @@ $(document).on("click", "#submit-button", submitEventHandlerBored);
 $(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
 
 businessDisplayEl.on("click", ".yelp-result", fetchDetails);
+
+$(document).on("click", "#next-results-button", function() {
+  displayBusinessesResult(indexOfFirstBusinessDisplayed + numOfResultsInList);
+});
+
+$(document).on("click", "#prev-results-button", function() {
+  displayBusinessesResult(indexOfFirstBusinessDisplayed - numOfResultsInList);
+});
 
 $(document).on("click", "#go-back-button", displayYelpResult);
 
@@ -599,4 +593,8 @@ $(document).on("click", ".modal", function (event) {
   }
   console.log(event.target);
   console.log(this);
+});
+
+$(window).resize(function() {
+  ajustPage();
 });
