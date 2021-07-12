@@ -44,12 +44,21 @@
   margin-right: auto;
 }
 
+.card {
+    margin: 15px;
+}
+
+.card-header-title {
+    font-size: small;
+    width: 140px;
+}
+
 @media screen and (max-width: 991px) {
   .title {
     font-size: 5rem;
   }
 }
-
+  
 @media screen and (max-width: 767px) {
   .title {
     font-size: 3rem;
@@ -58,5 +67,4 @@
   .business-details-display .card-content, .business-details-display img {
     width: 100%;
   }
-
 }

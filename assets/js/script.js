@@ -444,25 +444,32 @@ function submitEventHandlerYelp() {
             var resEl = $("<div>");
             resEl.attr("data-index", "" + dataIndex);
             resEl.addClass("yelp-result");
-            var nameEl = $("<div>").text(data.businesses[i].name);
-            nameEl.attr("data-index", "" + dataIndex);
+            //var nameEl = $("<div>").text(data.businesses[i].name);
+            //nameEl.attr("data-index", "" + dataIndex);
             var imgURL = data.businesses[i].image_url;
-            var distanceEl = $("<div>").text(
-              parseInt(data.businesses[i].distance) + "m"
-            );
-            distanceEl.attr("data-index", "" + dataIndex);
+            //var distanceEl = $("<div>").text(parseInt(data.businesses[i].distance) + "m");
+            //distanceEl.attr("data-index", "" + dataIndex);
             var imgEl = $("<img>").attr("src", imgURL);
             imgEl.attr("data-index", "" + dataIndex);
-            imgEl.attr("alt", "Image for Business");
-            imgEl.css("width", "100px");
-            imgEl.css("height", "100px");
-            resEl.append(nameEl, imgEl, distanceEl);
+            imgEl.css("width", "140px");
+            imgEl.css("height", "140px");
+            var cardImgEl = $("<div>").attr("class", "card-image");
+            cardImgEl.append(imgEl);
+                    
+            var cardHeaderEl = $("<header>").attr("class", "card-header");
+            var cardTitleEl = $("<p>").attr("class", "card-header-title").text(data.businesses[i].name);
+            cardHeaderEl.append(cardTitleEl);
+            
+            var cardEl = $("<div>").attr("class", "card");
+            //resEl.append(nameEl, cardEl, distanceEl);
+            cardEl.append(cardImgEl, cardHeaderEl);
+            resEl.append(cardEl);
             $(".businesses-result-display").append(resEl);
             dataIndex++;
           }
 
           if (index == 0) {
-            var nextBtn = $("<button>").text("Next");
+            var nextBtn = $("<button>").text(">");
             nextBtn.attr("id", "next-results-button");
             nextBtn.attr("class", "button");
             $(".businesses-result-display").append(nextBtn);
@@ -473,7 +480,7 @@ function submitEventHandlerYelp() {
             index = 10;
             getYelpResults(index);
 
-            var prevBtn = $("<button>").text("Previous");
+            var prevBtn = $("<button>").text("<");
             prevBtn.attr("id", "prev-results-button");
             prevBtn.attr("class", "button");
             $(".businesses-result-display").append(prevBtn);
