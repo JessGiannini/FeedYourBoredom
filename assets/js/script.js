@@ -1,6 +1,6 @@
-var activityDisplayEl = $('.activity-result-display');
-var businessDisplayEl = $('.businesses-result-display');
-var businessDetailsEl = $('.business-details-display');
+var activityDisplayEl = $(".activity-result-display");
+var businessDisplayEl = $(".businesses-result-display");
+var businessDetailsEl = $(".business-details-display");
 var dataFromYelp = [];
 var businessesSaved = [];
 var activitiesSaved = [];
@@ -19,10 +19,14 @@ var activityType = [
   "busywork",
 ];
 
-var actPlaceholderEl = $("<p>").attr("class", "instruction").text("Please select the type of activity to see your results");
+var actPlaceholderEl = $("<p>")
+  .attr("class", "instruction")
+  .text("Please select the type of activity to see your results");
 activityDisplayEl.append(actPlaceholderEl);
 
-var busPlaceholderEl = $("<p>").attr("class", "instruction").text("Please type in the city to see your results");
+var busPlaceholderEl = $("<p>")
+  .attr("class", "instruction")
+  .text("Please type in the city to see your results");
 businessDisplayEl.append(busPlaceholderEl);
 
 function loadActivitiesSaved() {
@@ -125,8 +129,6 @@ function submitEventHandlerBored(event) {
     });
 }
 
-
-
 function displayActivitySaved() {
   var key = $(this).attr("data-id");
   var requestURL = "https://www.boredapi.com/api/activity/?key=" + key;
@@ -147,7 +149,9 @@ function displayActivityDetails(activityData) {
     .attr("id", "activity-title")
     .addClass("card-header-title is-size-4-desktop is-size-5-touch");
   var cardHeader = $("<div>").addClass("card-header").append(activityEl);
-  var priceLabel = $("<span>").text("Price: ").addClass("has-text-weight-semibold");
+  var priceLabel = $("<span>")
+    .text("Price: ")
+    .addClass("has-text-weight-semibold");
   var priceEl = $("<div>")
     .append(priceLabel)
     .append(" " + activityData.price * 10 + "/10");
@@ -208,10 +212,7 @@ function fetchDetails() {
   var cardFooter = $("<div>")
     .addClass("mt-2 is-flex is-justify-content-space-between")
     .append(goBackButton, saveBusinessButton);
-  businessDetailsEl
-    .children(".card-content")
-    .first()
-    .append(cardFooter);
+  businessDetailsEl.children(".card-content").first().append(cardFooter);
 }
 
 function displayBusinessDetails(businessSelected) {
@@ -223,7 +224,9 @@ function displayBusinessDetails(businessSelected) {
   var nameEl = $("<div>")
     .text(businessSelected.name)
     .addClass("is-size-4-desktop is-size-5-touch has-text-weight-bold");
-  var priceLabel = $("<span>").text("Price:").addClass("has-text-weight-semibold");
+  var priceLabel = $("<span>")
+    .text("Price:")
+    .addClass("has-text-weight-semibold");
   var priceEl = $("<div>")
     .append(priceLabel)
     .append(" " + businessSelected.price);
@@ -307,10 +310,10 @@ function displayBusinessDetails(businessSelected) {
   var mapModal = $("<div>").addClass("modal").attr("id", "map-modal");
   mapModal.html(
     '<div class="modal-background"></div>' +
-    '<div class="modal-content">' +
+      '<div class="modal-content">' +
       '<div id="large-map" class="map"></div>' +
-    '</div>' +
-    '<button id="map-modal-close" class="modal-close is-large" aria-label="close">X</button>'
+      "</div>" +
+      '<button id="map-modal-close" class="modal-close is-large" aria-label="close">X</button>'
   );
 
   $(document).ready(function () {
@@ -437,41 +440,64 @@ function submitEventHandlerYelp() {
     })
     .then(function (data) {
       console.log(data);
-      var message ="";
+      var message = "";
       if (data.error !== undefined) {
         if (data.error.code === "VALIDATION_ERROR") {
           message = data.error.field + data.error.description.substring(2);
         } else if (data.error.code === "LOCATION_NOT_FOUND") {
           message = data.error.description;
         }
-      } else if(data.businesses.length === 0) {
+      } else if (data.businesses.length === 0) {
         message = "No business found";
       } else {
-        var prevBtn = $("<button>").text("<").attr("id", "prev-results-button").addClass("button m-auto p-0").css("height", "150px").css("width", "30px");
-        var prevBtnCol = $("<div>").addClass("button-column column is-1 is-flex").append(prevBtn);
-        var nextBtn = $("<button>").text(">").attr("id", "next-results-button").addClass("button m-auto p-0").css("height", "150px").css("width", "30px");
-        var nextBtnCol = $("<div>").addClass("button-column column is-1 is-flex").append(nextBtn);
-        var businessesListCol = $("<div>").addClass("businesses-list-column column is-10");
-        var businessesResultColumns = $("<div>").addClass("businesses-result-columns columns").css("width", "100%").append(prevBtnCol, businessesListCol, nextBtnCol);
+        var prevBtn = $("<button>")
+          .text("<")
+          .attr("id", "prev-results-button")
+          .addClass("button m-auto p-0")
+          .css("height", "150px")
+          .css("width", "30px");
+        var prevBtnCol = $("<div>")
+          .addClass("button-column column is-1 is-flex")
+          .append(prevBtn);
+        var nextBtn = $("<button>")
+          .text(">")
+          .attr("id", "next-results-button")
+          .addClass("button m-auto p-0")
+          .css("height", "150px")
+          .css("width", "30px");
+        var nextBtnCol = $("<div>")
+          .addClass("button-column column is-1 is-flex")
+          .append(nextBtn);
+        var businessesListCol = $("<div>").addClass(
+          "businesses-list-column column is-10"
+        );
+        var businessesResultColumns = $("<div>")
+          .addClass("businesses-result-columns columns")
+          .css("width", "100%")
+          .append(prevBtnCol, businessesListCol, nextBtnCol);
         ajustPage();
-        $(".businesses-result-display").html("").append(businessesResultColumns);
-        dataFromYelp = data.businesses;        
+        $(".businesses-result-display")
+          .html("")
+          .append(businessesResultColumns);
+        dataFromYelp = data.businesses;
         displayBusinessesResult(0);
       }
 
       if (message !== "") {
         message = message.substring(0, 1).toUpperCase() + message.substring(1);
-        var messageModal = $("<div>").addClass("modal").attr("id", "message-modal");
+        var messageModal = $("<div>")
+          .addClass("modal")
+          .attr("id", "message-modal");
         messageModal.html(
           '<div class="modal-background"></div>' +
-          '<div class="modal-content">' +
+            '<div class="modal-content">' +
             '<div class="card">' +
-              '<div class="card-header-title py-5 has-text-centered">' +
-                message +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-          '<button id="map-modal-close" class="modal-close is-large" aria-label="close">X</button>'
+            '<div class="card-header-title py-5 has-text-centered">' +
+            message +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            '<button id="map-modal-close" class="modal-close is-large" aria-label="close">X</button>'
         );
         businessDisplayEl.append(messageModal);
         $("#message-modal").addClass("is-active");
@@ -484,15 +510,28 @@ function submitEventHandlerYelp() {
 
 function ajustPage() {
   if ($(window).width() > 768) {
-    $("#prev-results-button").css("height", "150px").css("width", "30px").text("<");
-    $("#next-results-button").css("height", "150px").css("width", "30px").text(">");
+    $("#prev-results-button")
+      .css("height", "150px")
+      .css("width", "30px")
+      .text("<");
+    $("#next-results-button")
+      .css("height", "150px")
+      .css("width", "30px")
+      .text(">");
   } else {
-    $("#prev-results-button").css("height", "30px").css("width", "150px").text("^");
-    $("#next-results-button").css("height", "30px").css("width", "150px").text(">");
+    $("#prev-results-button")
+      .css("height", "30px")
+      .css("width", "150px")
+      .text("^");
+    $("#next-results-button")
+      .css("height", "30px")
+      .css("width", "150px")
+      .text(">");
   }
 }
 
-function displayBusinessesResult (indexStart) {
+function displayBusinessesResult(indexStart) {
+  //$("yelpImage".hide());
   if (indexStart >= dataFromYelp.length) {
     return;
   }
@@ -501,13 +540,41 @@ function displayBusinessesResult (indexStart) {
   }
   indexOfFirstBusinessDisplayed = indexStart;
   $(".businesses-list-column").html("");
-  var businessesList = $("<div>").addClass("columns is-flex is-flex-wrap-wrap").appendTo($(".businesses-list-column"));
-  for (var i = indexStart; i < indexStart + numOfResultsInList && i < dataFromYelp.length; i++) {
-    var resEl = $("<div>").attr("data-index", "" + i).addClass("yelp-result column is-one-quarter-desktop is-half-touch is-one-third-tablet").appendTo(businessesList);
-    var imgEl = $("<img>").attr("src", dataFromYelp[i].image_url).attr("data-index", "" + i).attr("alt", "Image for Business").css("width", "100%").css("height", "180px").css("max-width", "200px");
-    var cardImgEl = $("<div>").addClass("card-image is-flex is-justify-content-center").append(imgEl);
-    var cardContentEl = $("<p>").addClass("card-content  is-flex has-text-centered has-text-weight-semibold p-1").text(dataFromYelp[i].name);
-    var cardEl = $("<div>").addClass("card m-0").append(cardImgEl, cardContentEl).css("width", "100%").css("height", "100%").appendTo(resEl);
+  var businessesList = $("<div>")
+    .addClass("columns is-flex is-flex-wrap-wrap")
+    .appendTo($(".businesses-list-column"));
+  for (
+    var i = indexStart;
+    i < indexStart + numOfResultsInList && i < dataFromYelp.length;
+    i++
+  ) {
+    var resEl = $("<div>")
+      .attr("data-index", "" + i)
+      .addClass(
+        "yelp-result column is-one-quarter-desktop is-half-touch is-one-third-tablet"
+      )
+      .appendTo(businessesList);
+    var imgEl = $("<img>")
+      .attr("src", dataFromYelp[i].image_url)
+      .attr("data-index", "" + i)
+      .attr("alt", "Image for Business")
+      .css("width", "100%")
+      .css("height", "180px")
+      .css("max-width", "200px");
+    var cardImgEl = $("<div>")
+      .addClass("card-image is-flex is-justify-content-center")
+      .append(imgEl);
+    var cardContentEl = $("<p>")
+      .addClass(
+        "card-content  is-flex has-text-centered has-text-weight-semibold p-1"
+      )
+      .text(dataFromYelp[i].name);
+    var cardEl = $("<div>")
+      .addClass("card m-0")
+      .append(cardImgEl, cardContentEl)
+      .css("width", "100%")
+      .css("height", "100%")
+      .appendTo(resEl);
     resEl.append(cardEl);
   }
 }
@@ -555,11 +622,11 @@ $(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
 
 businessDisplayEl.on("click", ".yelp-result", fetchDetails);
 
-$(document).on("click", "#next-results-button", function() {
+$(document).on("click", "#next-results-button", function () {
   displayBusinessesResult(indexOfFirstBusinessDisplayed + numOfResultsInList);
 });
 
-$(document).on("click", "#prev-results-button", function() {
+$(document).on("click", "#prev-results-button", function () {
   displayBusinessesResult(indexOfFirstBusinessDisplayed - numOfResultsInList);
 });
 
@@ -592,12 +659,12 @@ $(document).on("click", ".modal-close", function () {
 $(document).on("click", ".modal", function (event) {
   if ($(event.target).hasClass("modal-background")) {
     $(this).removeClass("is-active");
-    console.log("I am executed")
+    console.log("I am executed");
   }
   console.log(event.target);
   console.log(this);
 });
 
-$(window).resize(function() {
+$(window).resize(function () {
   ajustPage();
 });
