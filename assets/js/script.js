@@ -20,13 +20,13 @@ var activityType = [
 ];
 
 var actPlaceholderEl = $("<p>")
-  .attr("class", "instruction")
-  .text("Please select the type of activity to see your results");
+  .addClass("card-content has-text-grey pt-0 is-size-5")
+  .text("Please select an activity type on the left and click search button to check your choices!");
 activityDisplayEl.append(actPlaceholderEl);
 
 var busPlaceholderEl = $("<p>")
-  .attr("class", "instruction")
-  .text("Please type in the city to see your results");
+  .addClass("card-content has-text-grey is-size-5")
+  .text("Please type in the location to check some good places! You could also use key words and select the price range(s) which is optional!");
 businessDisplayEl.append(busPlaceholderEl);
 
 function loadActivitiesSaved() {
@@ -453,7 +453,7 @@ function submitEventHandlerYelp() {
         var prevBtn = $("<button>")
           .text("<")
           .attr("id", "prev-results-button")
-          .addClass("button m-auto p-0")
+          .addClass("button m-auto p-0 is-warning is-rounded")
           .css("height", "150px")
           .css("width", "30px");
         var prevBtnCol = $("<div>")
@@ -462,7 +462,7 @@ function submitEventHandlerYelp() {
         var nextBtn = $("<button>")
           .text(">")
           .attr("id", "next-results-button")
-          .addClass("button m-auto p-0")
+          .addClass("button m-auto p-0 is-warning is-rounded")
           .css("height", "150px")
           .css("width", "30px");
         var nextBtnCol = $("<div>")
@@ -566,7 +566,7 @@ function displayBusinessesResult(indexStart) {
       .append(imgEl);
     var cardContentEl = $("<p>")
       .addClass(
-        "card-content  is-flex has-text-centered has-text-weight-semibold p-1"
+        "card-content has-text-centered has-text-weight-semibold p-1"
       )
       .text(dataFromYelp[i].name);
     var cardEl = $("<div>")
