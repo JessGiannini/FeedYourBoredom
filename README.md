@@ -1,36 +1,10 @@
 # Feed Your Boredom
 
-One paragraph of project description goes here.
+We created a platform to end all boredom! The user is lookin for an activity to do with a friend, their family, or even solo. We give them a quick and easy way to find an activity and a restaurant to start their adventure. They can even save their favorite activities and restuarants for use at a later time. The acitivity selector is a random activity generator that they can run again and again. The restaurant selector uses the power of Yelp! In our next update we will be adding the additional function of searching for the activity using yelp as well. This will make doing that activity even easier.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them.
-
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development environment running.
-
-Say what the step will be:
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo.
+Our application uses a Yelp API that needs a little extra help to make our website work. We had to use a CORS proxy server to fetch the data needed for our project.
 
 ## Built With
 
@@ -40,6 +14,7 @@ End with an example of getting some data out of the system or using it for a lit
 - [FontAwesome](https://fontawesome.com/kits/9de12bd4dc/use?welcome=yes)
 - [Bulma](https://bulma.io/)
 - [GoogleFonts](https://fonts.google.com/)
+- [OpenLayer](https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js)
 
 ## Deployed Link
 
@@ -53,7 +28,7 @@ End with an example of getting some data out of the system or using it for a lit
 * [Link to Github](https://github.com/)
 * [Link to LinkedIn](https://www.linkedin.com/)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/JessGiannini/FeedYourBoredom/graphs/contributors) who participated in this project.
 
 ## License
 
