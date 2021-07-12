@@ -12,16 +12,8 @@
 }
 /* end up title styling */
 
-.activity-result-display {
-  min-height: 200px;
-  border: 2px solid var(--border-testcolor-);
-}
-
-.businesses-result-display {
-  display: flex;
-  flex-wrap: wrap;
-  min-height: 400px;
-  border: 2px solid var(--border-testcolor-);
+.background-img {
+  width: 100%;
 }
 
 .business-details-display .card-content, .business-details-display img {
