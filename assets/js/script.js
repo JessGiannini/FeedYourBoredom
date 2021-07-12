@@ -1,3 +1,6 @@
+var activityDisplayEl = $('.activity-result-display');
+var businessDisplayEl = $('.businesses-result-display');
+var businessDetailsEl = $('.business-details-display');
 var dataFromYelp = [];
 var businessesSaved = [];
 var activitiesSaved = [];
@@ -13,6 +16,7 @@ var activityType = [
   "music",
   "busywork",
 ];
+
 
 function loadActivitiesSaved() {
   activitiesSaved = JSON.parse(localStorage.getItem("activitiesSaved"));
@@ -98,7 +102,7 @@ function submitEventHandlerBored(event) {
     })
     .then(function (data) {
       if (data.error != undefined) {
-        $(".activity-result-display").append("No results found");
+        activityDisplayEl.append("No results found");
         return;
       } else {
         displayActivityDetails(data);
@@ -108,7 +112,7 @@ function submitEventHandlerBored(event) {
           .attr("data-id", data.key)
           .attr("data-name", data.activity)
           .addClass("button mb-3 ml-5");
-        $(".activity-result-display").append(saveActivityButton);
+        activityDisplayEl.append(saveActivityButton);
       }
     });
 }
@@ -157,8 +161,8 @@ function displayActivityDetails(activityData) {
     .addClass("card-content")
     .append(priceEl, accessibilityEl, participantsEl);
   // price and accessibility can be displayed using empty or colored star
-  $(".activity-result-display").html("");
-  $(".activity-result-display").append(cardHeader, cardContent);
+  activityDisplayEl.empty();
+  activityDisplayEl.append(cardHeader, cardContent);
 }
 
 function displayBusinessSaved() {
@@ -196,16 +200,16 @@ function fetchDetails() {
   var cardFooter = $("<div>")
     .addClass("mt-2 is-flex is-justify-content-space-between")
     .append(goBackButton, saveBusinessButton);
-  $(".business-details-display")
+  businessDetailsEl
     .children(".card-content")
     .first()
     .append(cardFooter);
 }
 
 function displayBusinessDetails(businessSelected) {
-  $(".business-details-display").removeClass("is-hidden").addClass("is-flex");
-  $(".businesses-result-display").removeClass("is-flex").addClass("is-hidden");
-  $(".business-details-display").empty();
+  businessDetailsEl.removeClass("is-hidden").addClass("is-flex");
+  businessDisplayEl.removeClass("is-flex").addClass("is-hidden");
+  businessDetailsEl.empty();
   console.log(businessSelected);
   var cardContent = $("<div>").addClass("card-content  p-3");
   var nameEl = $("<div>")
@@ -270,7 +274,7 @@ function displayBusinessDetails(businessSelected) {
     addressEl,
     mapEl
   );
-  $(".business-details-display").append(imgEl, cardContent);
+  businessDetailsEl.append(imgEl, cardContent);
   // var pointFeature = new ol.Feature(new ol.geom.Point([businessSelected.coordinates.longitude, businessSelected.coordinates.latitude]));
 
   $(document).ready(function () {
@@ -386,15 +390,15 @@ function saveYelpResult() {
 }
 
 function displayYelpResult() {
-  $(".businesses-result-display").removeClass("is-hidden").addClass("is-flex");
-  $(".business-details-display").removeClass("is-flex").addClass("is-hidden");
+  businessDisplayEl.removeClass("is-hidden").addClass("is-flex");
+  businessDetailsEl.removeClass("is-flex").addClass("is-hidden");
 }
 
 function submitEventHandlerYelp() {
   event.preventDefault();
-  $(".business-details-display").removeClass("is-flex").addClass("is-hidden");
-  $(".businesses-result-display").removeClass("is-hidden").addClass("is-flex");
-  $(".businesses-result-display").empty();
+  businessDetailsEl.removeClass("is-flex").addClass("is-hidden");
+  businessDisplayEl.removeClass("is-hidden").addClass("is-flex");
+  businessDisplayEl.empty();
   var location = $("#city-input").val();
   var term = $("#term-input").val();
   var termQueryParameter = term === "" ? "" : "&term=" + term;
@@ -465,7 +469,7 @@ function submitEventHandlerYelp() {
             //resEl.append(nameEl, cardEl, distanceEl);
             cardEl.append(cardImgEl, cardHeaderEl);
             resEl.append(cardEl);
-            $(".businesses-result-display").append(resEl);
+            businessDisplayEl.append(resEl);
             dataIndex++;
           }
 
@@ -473,21 +477,21 @@ function submitEventHandlerYelp() {
             var nextBtn = $("<button>").text(">");
             nextBtn.attr("id", "next-results-button");
             nextBtn.attr("class", "button");
-            $(".businesses-result-display").append(nextBtn);
+            businessDisplayEl.append(nextBtn);
           }
 
           $(document).on("click", "#next-results-button", function () {
-            $(".businesses-result-display").html("");
+            businessDisplayEl.empty();
             index = 10;
             getYelpResults(index);
 
             var prevBtn = $("<button>").text("<");
             prevBtn.attr("id", "prev-results-button");
             prevBtn.attr("class", "button");
-            $(".businesses-result-display").append(prevBtn);
+            businessDisplayEl.append(prevBtn);
 
             $(document).on("click", "#prev-results-button", function () {
-              $(".businesses-result-display").html("");
+              businessDisplayEl.empty();
               index = 0;
               getYelpResults(index);
             });
@@ -509,7 +513,7 @@ function submitEventHandlerYelp() {
           '</div>' +
           '<button id="map-modal-close" class="modal-close is-large" aria-label="close">X</button>'
         );
-        $(".businesses-result-display").append(messageModal);
+        businessDisplayEl.append(messageModal);
         $("#message-modal").addClass("is-active");
       }
     })
@@ -524,7 +528,7 @@ loadActivitiesSaved();
 
 displayTabContent("search-tab");
 
-$(".business-details-display").removeClass("is-flex").addClass("is-hidden");
+businessDetailsEl.removeClass("is-flex").addClass("is-hidden");
 
 $(document).on("click", "a", displaySelectedTab);
 
@@ -555,7 +559,7 @@ $(document).on("click", "#submit-button", submitEventHandlerBored);
 
 $(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
 
-$(".businesses-result-display").on("click", ".yelp-result", fetchDetails);
+businessDisplayEl.on("click", ".yelp-result", fetchDetails);
 
 $(document).on("click", "#go-back-button", displayYelpResult);
 

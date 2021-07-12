@@ -57,6 +57,7 @@
     font-size: large;
 }
 
+
 @media screen and (max-width: 991px) {
   .title {
     font-size: 5rem;
