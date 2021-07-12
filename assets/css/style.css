@@ -52,11 +52,7 @@
   
 @media screen and (max-width: 768px) {
   .title {
-    font-size: 3rem;
-  }
-
-  .yelp-result {
-    width: 33%;
+    font-size: 2.8rem;
   }
 
   .business-details-display .card-content, .business-details-display img {

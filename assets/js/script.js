@@ -434,16 +434,18 @@ function submitEventHandlerYelp() {
       } else if(data.businesses.length === 0) {
         message = "No business found";
       } else {
-        var prevBtn = $("<button>").text("<").attr("id", "prev-results-button").addClass("button m-auto p-0").css("height", "150px").css("width", "30px");
+        var prevBtn = $("<button>").text("<").attr("id", "prev-results-button").addClass("button m-auto p-0");
         var prevBtnCol = $("<div>").addClass("button-column column is-1 is-flex").append(prevBtn);
-        var nextBtn = $("<button>").text(">").attr("id", "next-results-button").addClass("button m-auto p-0").css("height", "150px").css("width", "30px");
+        var nextBtn = $("<button>").text(">").attr("id", "next-results-button").addClass("button m-auto p-0");
         var nextBtnCol = $("<div>").addClass("button-column column is-1 is-flex").append(nextBtn);
         var businessesListCol = $("<div>").addClass("businesses-list-column column is-10");
         var businessesResultColumns = $("<div>").addClass("businesses-result-columns columns").css("width", "100%").append(prevBtnCol, businessesListCol, nextBtnCol);
-        ajustPage();
         $(".businesses-result-display").html("").append(businessesResultColumns);
         dataFromYelp = data.businesses;        
         displayBusinessesResult(0);
+        $(document).ready(function() {
+          ajustPage();
+        })
       }
 
       if (message !== "") {
@@ -498,29 +500,6 @@ function displayBusinessesResult (indexStart) {
     resEl.append(cardEl);
   }
 }
-          
-        //   $(document).on("click", "#next-results-button", function () {
-        //     console.log("next button clicked");
-        //     $(".businesses-result-display").html("");
-        //     index = numOfResultsInList;
-        //     getYelpResults(index);
-
-        //     var prevBtn = $("<button>").text("<").attr("id", "prev-results-button").addClass("button m-auto column is-12 p-0 m-auto").css("min-height", "150px").css("width", "30px");
-        //     var buttonCol = $("<div>").addClass("column is-1 is-flex").append(prevBtn);
-        //     businessesResultDisplayBox.prepend(buttonCol);
-        //     $(".businesses-result-display").append(businessesResultDisplayBox);
-
-        //     $(document).on("click", "#prev-results-button", function () {
-        //       console.log("prev button clicked");
-
-        //       $(".businesses-result-display").html("");
-        //       index = 0;
-        //       getYelpResults(index);
-        //     });
-        //   });
-        // }
-        // getYelpResults(index);
-      
 
 loadBusinessesSaved();
 
