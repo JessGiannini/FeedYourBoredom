@@ -20,6 +20,8 @@ var activityType = [
 var actPlaceholderEl = $("<p>").attr("class", "instruction").text("Please select the type of activity...");
 activityDisplayEl.append(actPlaceholderEl);
 
+var busPlaceholderEl = $("<p>").attr("class", "instruction").text("Please type in the city...");
+businessDisplayEl.append(busPlaceholderEl);
 
 function loadActivitiesSaved() {
   activitiesSaved = JSON.parse(localStorage.getItem("activitiesSaved"));
