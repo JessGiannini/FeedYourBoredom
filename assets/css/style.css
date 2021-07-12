@@ -48,9 +48,17 @@
     margin: 15px;
 }
 
-.card-header-title {
+#restaurant-title {
     font-size: small;
     width: 140px;
+}
+
+#activity-title {
+    font-size: large;
+}
+
+.instruction {
+    color: lightgrey;
 }
 
 @media screen and (max-width: 991px) {
