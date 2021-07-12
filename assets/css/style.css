@@ -32,27 +32,6 @@
 #large-map {
   height: 800px;
   width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-/* since card class is used widely, this may have some unexpected effect */
-.card {
-    margin: 15px;
-}
-
-#restaurant-title {
-    font-size: small;
-    width: 140px;
-}
-
-#activity-title {
-    font-size: large;
-}
-
-.instruction {
-    color: lightgrey;
 }
 
 @media screen and (max-width: 1023px) {
@@ -64,10 +43,6 @@
 @media screen and (max-width: 768px) {
   .title {
     font-size: 3rem;
-  }
-
-  .yelp-result {
-    width: 33%;
   }
 
   .business-details-display .card-content, .business-details-display img {
