@@ -44,3 +44,9 @@ This project is licensed under the MIT License
 ## URL Page
 
 https://jessgiannini.github.io/FeedYourBoredom/
+
+## Medium Blog Posts
+
+- [J.Giannini](https://medium.com/@jessgiannini/feed-your-boredom-6aa95ca77335)
+- [S.Yuhan](https://samyuhan.medium.com/feed-your-boredom-71acb01f84ce)
+- [Q.Tian]()
