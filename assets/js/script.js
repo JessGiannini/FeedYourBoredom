@@ -114,7 +114,8 @@ function submitEventHandlerBored(event) {
       } else {
         displayActivityDetails(data);
         var saveActivityButton = $("<button>")
-          .text("Star")
+          .addClass("icon")
+          .html("<i class= 'fas fa-heart'></i>")
           .attr("id", "save-activity-button")
           .attr("data-id", data.key)
           .attr("data-name", data.activity)
@@ -194,11 +195,13 @@ function fetchDetails() {
   var indexOfYelpResult = $(this).attr("data-index");
   displayBusinessDetails(dataFromYelp[indexOfYelpResult]);
   var goBackButton = $("<button>")
-    .text("Go Back")
+    .addClass("icon")
+    .html('<i class="fas fa-undo"></i>')
     .attr("id", "go-back-button")
     .addClass("button");
   var saveBusinessButton = $("<button>")
-    .text("Star")
+    .addClass("icon")
+    .html("<i class= 'fas fa-heart'></i>")
     .attr("id", "save-business-button")
     .attr("data-index", indexOfYelpResult)
     .addClass("button");
