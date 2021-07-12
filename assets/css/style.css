@@ -57,6 +57,7 @@
 .card-header-title {
     font-size: small;
     width: 140px;
+}
   
 @media screen and (max-width: 767px) {
   .title {
