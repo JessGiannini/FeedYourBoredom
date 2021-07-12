@@ -15,6 +15,7 @@ Our application uses a Yelp API that needs a little extra help to make our websi
 - [Bulma](https://bulma.io/)
 - [GoogleFonts](https://fonts.google.com/)
 - [OpenLayer](https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js)
+- [CORSProxy](https://cors.bridged.cc)
 
 ## Deployed Link
 
@@ -36,9 +37,9 @@ This project is licensed under the MIT License
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code, libraries, packages, or UI was used / inspired from
-- Inspiration
-- etc
+- Thank you to the libraries we used to style our application! We loved Font Awesome, Bulma, Google Fonts, and Open Layers for giving us tons of styling as well as a functioning map.
+- We were inpired by Manuel Nunes and Sarah Cullen for pushing us to stick with our harder concept. As well as supporting us along the way!
+- Cheers to our team for pushing through and finding better ways to work with eachother!
 
 ## URL Page
 
