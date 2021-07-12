@@ -4,7 +4,6 @@ var activitiesSaved = [];
 var largeMap;
 var numOfResultsInList = 8;
 var indexOfFirstBusinessDisplayed;
-var indexOfLastBusinessDisplayed;
 var activityType = [
   "education",
   "recreational",
@@ -472,26 +471,25 @@ function submitEventHandlerYelp() {
 
 // dataFromYelp
 function displayBusinessesResult (indexStart) {
-  console.log(dataFromYelp);
+  if (indexStart >= dataFromYelp.length) {
+    return;
+  }
+  if (indexStart <= 0) {
+    indexStart = 0;
+  }
+  indexOfFirstBusinessDisplayed = indexStart;
+  $(".businesses-list-column").html("");
   var businessesList = $("<div>").addClass("columns is-flex-wrap-wrap").appendTo($(".businesses-list-column"));
   for (var i = indexStart; i < indexStart + numOfResultsInList && i < dataFromYelp.length; i++) {
-    var resEl = $("<div>").attr("data-index", "" + i).addClass("yelp-result column is-one-quarter-desktop is-one-third-tablet");
-    var nameEl = $("<div>").text(dataFromYelp[i].name).attr("data-index", "" + i);
-    var imgURL = dataFromYelp[i].image_url;
-    var distanceEl = $("<div>").text(parseInt(dataFromYelp[i].distance) + "m").attr("data-index", "" + i);
-    var imgEl = $("<img>").attr("src", imgURL).attr("data-index", "" + i).attr("alt", "Image for Business").css("width", "100px").css("height", "100px");
-    resEl.append(nameEl, imgEl, distanceEl);
-    businessesList.append(resEl);
+    var resEl = $("<div>").attr("data-index", "" + i).addClass("yelp-result column is-one-quarter-desktop is-one-third-tablet").appendTo(businessesList);
+    var imgEl = $("<img>").attr("src", dataFromYelp[i].image_url).attr("data-index", "" + i).attr("alt", "Image for Business").css("width", "100%").css("height", "180px");
+    var cardImgEl = $("<div>").addClass("card-image").append(imgEl);
+    var cardContentEl = $("<p>").addClass("card-content has-text-weight-semibold p-1").text(dataFromYelp[i].name);
+    var cardEl = $("<div>").addClass("card m-0").append(cardImgEl, cardContentEl).css("width", "100%").css("height", "100%").appendTo(resEl);
+    resEl.append(cardEl);
   }
 }
           
-        //   if (index == 0) {
-        //     var nextBtn = $("<button>").text(">").attr("id", "next-results-button").addClass("button m-auto column is-12 p-0 m-auto").css("min-height", "150px").css("width", "30px");
-        //     var buttonCol = $("<div>").addClass("column is-1 is-flex").append(nextBtn);
-        //     businessesResultDisplayBox.append(buttonCol);
-        //     $(".businesses-result-display").append(businessesResultDisplayBox);
-        //   }
-
         //   $(document).on("click", "#next-results-button", function () {
         //     console.log("next button clicked");
         //     $(".businesses-result-display").html("");
@@ -555,6 +553,15 @@ $(document).on("click", "#price-selected", function () {
 $(document).on("click", "#submit-button", submitEventHandlerBored);
 
 $(document).on("click", "#submit-button-yelp", submitEventHandlerYelp);
+
+$(document).on("click", "#next-results-button", function() {
+  displayBusinessesResult(indexOfFirstBusinessDisplayed + numOfResultsInList);
+});
+
+$(document).on("click", "#prev-results-button", function() {
+  displayBusinessesResult(indexOfFirstBusinessDisplayed - numOfResultsInList);
+});
+
 
 $(".businesses-result-display").on("click", ".yelp-result", fetchDetails);
 
