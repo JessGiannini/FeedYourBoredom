@@ -44,8 +44,6 @@
   margin-right: auto;
 }
 
-
-/* since card class is used widely, this may have some unexpected effect */
 .card {
     margin: 15px;
 }
