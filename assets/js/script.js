@@ -17,6 +17,9 @@ var activityType = [
   "busywork",
 ];
 
+var actPlaceholderEl = $("<p>").attr("class", "instruction").text("Please select the type of activity...");
+activityDisplayEl.append(actPlaceholderEl);
+
 
 function loadActivitiesSaved() {
   activitiesSaved = JSON.parse(localStorage.getItem("activitiesSaved"));
