@@ -479,12 +479,12 @@ function displayBusinessesResult (indexStart) {
   }
   indexOfFirstBusinessDisplayed = indexStart;
   $(".businesses-list-column").html("");
-  var businessesList = $("<div>").addClass("columns is-flex-wrap-wrap").appendTo($(".businesses-list-column"));
+  var businessesList = $("<div>").addClass("columns is-flex is-flex-wrap-wrap").appendTo($(".businesses-list-column"));
   for (var i = indexStart; i < indexStart + numOfResultsInList && i < dataFromYelp.length; i++) {
-    var resEl = $("<div>").attr("data-index", "" + i).addClass("yelp-result column is-one-quarter-desktop is-one-third-tablet").appendTo(businessesList);
-    var imgEl = $("<img>").attr("src", dataFromYelp[i].image_url).attr("data-index", "" + i).attr("alt", "Image for Business").css("width", "100%").css("height", "180px");
-    var cardImgEl = $("<div>").addClass("card-image").append(imgEl);
-    var cardContentEl = $("<p>").addClass("card-content has-text-weight-semibold p-1").text(dataFromYelp[i].name);
+    var resEl = $("<div>").attr("data-index", "" + i).addClass("yelp-result column is-one-quarter-desktop is-half-touch is-one-third-tablet").appendTo(businessesList);
+    var imgEl = $("<img>").attr("src", dataFromYelp[i].image_url).attr("data-index", "" + i).attr("alt", "Image for Business").css("width", "100%").css("height", "180px").css("max-width", "200px");
+    var cardImgEl = $("<div>").addClass("card-image is-flex is-justify-content-center").append(imgEl);
+    var cardContentEl = $("<p>").addClass("card-content  is-flex is-justify-content-center has-text-weight-semibold p-1").text(dataFromYelp[i].name);
     var cardEl = $("<div>").addClass("card m-0").append(cardImgEl, cardContentEl).css("width", "100%").css("height", "100%").appendTo(resEl);
     resEl.append(cardEl);
   }
