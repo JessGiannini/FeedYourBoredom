@@ -19,24 +19,23 @@ var activityType = [
   "busywork",
 ];
 
+// both the placeholderEl are styled using Bulma
+
 var actPlaceholderEl = $("<p>")
   .addClass("card-content has-text-grey pt-0 is-size-5")
-  .text("Please select an activity type on the left and click search button to check your choices!");
+  .text(
+    "Please select an activity type on the left and click search button to check your choices!"
+  );
 activityDisplayEl.append(actPlaceholderEl);
 
 var busPlaceholderEl = $("<p>")
   .addClass("card-content has-text-grey is-size-5")
-  .text("Please type in the location to check some good places! You could also use key words and select the price range(s) which is optional!");
+  .text(
+    "Please type in the location to check some good places! You could also use key words and select the price range(s) which is optional!"
+  );
 businessDisplayEl.append(busPlaceholderEl);
 
-function loadActivitiesSaved() {
-  activitiesSaved = JSON.parse(localStorage.getItem("activitiesSaved"));
-  if (activitiesSaved === null) {
-    activitiesSaved = [];
-  } else {
-    listActivitiesSaved();
-  }
-}
+// these clear functions were fun to write and in the future we will use similar code to add a function to remove only one item from the list
 
 function clearActivities() {
   activitiesSaved = [];
@@ -50,8 +49,17 @@ function clearBusinesses() {
   $(".favorite-business-box").children(".business-saved").remove();
 }
 
-// check localStorage
-//load and display the businesses saved if any
+// check localStorage to load and display the businesses or activities saved if any
+
+function loadActivitiesSaved() {
+  activitiesSaved = JSON.parse(localStorage.getItem("activitiesSaved"));
+  if (activitiesSaved === null) {
+    activitiesSaved = [];
+  } else {
+    listActivitiesSaved();
+  }
+}
+
 function loadBusinessesSaved() {
   businessesSaved = JSON.parse(localStorage.getItem("businessesSaved"));
   if (businessesSaved === null) {
@@ -60,6 +68,8 @@ function loadBusinessesSaved() {
     listBusinessesSaved();
   }
 }
+
+// these functions are used to list and display using buima
 
 function listActivitiesSaved() {
   for (var i = 0; i < activitiesSaved.length; i++) {
@@ -78,6 +88,8 @@ function listBusinessesSaved() {
     $(".favorite-business-box").prepend(nameEl);
   }
 }
+
+// these two functions were created to make the tab section allowing the user to quickly find stored activities or restaurants
 
 function displaySelectedTab() {
   $(".tabs li").removeClass();
@@ -143,6 +155,8 @@ function displayActivitySaved() {
     });
 }
 
+// this funtion is used to fetch specific data from the Bored API and dispaly it using Bulma
+
 function displayActivityDetails(activityData) {
   var activityEl = $("<div>")
     .text(activityData.activity)
@@ -170,10 +184,12 @@ function displayActivityDetails(activityData) {
   var cardContent = $("<div>")
     .addClass("card-content")
     .append(priceEl, accessibilityEl, participantsEl);
-  // price and accessibility can be displayed using empty or colored star
+
   activityDisplayEl.empty();
   activityDisplayEl.append(cardHeader, cardContent);
 }
+
+//below you can see the CORS proxy being used with the authorization to access Yelp API
 
 function displayBusinessSaved() {
   var id = $(this).attr("data-id");
@@ -195,6 +211,8 @@ function displayBusinessSaved() {
     });
 }
 
+// this function contains the Font Aweome styling for our save and go back buttons
+
 function fetchDetails() {
   var indexOfYelpResult = $(this).attr("data-index");
   displayBusinessDetails(dataFromYelp[indexOfYelpResult]);
@@ -214,6 +232,8 @@ function fetchDetails() {
     .append(goBackButton, saveBusinessButton);
   businessDetailsEl.children(".card-content").first().append(cardFooter);
 }
+
+// this next section of code shows our use of Bulma to style the business display and so much more!
 
 function displayBusinessDetails(businessSelected) {
   businessDetailsEl.removeClass("is-hidden").addClass("is-flex");
@@ -286,7 +306,8 @@ function displayBusinessDetails(businessSelected) {
     mapEl
   );
   businessDetailsEl.append(imgEl, cardContent);
-  // var pointFeature = new ol.Feature(new ol.geom.Point([businessSelected.coordinates.longitude, businessSelected.coordinates.latitude]));
+
+  // below is where we use a new library called Open Layer to display a working map of the business
 
   $(document).ready(function () {
     var map = new ol.Map({
@@ -306,7 +327,8 @@ function displayBusinessDetails(businessSelected) {
     });
   });
 
-  // create map modal
+  // this was used to create the map modal
+
   var mapModal = $("<div>").addClass("modal").attr("id", "map-modal");
   mapModal.html(
     '<div class="modal-background"></div>' +
@@ -335,6 +357,8 @@ function displayBusinessDetails(businessSelected) {
   });
   $(".search-result-section").append(mapModal);
 }
+
+// the next two functions are used to save  the users favorite activity and business
 
 function saveBoredResult() {
   var relistNeeded = false;
@@ -400,6 +424,8 @@ function saveYelpResult() {
   }
 }
 
+//this function was created to fix a bug where in the user wants to do a new search but the details of a business are in the way
+
 function displayYelpResult() {
   businessDisplayEl.removeClass("is-hidden").addClass("is-flex");
   businessDetailsEl.removeClass("is-flex").addClass("is-hidden");
@@ -438,6 +464,9 @@ function submitEventHandlerYelp() {
       console.log(res);
       return res.json();
     })
+
+    // this section below includes user validation and displays warnings if the user enters incorrectly
+
     .then(function (data) {
       console.log(data);
       var message = "";
@@ -450,6 +479,7 @@ function submitEventHandlerYelp() {
       } else if (data.businesses.length === 0) {
         message = "No business found";
       } else {
+        //more bulma used to style buttons to match the rest of the design
         var prevBtn = $("<button>")
           .text("<")
           .attr("id", "prev-results-button")
@@ -508,6 +538,8 @@ function submitEventHandlerYelp() {
     });
 }
 
+//used to create previous and next buttons for business displayed
+
 function ajustPage() {
   if ($(window).width() > 768) {
     $("#prev-results-button")
@@ -529,6 +561,8 @@ function ajustPage() {
       .text(">");
   }
 }
+
+//this function displays the business results and styles them responsively using Bulma
 
 function displayBusinessesResult(indexStart) {
   //$("yelpImage".hide());
@@ -565,9 +599,7 @@ function displayBusinessesResult(indexStart) {
       .addClass("card-image is-flex is-justify-content-center")
       .append(imgEl);
     var cardContentEl = $("<p>")
-      .addClass(
-        "card-content has-text-centered has-text-weight-semibold p-1"
-      )
+      .addClass("card-content has-text-centered has-text-weight-semibold p-1")
       .text(dataFromYelp[i].name);
     var cardEl = $("<div>")
       .addClass("card m-0")
@@ -579,11 +611,15 @@ function displayBusinessesResult(indexStart) {
   }
 }
 
+//functions called
+
 loadBusinessesSaved();
 
 loadActivitiesSaved();
 
 displayTabContent("search-tab");
+
+//below is a mix or our drop down menu for price as well as all our many listening events
 
 for (var i = 0; i < activityType.length; i++) {
   $("#activity-type-select").append($("<option>").text(activityType[i]));
@@ -664,6 +700,8 @@ $(document).on("click", ".modal", function (event) {
   console.log(event.target);
   console.log(this);
 });
+
+//final resize for responsiveness
 
 $(window).resize(function () {
   ajustPage();
