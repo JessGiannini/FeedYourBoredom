@@ -32,9 +32,9 @@ Our application uses a Yelp API that needs a little extra help to make our websi
     * When `Business` is selected, businesses saved by the user previously would be displayed as a panel. 
     * When user click any term in the panel, the details of it would be displayed on the right.
 
-    (assets/images/saveAndRefetchActivity.gif)
+    ![Save And Refetch Activity](assets/images/saveAndRefetchActivity.gif)
 
-    (assets/images/saveAndRefetchYelp.gif)
+    ![Save And Refetch Business](assets/images/saveAndRefetchYelp.gif)
 
     * User can delete all saved items on that panel with a click on corresponding `Clear all saved` button
 4. Activities search: 
@@ -47,7 +47,7 @@ Our application uses a Yelp API that needs a little extra help to make our websi
     * User can also use keyword and select one or more price range to make the search result more precise so that they can find proper businesses faster
     * The businesses results list would be displayed in the second block on the right. User can click `>` or `<` to check more results
 
-    (assets/images/searchBusiness.gif)
+    ![Search Business](assets/images/searchBusiness.gif)
 
     * If user find any interested business, they can click the card to check more details. Then the list is hidden while details showes in the same place.
     * In the businesses details includes business name, price range, rating, distance, phone number address, a small map and its image. User can:
@@ -66,7 +66,7 @@ Our application uses a Yelp API that needs a little extra help to make our websi
 
 ## Page Demo
 
-(assets/images/feedyourboredom.gif)
+![Page Demo](assets/images/feedyourboredom.gif)
 
 ## Page Screen Shot with Different Screen Width
 
