@@ -5,37 +5,43 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- our links to bulma, google fonts, font awesome, and open layer library -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Festive&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
     <script src="https://kit.fontawesome.com/9de12bd4dc.js" crossorigin="anonymous"></script>
+    <!-- our css style sheet comes last -->
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Feed Your Boredom</title>
 </head>
 
 <body>
+    <!-- bulma styling to create hero header -->
     <header class="hero is-info">
         <div class="hero-body">
             <p class="title has-text-centered">
                 Feed Your Boredom
             </p>
+            <!-- and styled subtitle -->
             <p class="subtitle has-text-centered mt-3 is-size-3-desktop is-size-5-mobile">
                 Activity and Business Selector
             </p>
         </div>
     </header>
+    <!-- our section on the tabs and search bar -->
     <div class="container mt-3 p-3">
         <div class="columns">
             <div class="search-section column is-3">
                 <div class="search-panel">
                     <div class="tabs is-boxed is-fullwidth">
                         <ul>
-                          <li class="is-active"><a id="search-tab" class="p-1">Search</a></li>
-                          <li><a id="activity-tab" class="p-1">Activity</a></li>
-                          <li><a id="business-tab" class="p-1">Business</a></li>
+                            <li class="is-active"><a id="search-tab" class="p-1">Search</a></li>
+                            <li><a id="activity-tab" class="p-1">Activity</a></li>
+                            <li><a id="business-tab" class="p-1">Business</a></li>
                         </ul>
                     </div>
                     <div class="new-search">
@@ -48,16 +54,19 @@
                                 </div>
                             </div>
                             <div class="control">
-                                <button id="submit-button" class="button is-warning is-rounded" type="submit">Search</button>
+                                <button id="submit-button" class="button is-warning is-rounded"
+                                    type="submit">Search</button>
                             </div>
                         </div>
                         <div class="field mt-5">
-                            <label class="label mb-0" for="business-search-form">Search for interested businesses</label>
+                            <label class="label mb-0" for="business-search-form">Search for interested
+                                businesses</label>
                             <input class="input my-2" id="city-input" type="text" placeholder="* Location">
                             <input class="input mb-2" id="term-input" type="text" placeholder="Key word">
                             <label class="label" for="price-select">Select price range</label>
                             <div class="control">
                                 <div class="select is-multiple">
+                                    <!-- our bulma styled drop down menu for pricing -->
                                     <select name="" multiple size="1" id="price-select">
                                         <option value="Any Price Range">Any Price Range</option>
                                         <option value="$">$</option>
@@ -68,33 +77,43 @@
                                 </div>
                                 <div id="price-selected" class="is-hidden"></div>
                             </div>
+                            <!-- our bulma styling for the search button -->
                             <div class="control">
-                                <button id="submit-button-yelp" class="button is-warning is-rounded mt-2" type="submit">Search</button>
+                                <button id="submit-button-yelp" class="button is-warning is-rounded mt-2"
+                                    type="submit">Search</button>
                             </div>
                         </div>
                     </div>
+                    <!-- below are the styling for the clear saved buttons -->
                     <div class="favorite-activity-box panel">
                         <div class="panel-block">
-                            <button id="clear-activity-saved-button" class="button is-outlined is-fullwidth has-background-danger-dark">
+                            <button id="clear-activity-saved-button"
+                                class="button is-outlined is-fullwidth has-background-danger-dark">
                                 Clear all saved
                             </button>
                         </div>
-                    </div> 
+                    </div>
                     <div class="favorite-business-box panel">
                         <div class="panel-block">
-                            <button id="clear-business-saved-button" class="button is-outlined is-fullwidth has-background-danger-dark">
+                            <button id="clear-business-saved-button"
+                                class="button is-outlined is-fullwidth has-background-danger-dark">
                                 Clear all saved
                             </button>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
+            <!-- below is our placeholder images for activities and yelp logo -->
             <div class="search-result-section column is-9">
-                <div class="activity-result-display card p-3"> 
-                    <img id="activity-background" class="background-img" src="https://chasecity-rehab.com/dev/wp-content/uploads/2019/05/activities-300x181.png" alt="Activities Logo">
+                <div class="activity-result-display card p-3">
+                    <img id="activity-background" class="background-img"
+                        src="https://chasecity-rehab.com/dev/wp-content/uploads/2019/05/activities-300x181.png"
+                        alt="Activities Logo">
                 </div>
                 <div class="businesses-result-display card p-3">
-                    <img id="business-background" class="background-img" src="https://www.carriagehouseresort.com/wp-content/uploads/yelp-logo-vector.png" alt="Yelp Logo">
+                    <img id="business-background" class="background-img"
+                        src="https://www.carriagehouseresort.com/wp-content/uploads/yelp-logo-vector.png"
+                        alt="Yelp Logo">
                 </div>
                 <div class="business-details-display card is-flex is-flex-wrap-wrap is-justify-content-center">
                 </div>
