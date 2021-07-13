@@ -77,10 +77,24 @@ Our application uses a Yelp API that needs a little extra help to make our websi
 ![fit mobile screen](assets/images/mobile_screen.png)
 
 ## Authors
+
+**Jessica Giannini**
+
+- [Link to Portfolio Site](https://jessgiannini.github.io/WebDeveloperPortfolio/)
+- [Link to Github](https://github.com/jessgiannini)
+- [Link to LinkedIn](https://www.linkedin.com/in/jessica-aletta-giannini-155b1310/)
+
+**Samantha Yuhan**
+
+- [Link to Portfolio Site](https://samyuhan.github.io/portfolio/)
+- [Link to Github](https://github.com/samyuhan)
+- [Link to LinkedIn](https://www.linkedin.com/in/samanthayuhan/)
+
 **Qiushuang Tian**
-* [Link to Portfolio Site](https://qtian13.github.io/)
-* [Link to Github](https://github.com/qtian13)
-* [Link to LinkedIn](https://www.linkedin.com/in/qiushuang-tian-a9754248/)
+
+- [Link to Portfolio Site](https://qtian13.github.io/)
+- [Link to Github](https://github.com/qtian13)
+- [Link to LinkedIn](https://www.linkedin.com/in/qiushuang-tian-a9754248/)
 
 See also the list of [contributors](https://github.com/JessGiannini/
 FeedYourBoredom/graphs/contributors) who participated in this project.
