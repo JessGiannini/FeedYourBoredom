@@ -2,6 +2,7 @@
   --border-testcolor-: rgba(44, 41, 41, 0.4);
 }
 
+/* title styling using Google Fonts */
 .title {
   font-family: "Festive", cursive;
   font-size: 7rem;
@@ -10,15 +11,20 @@
 .subtitle {
   font-family: "Amatic SC", cursive;
 }
-/* end up title styling */
+/* end of title styling */
 
 .background-img {
   width: 100%;
 }
 
-.business-details-display .card-content, .business-details-display img {
+/* styling the restuarant and business section */
+
+.business-details-display .card-content,
+.business-details-display img {
   width: 50%;
 }
+
+/* creating the modal for the map */
 
 .modal-content {
   max-width: 800px;
@@ -34,18 +40,21 @@
   width: 800px;
 }
 
+/* Responsive Design */
+
 @media screen and (max-width: 1023px) {
   .title {
     font-size: 5rem;
   }
 }
-  
+
 @media screen and (max-width: 768px) {
   .title {
     font-size: 3rem;
   }
 
-  .business-details-display .card-content, .business-details-display img {
+  .business-details-display .card-content,
+  .business-details-display img {
     width: 100%;
   }
 }
