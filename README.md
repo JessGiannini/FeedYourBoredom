@@ -55,7 +55,7 @@ Our application uses a Yelp API that needs a little extra help to make our websi
    - User can also use keyword and select one or more price range to make the search result more precise so that they can find proper businesses faster
    - The businesses results list would be displayed in the second block on the right. User can click `>` or `<` to check more results
 
-   (assets/images/searchBusiness.gif)
+   ![Business Search](assets/images/searchBusiness.gif)
 
    - If user find any interested business, they can click the card to check more details. Then the list is hidden while details showes in the same place.
    - In the businesses details includes business name, price range, rating, distance, phone number address, a small map and its image. User can:
